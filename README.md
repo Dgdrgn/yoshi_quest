@@ -1,18 +1,25 @@
-Game - Programming Assignments Private Repository
-=============
+# Game - Programming Assignments Private Repository
+### Student Information
+  + Name: Tommy Trojan
+  + USC Email: ttrojan@usc.edu
+  + USC ID: 0123456789
 
-Student Information
--------------
+### Game Information
+  + Game Name: myAwsomeGame
+  + Game Description: One sentence game description
+  + [Game Design Doc](GameDesignDoc.md)
 
-- Name: Jesus Garcia
-- USC Email: jesusega@usc.edu
-- USC ID: 7608722769
 
-Compile and Run Instructions
--------------
-
+### Compile & Run Instructions
 The grader should use the following procedure to compile and run the code:
+```shell
+#Compile Instructions
+echo "Write command here"
+#Doxygen Instructions
+echo "Write command here"
+#Command to run
+echo "Write command here"
+```
 
-	make
-	./game_jesusega
-
+### Screenshots -- [Optional]
+You can either remove this section or add screenshots if you wish.
