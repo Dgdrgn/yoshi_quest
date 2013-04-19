@@ -11,25 +11,19 @@ Objects
 --------------------
 My game will include the following "objects":
 	- Yoshi (playable character) - moves by the player's command
-	![Yoshi](/img/yoshiw2.jpg)
-	
+	![Yoshi](/img/yoshiw2.jpg)'\n'
 	- Goomba (enemy) - moves from right to left
-	![Goomba](/img/goombaw1.jpg)
-	
+	![Goomba](/img/goombaw1.jpg)'\n'
 	- Koopa (enemy) - moves from right to left
-	![Koopa](/img/koopaw1.jpg)
-	
+	![Koopa](/img/koopaw1.jpg)'\n'
 	- Bullet Bill (enemy) - moves from right to left or left to right
-	![Bullet Bill](/img/rbill.jpg)
-	
+	![Bullet Bill](/img/rbill.jpg)'\n'
 	- Kamek (enemy) - appears and shoots magic
-	![Kamek](/img/kamek1.jpg)
-	
+	![Kamek](/img/kamek1.jpg)'\n'
 	- Magic (enemy ammo) - moves across
-	![magic](/img/magic.jpg)
-	
+	![magic](/img/magic.jpg)'\n'
 	- Coin (item) - still object
-	![coin](/img/coin.jpg)
+	![coin](/img/coin.jpg)'\n'
 
 Score
 --------------------
