@@ -34,9 +34,13 @@ My game will include the following "objects":
 Score
 --------------------
 The scoring is as follows:
-	- 100 points for every second that passes
-	- 50 points for every coin collected
-	- 100 points for every killed enemy
+
+- 100 points for every second that passes
+	
+	
+- 50 points for every coin collected
+	
+- 100 points for every killed enemy
 	
 Life
 --------------------
