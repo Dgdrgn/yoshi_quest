@@ -10,20 +10,26 @@ enemies while keeping up with the screen.
 Objects
 --------------------
 My game will include the following "objects":
-	- Yoshi (playable character) - moves by the player's command
-	![Yoshi](/img/yoshiw2.jpg)'\n'
-	- Goomba (enemy) - moves from right to left
-	![Goomba](/img/goombaw1.jpg)'\n'
-	- Koopa (enemy) - moves from right to left
-	![Koopa](/img/koopaw1.jpg)'\n'
-	- Bullet Bill (enemy) - moves from right to left or left to right
-	![Bullet Bill](/img/rbill.jpg)'\n'
-	- Kamek (enemy) - appears and shoots magic
-	![Kamek](/img/kamek1.jpg)'\n'
-	- Magic (enemy ammo) - moves across
-	![magic](/img/magic.jpg)'\n'
-	- Coin (item) - still object
-	![coin](/img/coin.jpg)'\n'
+- Yoshi (playable character) - moves by the player's command
+![Yoshi](/img/yoshiw2.jpg)
+	
+- Goomba (enemy) - moves from right to left
+![Goomba](/img/goombaw1.jpg)
+	
+- Koopa (enemy) - moves from right to left
+![Koopa](/img/koopaw1.jpg)
+	
+- Bullet Bill (enemy) - moves from right to left or left to right
+![Bullet Bill](/img/rbill.jpg)
+	
+- Kamek (enemy) - appears and shoots magic
+![Kamek](/img/kamek1.jpg)
+	
+- Magic (enemy ammo) - moves across
+![magic](/img/magic.jpg)
+	
+- Coin (item) - still object
+![coin](/img/coin.jpg)
 
 Score
 --------------------
