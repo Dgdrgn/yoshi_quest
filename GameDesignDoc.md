@@ -52,13 +52,14 @@ lives, its game over.
 
 Layout
 --------------------
-![Layout](/img/layout.jpg)
+![Layout](/img/gLayout.jpg)
 
 On the game screen, the lives, coins, and score will be
 displayed on top. The game will be displayed underneath.
 During the game, the player can press 'p' to pause.
 
-![Menu Layout](img/mlayout.jpg)
+![Pause Layout](img/pLayout.jpg)
+![Main Layout](img/mLayout.jpg)
 
 On the pause menu, the screen will show buttons to 
 go back to the start menu, unpause, or show the
