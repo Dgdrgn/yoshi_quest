@@ -59,7 +59,7 @@ displayed on top. The game will be displayed underneath.
 During the game, the player can press 'p' to pause.
 
 ![Pause Layout](img/pLayout.jpg)
-![Main Layout](img/mLayout.jpg)
+![Start Layout](img/sLayout.jpg)
 
 On the pause menu, the screen will show buttons to 
 go back to the start menu, unpause, or show the
