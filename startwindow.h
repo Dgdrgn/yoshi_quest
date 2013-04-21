@@ -7,6 +7,8 @@
 #include <QGraphicsView>
 #include <QGraphicsItemAnimation>
 #include <QTimer>
+#include <QPixmap>
+#include <QGraphicsPixmapItem>
 
 class Start : public QGraphicsView
 {
@@ -18,11 +20,10 @@ class Start : public QGraphicsView
 		void show();
 	private:
 		QGraphicsScene *sScene;
+		QGraphicsPixmapItem *sMenu;
 		
 	public slots:
 		
-	protected:
-		void keyPressEvent(QKeyEvent *e);
 };
 
 #endif

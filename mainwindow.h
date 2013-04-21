@@ -10,10 +10,14 @@
 #include <QMenuBar>
 #include <QMenu>
 #include <QAction>
+#include <QLayout>
+//#include "gamewindow.h"
+#include "startwindow.h"
+//#include "pausewindow.h"
 
 
-#define WINDOW_MAX_X 800
-#define WINDOW_MAX_Y 800
+#define WINDOW_MAX_X 625
+#define WINDOW_MAX_Y 625
 
 class Main : public QMainWindow
 {
@@ -24,15 +28,14 @@ class Main : public QMainWindow
 		~Main();
 		void show();
 	private:
+		Start *sScreen;
 		QTimer *time;
-		QMenuBar *mb;
+		QVBoxLayout *layout;
 		void createActions();
 		void createMenus();
 		QMenu *fileMenu;
 		QAction *exitAct;
 		QWidget *window;
-	protected:
-		//void contextMenuEvent(QContextMenuEvent *event);
 	private slots:
 		
 /*	public slots:

@@ -1,27 +1,30 @@
 #include "mainwindow.h"
-/*#include "gamewindow.h"
-#include "startwindow.h"
-#include "pausewindow.h"*/
 
 Main::Main()
 {
 	time = new QTimer;
+	sScreen = new Start;
+	layout = new QVBoxLayout;
 	window = new QWidget;
-	window->setWindowTitle("12");
-	mb = menuBar();
+	window->setWindowTitle("Yoshi's Quest");
+	window->setFixedSize(WINDOW_MAX_X, WINDOW_MAX_Y);
 	createActions();
 	createMenus();
+	setCentralWidget(sScreen);
 }
 
 Main::~Main()
 {
-	
-	window->show();
+	delete sScreen;
+	delete window;
 }
 
 void Main::show()
 {
-	
+	menuBar()->show();
+	layout->addWidget(sScreen);
+	window->setLayout(layout);
+	window->show();
 }
 
 /*void Main::game()
@@ -41,14 +44,13 @@ void Main::start()
 
 void Main::createActions()
 {
-	exitAct = new QAction("Exit", this);
-	exitAct->setStatusTip(tr("Exit Game"));
+	exitAct = new QAction("&Exit", this);
+	exitAct->setStatusTip("&Exit Game");
 	connect(exitAct, SIGNAL(triggered()), qApp, SLOT(quit()));
 }
 
 void Main::createMenus()
 {
-	fileMenu = new QMenu("File", this);
-	mb->addMenu(fileMenu);
+	fileMenu = menuBar()->addMenu("&File");
 	fileMenu->addAction(exitAct);
 }
