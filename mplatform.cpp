@@ -9,8 +9,3 @@ MPlatform::~MPlatform()
 {
 
 }
-
-void MPlatform::move()
-{
-
-}

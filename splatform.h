@@ -7,6 +7,5 @@ class SPlatform : public Platform
 	public:
 		SPlatform(QPixmap *pm, int lx, int ly);
 		~SPlatform();
-		void move();
 };
 #endif

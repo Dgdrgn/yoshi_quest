@@ -7,8 +7,8 @@ class Thing : public QGraphicsPixmapItem
 	public:
 		Thing(QPixmap *pm, int lx, int ly);
 		~Thing();
-		virtual void move() = 0;
-	private:
+		void update();
+	protected:
 		int locx;
 		int locy;
 		int width;

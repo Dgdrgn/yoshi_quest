@@ -9,8 +9,3 @@ Heart::~Heart()
 {
 
 }
-
-void Heart::move()
-{
-
-}

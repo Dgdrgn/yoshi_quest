@@ -9,8 +9,3 @@ Bill::~Bill()
 {
 
 }
-
-void Bill::move()
-{
-
-}

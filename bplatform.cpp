@@ -10,7 +10,3 @@ BPlatform::~BPlatform()
 
 }
 
-void BPlatform::move()
-{
-
-}

@@ -1,9 +1,10 @@
 #include "mainwindow.h"
-
+#include "iostream"
 Main::Main()
 {
-	time = new QTimer;
+	time = new QTimer(this);
 	sScreen = new Start;
+	gScreen = new Game(time);
 	createActions();
 	createMenus();
 	layout = new QVBoxLayout;
@@ -11,6 +12,10 @@ Main::Main()
 	window->setWindowTitle("Yoshi's Quest");
 	window->setFixedSize(WINDOW_MAX_X, WINDOW_MAX_Y);
 	setCentralWidget(sScreen);
+	//setFocusPolicy(Qt::StrongFocus);
+	std::cout << "has focus" << hasFocus() << std::endl;
+	menuBar()->show();
+	layout->addWidget(gScreen);
 }
 
 Main::~Main()
@@ -21,8 +26,6 @@ Main::~Main()
 
 void Main::show()
 {
-	menuBar()->show();
-	layout->addWidget(sScreen);
 	window->setLayout(layout);
 	window->show();
 }
@@ -53,4 +56,53 @@ void Main::createMenus()
 {
 	fileMenu = menuBar()->addMenu("&File");
 	fileMenu->addAction(exitAct);
+}
+
+void Main::keyPressEvent(QKeyEvent *e)
+{
+	std::cout << e->key() << std::endl;
+	switch(e->key()) {
+		case Qt::Key_Left:
+			gScreen->yLeft();
+			break;
+		case Qt::Key_Right:
+			gScreen->yRight();
+			break;
+		case Qt::Key_Up:
+			gScreen->yUp();
+			break;
+		case Qt::Key_Down:
+			gScreen->yDown();
+			break;
+		case Qt::Key_Space:
+			switchGame();
+			break;
+	}
+}
+
+void Main::keyReleaseEvent(QKeyEvent *e)
+{
+	switch(e->key()) {
+		case Qt::Key_Left:
+			gScreen->yStop();
+			break;
+		case Qt::Key_Right:
+			gScreen->yStop();
+			break;
+		case Qt::Key_Up:
+			gScreen->yStop();
+			break;
+		case Qt::Key_Down:
+			gScreen->yStop();
+			break;
+	}
+}
+
+void Main::switchGame()
+{
+	std::cout << "HI" << std::endl;
+	layout->removeWidget(sScreen);
+	layout->addWidget(gScreen);
+	setCentralWidget(gScreen);
+	show();
 }

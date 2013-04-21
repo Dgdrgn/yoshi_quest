@@ -11,8 +11,10 @@
 #include <QMenu>
 #include <QAction>
 #include <QLayout>
-//#include "gamewindow.h"
+#include <QKeyEvent>
+#include "gamewindow.h"
 #include "startwindow.h"
+#include "yoshi.h"
 //#include "pausewindow.h"
 
 class QAction;
@@ -28,8 +30,10 @@ class Main : public QMainWindow
 		explicit Main();
 		~Main();
 		void show();
+		void switchGame();
 	private:
 		Start *sScreen;
+		Game *gScreen;
 		QTimer *time;
 		QVBoxLayout *layout;
 		void createActions();
@@ -37,6 +41,9 @@ class Main : public QMainWindow
 		QMenu *fileMenu;
 		QAction *exitAct;
 		QWidget *window;
+	protected:
+		void keyPressEvent(QKeyEvent *e);
+		void keyReleaseEvent(QKeyEvent *e);
 	private slots:
 		
 /*	public slots:

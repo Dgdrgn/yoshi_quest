@@ -9,8 +9,3 @@ Magic::~Magic()
 {
 
 }
-
-void Magic::move()
-{
-
-}

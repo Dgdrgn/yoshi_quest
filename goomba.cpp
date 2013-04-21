@@ -9,8 +9,3 @@ Goomba::~Goomba()
 {
 
 }
-
-void Goomba::move()
-{
-
-}

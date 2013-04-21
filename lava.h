@@ -7,6 +7,5 @@ class Lava : public Thing
 	public:
 		Lava(QPixmap *pm, int lx, int ly);
 		~Lava();
-		void move();
 };
 #endif

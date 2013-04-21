@@ -9,8 +9,3 @@ Coin::~Coin()
 {
 
 }
-
-void Coin::move()
-{
-
-}

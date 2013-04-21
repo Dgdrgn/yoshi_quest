@@ -9,8 +9,3 @@ Lava::~Lava()
 {
 
 }
-
-void Lava::move()
-{
-
-}

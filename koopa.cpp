@@ -9,8 +9,3 @@ Koopa::~Koopa()
 {
 
 }
-
-void Koopa::move()
-{
-
-}

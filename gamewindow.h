@@ -1,25 +1,38 @@
 #ifndef GAMEWINDOW_H
 #define GAMEWINDOW_H
 
-/*#include <QApplication>
+#include <QApplication>
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsItemAnimation>
 #include <QTimer>
+#include <QPixmap>
+#include "yoshi.h"
+#include "bg.h"
 
 class Game : public QGraphicsView
 {
 	Q_OBJECT
 	
 	public:
-		explicit Game();
+		explicit Game(QTimer *time);
 		~Game();
-		void show();
+		QTimer *timer;
+		QTimer *ytimer;
+		void yLeft();
+		void yRight();
+		void yUp();
+		void yDown();
+		void yStop();
 	private:
 		QGraphicsScene *gScene;
+		QPixmap *yPix;
+		QPixmap *bPix;
+		Yoshi *yoshi;
+		Bg *background;
 	public slots:
-		
+		void animate();
 };
 
-#endif*/
+#endif

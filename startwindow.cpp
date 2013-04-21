@@ -13,12 +13,3 @@ Start::~Start()
 	delete sMenu;
 	delete sScene;
 }
-
-/*void Start::keyPressEvent(QKeyEvent *e)
-{
-	switch(e->key()) {
-		case Qt::Key_Space :
-			
-			break;
-	}
-}*/

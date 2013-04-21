@@ -9,8 +9,3 @@ Kamek::~Kamek()
 {
 
 }
-
-void Kamek::move()
-{
-
-}
