@@ -31,6 +31,7 @@ class Game : public QGraphicsView
 		QPixmap *bPix;
 		Yoshi *yoshi;
 		Bg *background;
+		Bg *background2;
 	public slots:
 		void animate();
 };
