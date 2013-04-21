@@ -3,9 +3,9 @@ Game Design Document
 
 Objective
 --------------------
-The objective of the game is to get from one end to 
-the other without dying. The player must avoid the
-enemies while keeping up with the screen.
+The objective of the game is to climb to the top
+to avoid the rising lava and avoid the enemies along
+the way.
 
 Objects
 --------------------
@@ -13,10 +13,10 @@ My game will include the following "objects":
 - Yoshi (playable character) - moves by the player's command
 ![Yoshi](/img/yoshiw2.jpg)
 	
-- Goomba (enemy) - moves from right to left
+- Goomba (enemy) - moves right and left
 ![Goomba](/img/goombaw1.jpg)
 	
-- Koopa (enemy) - moves from right to left
+- Koopa (enemy) - moves right and left
 ![Koopa](/img/koopaw1.jpg)
 	
 - Bullet Bill (enemy) - moves from right to left or left to right
@@ -37,7 +37,6 @@ The scoring is as follows:
 
 - 100 points for every second that passes
 	
-	
 - 50 points for every coin collected
 	
 - 100 points for every killed enemy
@@ -55,13 +54,13 @@ Layout
 ![Layout](/img/gLayout.jpg)
 
 On the game screen, the lives, coins, and score will be
-displayed on top. The game will be displayed underneath.
+displayed on the bottom with the lava. The game will be displayed on top.
 During the game, the player can press 'p' to pause.
 
 ![Pause Layout](img/pLayout.jpg)
 ![Start Layout](img/sLayout.jpg)
 
-On the pause menu, the screen will show buttons to 
+On the pause menu, the screen will show options to 
 go back to the start menu, unpause, or show the
 controls of the game. On the start menu, the screen
 will show buttons to start, show the instructions, 

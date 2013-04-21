@@ -15,6 +15,7 @@
 #include "startwindow.h"
 //#include "pausewindow.h"
 
+class QAction;
 
 #define WINDOW_MAX_X 625
 #define WINDOW_MAX_Y 625

@@ -4,12 +4,12 @@ Main::Main()
 {
 	time = new QTimer;
 	sScreen = new Start;
+	createActions();
+	createMenus();
 	layout = new QVBoxLayout;
 	window = new QWidget;
 	window->setWindowTitle("Yoshi's Quest");
 	window->setFixedSize(WINDOW_MAX_X, WINDOW_MAX_Y);
-	createActions();
-	createMenus();
 	setCentralWidget(sScreen);
 }
 
