@@ -14,6 +14,7 @@
 #include "bg.h"
 #include "lava.h"
 #include "heart.h"
+#include "coin.h"
 #include "bplatform.h"
 #include "mplatform.h"
 #include "splatform.h"
@@ -27,7 +28,8 @@ class Game : public QGraphicsView
 		explicit Game(QTimer *time);
 		~Game();
 		QTimer *timer;
-		QTimer *ytimer;
+		QTimer *yTimer;
+		QTimer *cTimer;
 		void yLeft();
 		void yRight();
 		void yUp();
@@ -42,16 +44,20 @@ class Game : public QGraphicsView
 		QPixmap *spPix;
 		QPixmap *mpPix;
 		QPixmap *bpPix;
+		QPixmap *cPix;
 		Yoshi *yoshi;
 		Bg *background;
 		Bg *background2;
 		Heart *heart;
 		Lava *lava;
+		Coin *coin;
 		Queue<Platform*> platforms;
+		Coin *sCoin;
 		int pSize;
 		int pLoc;
 	public slots:
 		void animate();
+		void newCoin();
 };
 
 #endif

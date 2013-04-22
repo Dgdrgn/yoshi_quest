@@ -7,5 +7,8 @@ class Coin : public Thing
 	public:
 		Coin(QPixmap *pm, int lx, int ly);
 		~Coin();
+		void move();
+	private:
+		QPixmap *coin;
 };
 #endif

@@ -13,9 +13,10 @@ Main::Main()
 	window->setFixedSize(WINDOW_MAX_X, WINDOW_MAX_Y);
 	setCentralWidget(sScreen);
 	//setFocusPolicy(Qt::StrongFocus);
-	std::cout << "has focus" << hasFocus() << std::endl;
 	menuBar()->show();
 	layout->addWidget(gScreen);
+	setFocus();
+	std::cout << "has focus" << hasFocus() << std::endl;
 }
 
 Main::~Main()

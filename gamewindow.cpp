@@ -5,6 +5,7 @@ void Game::animate()
 	background->move();
 	background2->move();
 	lava->move();
+	sCoin->move();
 	for(int i=0; i<platforms.size(); i++)
 		platforms[i]->move();
 	if(platforms.front()->getLocy() >= 500) {
@@ -57,6 +58,17 @@ void Game::animate()
 	gScene->addItem(platforms.back());
 }
 
+void Game::newCoin()
+{
+	if(sCoin->getLocy() >= 450) {
+		int randx = rand()%400;
+		gScene->removeItem(sCoin);
+		delete sCoin;
+		sCoin = new Coin(cPix, randx, 0);
+		gScene->addItem(sCoin);
+	}
+}
+
 Game::Game(QTimer *time)
 {
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -70,10 +82,14 @@ Game::Game(QTimer *time)
 	bpPix = new QPixmap("img/bPlatform.jpg");
 	mpPix = new QPixmap("img/mPlatform.jpg");
 	spPix = new QPixmap("img/sPlatform.jpg");
+	cPix = new QPixmap("img/coin.jpg");
 	background = new Bg(bPix, 0, 0);
 	background2 = new Bg(bPix, 0, -680);
 	yoshi = new Yoshi(yPix, 225, 225);
-	heart = new Heart(hPix, 20, 460);
+	coin = new Coin(cPix, 170, 460);
+	sCoin = new Coin(cPix, 500, 500);
+	coin->setZValue(2);
+	heart = new Heart(hPix, 20, 465);
 	heart->setZValue(2);
 	lava = new Lava(lPix, 0, 451);
 	lava->setZValue(1);
@@ -83,6 +99,7 @@ Game::Game(QTimer *time)
 	gScene->addItem(background2);
 	gScene->addItem(lava);
 	gScene->addItem(heart);
+	gScene->addItem(coin);
 	gScene->addItem(yoshi);
 	for(int i=3; i>=0; i--) {
 		int yLoc = i*100;
@@ -136,6 +153,10 @@ Game::Game(QTimer *time)
 	timer->setInterval(5);
 	connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
 	timer->start();
+	cTimer = time;
+	cTimer->setInterval(1000);
+	connect(cTimer, SIGNAL(timeout()), this, SLOT(newCoin()));
+	cTimer->start();
 }
 
 Game::~Game()
