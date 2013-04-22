@@ -8,8 +8,16 @@
 #include <QGraphicsItemAnimation>
 #include <QTimer>
 #include <QPixmap>
+#include <cstdlib>
+#include "queue.h"
 #include "yoshi.h"
 #include "bg.h"
+#include "lava.h"
+#include "heart.h"
+#include "bplatform.h"
+#include "mplatform.h"
+#include "splatform.h"
+#include "platform.h"
 
 class Game : public QGraphicsView
 {
@@ -29,9 +37,19 @@ class Game : public QGraphicsView
 		QGraphicsScene *gScene;
 		QPixmap *yPix;
 		QPixmap *bPix;
+		QPixmap *hPix;
+		QPixmap *lPix;
+		QPixmap *spPix;
+		QPixmap *mpPix;
+		QPixmap *bpPix;
 		Yoshi *yoshi;
 		Bg *background;
 		Bg *background2;
+		Heart *heart;
+		Lava *lava;
+		Queue<Platform*> platforms;
+		int pSize;
+		int pLoc;
 	public slots:
 		void animate();
 };

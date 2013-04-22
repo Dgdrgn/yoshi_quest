@@ -10,6 +10,5 @@ class Bg : public Thing
 		void move();
 	private:
 		QPixmap *back;
-		int cnt;
 };
 #endif

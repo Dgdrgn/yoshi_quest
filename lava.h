@@ -7,5 +7,11 @@ class Lava : public Thing
 	public:
 		Lava(QPixmap *pm, int lx, int ly);
 		~Lava();
+		void move();
+	private:
+		QPixmap *lava1;
+		QPixmap *lava2;
+		QPixmap *lava3;
+		int lavas;
 };
 #endif

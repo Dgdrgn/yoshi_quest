@@ -19,8 +19,8 @@
 
 class QAction;
 
-#define WINDOW_MAX_X 625
-#define WINDOW_MAX_Y 625
+#define WINDOW_MAX_X 525
+#define WINDOW_MAX_Y 525
 
 class Main : public QMainWindow
 {
