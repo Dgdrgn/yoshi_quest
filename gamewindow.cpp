@@ -2,10 +2,19 @@
 
 void Game::animate()
 {
+	gScene->removeItem(sAmount);
+	score += 10;
+	QString temp = QString::number(score);
+	sAmount = new QGraphicsSimpleTextItem(temp);
+	sAmount->setPos(400, 460);
+	sAmount->setFont(font);
+	sAmount->setZValue(2);
+	gScene->addItem(sAmount);
 	background->move();
 	background2->move();
 	lava->move();
 	sCoin->move();
+	goomba->move();
 	for(int i=0; i<platforms.size(); i++)
 		platforms[i]->move();
 	if(platforms.front()->getLocy() >= 500) {
@@ -63,13 +72,17 @@ void Game::newCoin()
 	if(sCoin->getLocy() >= 450) {
 		int randx = rand()%400;
 		gScene->removeItem(sCoin);
+		gScene->removeItem(goomba);
 		delete sCoin;
-		sCoin = new Coin(cPix, randx, 0);
+		delete goomba;
+		sCoin = new Coin(cPix, randx, 7);
+		goomba = new Goomba(gPix, randx, -36);
 		gScene->addItem(sCoin);
+		gScene->addItem(goomba);
 	}
 }
 
-Game::Game(QTimer *time)
+Game::Game()
 {
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -83,14 +96,39 @@ Game::Game(QTimer *time)
 	mpPix = new QPixmap("img/mPlatform.jpg");
 	spPix = new QPixmap("img/sPlatform.jpg");
 	cPix = new QPixmap("img/coin.jpg");
+	gPix = new QPixmap("img/goombaw1.jpg");
 	background = new Bg(bPix, 0, 0);
 	background2 = new Bg(bPix, 0, -680);
 	yoshi = new Yoshi(yPix, 225, 225);
 	coin = new Coin(cPix, 170, 460);
 	sCoin = new Coin(cPix, 500, 500);
 	coin->setZValue(2);
+	goomba = new Goomba(gPix, 0, -36);
 	heart = new Heart(hPix, 20, 465);
 	heart->setZValue(2);
+	font.setPixelSize(30);
+	sLabel = new QGraphicsSimpleTextItem("Score: ");
+	sLabel->setPos(300, 460);
+	sLabel->setFont(font);
+	sLabel->setZValue(2);
+	score = 0;
+	QString temp = QString::number(score);
+	sAmount = new QGraphicsSimpleTextItem(temp);
+	sAmount->setPos(400, 460);
+	sAmount->setFont(font);
+	sAmount->setZValue(2);
+	lives = 3;
+	temp = QString::number(lives);
+	lAmount = new QGraphicsSimpleTextItem(temp);
+	lAmount->setPos(70, 460);
+	lAmount->setFont(font);
+	lAmount->setZValue(2);
+	nCoins = 0;
+	temp = QString::number(nCoins);
+	cAmount = new QGraphicsSimpleTextItem(temp);
+	cAmount->setPos(210, 460);
+	cAmount->setFont(font);
+	cAmount->setZValue(2);
 	lava = new Lava(lPix, 0, 451);
 	lava->setZValue(1);
 	Platform *tempP = new BPlatform(bpPix, 50, 400);
@@ -101,6 +139,11 @@ Game::Game(QTimer *time)
 	gScene->addItem(heart);
 	gScene->addItem(coin);
 	gScene->addItem(yoshi);
+	gScene->addItem(sLabel);
+	gScene->addItem(sAmount);
+	gScene->addItem(lAmount);
+	gScene->addItem(cAmount);
+	gScene->addItem(goomba);
 	for(int i=3; i>=0; i--) {
 		int yLoc = i*100;
 		pSize = rand()%3;
@@ -149,12 +192,12 @@ Game::Game(QTimer *time)
 	}
 	for(int i=0; i<platforms.size(); i++)
 		gScene->addItem(platforms[i]);
-	timer = time;
-	timer->setInterval(5);
+	timer = new QTimer(this);
+	timer->setInterval(100);
 	connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
 	timer->start();
-	cTimer = time;
-	cTimer->setInterval(1000);
+	cTimer = new QTimer(this);
+	cTimer->setInterval(10000);
 	connect(cTimer, SIGNAL(timeout()), this, SLOT(newCoin()));
 	cTimer->start();
 }

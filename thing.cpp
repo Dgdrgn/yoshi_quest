@@ -9,6 +9,8 @@ Thing::Thing(QPixmap *pm, int lx, int ly)
 	setPos(locx, locy);
 	velx = 1;
 	vely = 1;
+	width = pm->width();
+	height = pm->height();
 }
 
 Thing::~Thing()

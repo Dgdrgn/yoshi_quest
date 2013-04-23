@@ -12,6 +12,7 @@ class Thing : public QGraphicsPixmapItem
 		int getLocy() {return locy;};
 		int getWidth() {return width;};
 		int getHeight() {return height;};
+		void updateWH(QPixmap *p) {width = p->width(); height = p->height();};
 	protected:
 		int cnt;
 		int locx;

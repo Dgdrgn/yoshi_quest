@@ -8,6 +8,7 @@
 #include <QGraphicsItemAnimation>
 #include <QTimer>
 #include <QPixmap>
+#include <QFont>
 #include <cstdlib>
 #include "queue.h"
 #include "yoshi.h"
@@ -15,6 +16,7 @@
 #include "lava.h"
 #include "heart.h"
 #include "coin.h"
+#include "goomba.h"
 #include "bplatform.h"
 #include "mplatform.h"
 #include "splatform.h"
@@ -25,7 +27,7 @@ class Game : public QGraphicsView
 	Q_OBJECT
 	
 	public:
-		explicit Game(QTimer *time);
+		explicit Game();
 		~Game();
 		QTimer *timer;
 		QTimer *yTimer;
@@ -45,6 +47,7 @@ class Game : public QGraphicsView
 		QPixmap *mpPix;
 		QPixmap *bpPix;
 		QPixmap *cPix;
+		QPixmap *gPix;
 		Yoshi *yoshi;
 		Bg *background;
 		Bg *background2;
@@ -52,9 +55,19 @@ class Game : public QGraphicsView
 		Lava *lava;
 		Coin *coin;
 		Queue<Platform*> platforms;
+		Goomba *goomba;
 		Coin *sCoin;
 		int pSize;
 		int pLoc;
+		int score;
+		int lives;
+		int nCoins;
+		QGraphicsSimpleTextItem* sLabel;
+		QGraphicsSimpleTextItem* sAmount;
+		QGraphicsSimpleTextItem* lAmount;
+		QGraphicsSimpleTextItem* cAmount;
+		QFont font;
+		
 	public slots:
 		void animate();
 		void newCoin();

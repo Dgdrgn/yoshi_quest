@@ -26,49 +26,69 @@ Yoshi::~Yoshi()
 
 void Yoshi::idle()
 {
-	if(right)
+	if(right) {
 		setPixmap(*yoshiWalk2L);
-	else
+		updateWH(yoshiWalk2L);
+	}
+	else {
 		setPixmap(*yoshiWalk2R);
+		updateWH(yoshiWalk2R);
+	}
 }
 
 void Yoshi::walk1()
 {
 	locx += 5;
-	if(right)
+	if(right) {
 		setPixmap(*yoshiWalk1R);
-	else
+		updateWH(yoshiWalk1R);
+	}
+	else {
 		setPixmap(*yoshiWalk1L);
+		updateWH(yoshiWalk1L);		
+	}
 	update();
 }
 
 void Yoshi::walk2()
 {
 	locx += 5;
-	if(right)
+	if(right) {
 		setPixmap(*yoshiWalk2R);
-	else
+		updateWH(yoshiWalk2R);
+	}
+	else {
 		setPixmap(*yoshiWalk2L);
+		updateWH(yoshiWalk2L);
+	}
 	update();
 }
 
 void Yoshi::walk3()
 {
 	locx += 5;
-	if(right)
+	if(right) {
 		setPixmap(*yoshiWalk3R);
-	else
+		updateWH(yoshiWalk3R);
+	}
+	else {
 		setPixmap(*yoshiWalk3L);
+		updateWH(yoshiWalk3L);
+	}
 	update();
 }
 
 void Yoshi::walk4()
 {
 	locx += 5;
-	if(right)
+	if(right) {
 		setPixmap(*yoshiWalk2R);
-	else
+		updateWH(yoshiWalk2R);
+	}
+	else {
 		setPixmap(*yoshiWalk2L);
+		updateWH(yoshiWalk2L);
+	}
 	update();
 }
 
@@ -77,24 +97,29 @@ void Yoshi::jump()
 	for(int i=0; i<20; i++) {
 		if(right) {
 			setPixmap(*yoshiJumpR);
+			updateWH(yoshiJumpR);
 			locx++;
 		}
 		else {
 			setPixmap(*yoshiJumpL);
+			updateWH(yoshiJumpL);
 			locx--;
 		}
 		locy++;
 		update();
 	}
 	setPixmap(*yoshiAirR);
+	updateWH(yoshiAirR);
 	update();
 	for(int j=0; j<20; j++) {
 		if(right) {
 			setPixmap(*yoshiFallR);
+			updateWH(yoshiFallR);
 			locx++;
 		}
 		else {
 			setPixmap(*yoshiFallL);
+			updateWH(yoshiFallL);
 			locx--;
 		}
 		locy--;
@@ -104,10 +129,14 @@ void Yoshi::jump()
 
 void Yoshi::crouch()
 {
-	if(right)
+	if(right) {
 		setPixmap(*yoshiCrouchL);
-	else
+		updateWH(yoshiCrouchL);
+	}
+	else {
 		setPixmap(*yoshiCrouchR);
+		updateWH(yoshiCrouchR);
+	}
 }
 
 void Yoshi::stop()

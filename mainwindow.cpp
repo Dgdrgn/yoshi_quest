@@ -4,7 +4,7 @@ Main::Main()
 {
 	time = new QTimer(this);
 	sScreen = new Start;
-	gScreen = new Game(time);
+	gScreen = new Game();
 	createActions();
 	createMenus();
 	layout = new QVBoxLayout;
