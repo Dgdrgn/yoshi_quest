@@ -64,16 +64,16 @@ void Main::keyPressEvent(QKeyEvent *e)
 	std::cout << e->key() << std::endl;
 	switch(e->key()) {
 		case Qt::Key_Left:
-			gScreen->yLeft();
+			
 			break;
 		case Qt::Key_Right:
-			gScreen->yRight();
+			
 			break;
 		case Qt::Key_Up:
-			gScreen->yUp();
+			
 			break;
 		case Qt::Key_Down:
-			gScreen->yDown();
+			
 			break;
 		case Qt::Key_Space:
 			switchGame();
@@ -85,16 +85,16 @@ void Main::keyReleaseEvent(QKeyEvent *e)
 {
 	switch(e->key()) {
 		case Qt::Key_Left:
-			gScreen->yStop();
+			
 			break;
 		case Qt::Key_Right:
-			gScreen->yStop();
+			
 			break;
 		case Qt::Key_Up:
-			gScreen->yStop();
+			
 			break;
 		case Qt::Key_Down:
-			gScreen->yStop();
+			
 			break;
 	}
 }

@@ -7,6 +7,6 @@ class Platform : public Thing
 	public:
 		Platform(QPixmap *pm, int lx, int ly);
 		~Platform();
-		virtual void move() = 0;
+		void move();
 };
 #endif

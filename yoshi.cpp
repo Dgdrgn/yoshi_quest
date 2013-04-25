@@ -3,25 +3,38 @@
 Yoshi::Yoshi(QPixmap *pm, int lx, int ly) : Thing(pm, lx, ly)
 {
 	right = true;
-	yoshiCrouchR = new QPixmap("img/yoshic.jpg");
-	yoshiCrouchL = new QPixmap("img/yoshicr.jpg");
-	yoshiJumpR = new QPixmap("img/yoshij11.jpg");
-	yoshiJumpL = new QPixmap("img/yoshij11r.jpg");
-	yoshiAirR = new QPixmap("img/yoshij12.jpg");
-	yoshiAirL = new QPixmap("img/yoshij12r.jpg");
-	yoshiFallR = new QPixmap("img/yoshij13.jpg");
-	yoshiFallL = new QPixmap("img/yoshij13r.jpg");
-	yoshiWalk1R = new QPixmap("img/yoshiw1.jpg");
-	yoshiWalk1L = new QPixmap("img/yoshiw1r.jpg");
-	yoshiWalk2R = new QPixmap("img/yoshiw2.jpg");
-	yoshiWalk2L = new QPixmap("img/yoshiw2r.jpg");
-	yoshiWalk3R = new QPixmap("img/yoshiw3.jpg");
-	yoshiWalk3L = new QPixmap("img/yoshiw3r.jpg");
+	yoshiCrouchR = new QPixmap("img/yoshic.gif");
+	yoshiCrouchL = new QPixmap("img/yoshicr.gif");
+	yoshiJumpR = new QPixmap("img/yoshij11.gif");
+	yoshiJumpL = new QPixmap("img/yoshij11r.gif");
+	yoshiAirR = new QPixmap("img/yoshij12.gif");
+	yoshiAirL = new QPixmap("img/yoshij12r.gif");
+	yoshiFallR = new QPixmap("img/yoshij13.gif");
+	yoshiFallL = new QPixmap("img/yoshij13r.gif");
+	yoshiWalk1R = new QPixmap("img/yoshiw1.gif");
+	yoshiWalk1L = new QPixmap("img/yoshiw1r.gif");
+	yoshiWalk2R = new QPixmap("img/yoshiw2.gif");
+	yoshiWalk2L = new QPixmap("img/yoshiw2r.gif");
+	yoshiWalk3R = new QPixmap("img/yoshiw3.gif");
+	yoshiWalk3L = new QPixmap("img/yoshiw3r.gif");
 }
 
 Yoshi::~Yoshi()
 {
 
+}
+
+void Yoshi::move()
+{
+	if(cnt == 10000) {
+		vely++;
+		cnt = 0;
+	}
+	locy += vely;
+	if(locy >= 680)
+		locy = -680;
+	update();
+	cnt++;
 }
 
 void Yoshi::idle()

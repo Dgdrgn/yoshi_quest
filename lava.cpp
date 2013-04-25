@@ -2,9 +2,9 @@
 
 Lava::Lava(QPixmap *pm, int lx, int ly) : Thing(pm, lx, ly)
 {
-	lava1 = new QPixmap("img/lava1.jpg");
-	lava2 = new QPixmap("img/lava2.jpg");
-	lava3 = new QPixmap("img/lava3.jpg");
+	lava1 = new QPixmap("img/lava1.gif");
+	lava2 = new QPixmap("img/lava2.gif");
+	lava3 = new QPixmap("img/lava3.gif");
 	lavas = 1;
 }
 

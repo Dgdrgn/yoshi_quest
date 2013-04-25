@@ -4,7 +4,7 @@ Start::Start()
 {
 	sScene = new QGraphicsScene();
 	setScene(sScene);
-	sMenu = new QGraphicsPixmapItem(QPixmap("img/start.jpg"));
+	sMenu = new QGraphicsPixmapItem(QPixmap("img/start.gif"));
 	sScene->addItem(sMenu);
 }
 

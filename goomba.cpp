@@ -2,10 +2,10 @@
 
 Goomba::Goomba(QPixmap *pm, int lx, int ly) : Thing(pm, lx, ly)
 {
-	goomba1 = new QPixmap("img/goombaw1.jpg");
-	goomba2 = new QPixmap("img/goombaw2.jpg");
-	bool right = true;
-	bool pix1 = true;
+	goomba1 = new QPixmap("img/goombaw1.gif");
+	goomba2 = new QPixmap("img/goombaw2.gif");
+	right = true;
+	pix1 = true;
 }
 
 Goomba::~Goomba()
@@ -13,7 +13,8 @@ Goomba::~Goomba()
 
 }
 
-void Goomba::move() {
+void Goomba::move() 
+{
 	if(pix1) {
 		setPixmap(*goomba2);
 	}

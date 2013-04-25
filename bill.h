@@ -7,5 +7,6 @@ class Bill : public Thing
 	public:
 		Bill(QPixmap *pm, int lx, int ly);
 		~Bill();
+		void move();
 };
 #endif

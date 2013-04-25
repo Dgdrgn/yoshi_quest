@@ -8,10 +8,13 @@ class Thing : public QGraphicsPixmapItem
 		Thing(QPixmap *pm, int lx, int ly);
 		~Thing();
 		void update();
+		virtual void move() = 0;
 		int getLocx() {return locx;};
 		int getLocy() {return locy;};
 		int getWidth() {return width;};
 		int getHeight() {return height;};
+		void setLocx(int lx) {locx = lx;};
+		void setLocy(int ly) {locy = ly;};
 		void updateWH(QPixmap *p) {width = p->width(); height = p->height();};
 	protected:
 		int cnt;
@@ -21,6 +24,7 @@ class Thing : public QGraphicsPixmapItem
 		int height;
 		int velx;
 		int vely;
+		int id;
 		QPixmap *pixMap;
 };
 #endif

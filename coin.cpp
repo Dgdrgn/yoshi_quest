@@ -2,7 +2,7 @@
 
 Coin::Coin(QPixmap *pm, int lx, int ly) : Thing(pm, lx, ly)
 {
-	coin = new QPixmap("img/coin.jpg");
+	coin = new QPixmap("img/coin.gif");
 }
 
 Coin::~Coin()

@@ -7,6 +7,7 @@ class Heart : public Thing
 	public:
 		Heart(QPixmap *pm, int lx, int ly);
 		~Heart();
+		void move();
 	private:
 		QPixmap *heart;
 };

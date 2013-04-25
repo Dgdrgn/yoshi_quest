@@ -7,5 +7,6 @@ class Kamek : public Thing
 	public:
 		Kamek(QPixmap *pm, int lx, int ly);
 		~Kamek();
+		void move();
 };
 #endif

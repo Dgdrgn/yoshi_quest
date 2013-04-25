@@ -10,6 +10,7 @@
 #include <QPixmap>
 #include <QFont>
 #include <cstdlib>
+#include "mylist.h"
 #include "queue.h"
 #include "yoshi.h"
 #include "bg.h"
@@ -17,6 +18,7 @@
 #include "heart.h"
 #include "coin.h"
 #include "goomba.h"
+#include "koopa.h"
 #include "bplatform.h"
 #include "mplatform.h"
 #include "splatform.h"
@@ -32,11 +34,8 @@ class Game : public QGraphicsView
 		QTimer *timer;
 		QTimer *yTimer;
 		QTimer *cTimer;
-		void yLeft();
-		void yRight();
-		void yUp();
-		void yDown();
-		void yStop();
+		QTimer *eTimer;
+		int koopaCnt;
 	private:
 		QGraphicsScene *gScene;
 		QPixmap *yPix;
@@ -48,14 +47,14 @@ class Game : public QGraphicsView
 		QPixmap *bpPix;
 		QPixmap *cPix;
 		QPixmap *gPix;
-		Yoshi *yoshi;
+		QPixmap *koopaPix;
 		Bg *background;
 		Bg *background2;
 		Heart *heart;
 		Lava *lava;
 		Coin *coin;
 		Queue<Platform*> platforms;
-		Goomba *goomba;
+		MyList<Thing*> things;
 		Coin *sCoin;
 		int pSize;
 		int pLoc;
@@ -71,6 +70,9 @@ class Game : public QGraphicsView
 	public slots:
 		void animate();
 		void newCoin();
+		void newGoomba();
+		void collisions();
+		void newKoopa();
 };
 
 #endif
