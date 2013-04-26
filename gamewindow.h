@@ -75,6 +75,8 @@ class Game : public QGraphicsView
 		int kamekCnt;
 		int billCnt;
 		int coinCnt;
+		void respawn();
+		void newMagic();
 		
 	public slots:
 		void animate();
@@ -83,7 +85,6 @@ class Game : public QGraphicsView
 		void newKoopa();
 		void newKamek();
 		void newBill();
-		void newMagic();
 		void offScreen();
 		void collisions();
 };

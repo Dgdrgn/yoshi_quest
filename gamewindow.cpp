@@ -1,6 +1,14 @@
 #include "gamewindow.h"
 
 /****************************************************************/
+/*respawns player*/
+void Game::respawn()
+{
+	things.push_back(new Yoshi(yPix, 200, 0));
+	gScene->addItem(things.back());
+}
+
+/****************************************************************/
 /*checks for collisions*/
 void Game::collisions()
 {
@@ -10,8 +18,9 @@ void Game::collisions()
 		if(things[i]->type != Thing::item && things[i]->type != Thing::billEnemy) {
 			for(int j=0; j<platforms.size(); j++) {
 				//stay
-				if(((things[i]->getHeight() + things[i]->getLocy()) == 
-				platforms[j]->getLocy()) && (things[i]->getLocx() + 
+				if(((things[i]->getHeight() + things[i]->getLocy()) >= 
+				platforms[j]->getLocy()) && ((things[i]->getHeight() + 
+				things[i]->getLocy()) <= platforms[j]->getLocy()+10) && (things[i]->getLocx() + 
 				things[i]->getWidth() > platforms[j]->getLocx()) 
 				&& ((things[i]->getLocx()) < (platforms[j]->getLocx() + 
 				platforms[j]->getWidth()))) {
@@ -139,6 +148,17 @@ void Game::offScreen()
 {
 	for(int i=0; i<things.size(); i++) {
 		if(things[i]->getLocy() >= 500) {
+			if(things[i]->type == Thing::hero) {
+				lives--;
+				gScene->removeItem(lAmount);
+				delete lAmount;
+				lAmount = new QGraphicsSimpleTextItem(QString::number(lives));
+				lAmount->setPos(70, 460);
+				lAmount->setFont(font);
+				lAmount->setZValue(2);
+				gScene->addItem(lAmount);
+				respawn();
+			}
 			gScene->removeItem(things[i]);
 			things.pop(i);
 		}
@@ -363,6 +383,7 @@ Game::Game()
 	connect(timer, SIGNAL(timeout()), this, SLOT(newKoopa()));
 	connect(timer, SIGNAL(timeout()), this, SLOT(newKamek()));
 	connect(timer, SIGNAL(timeout()), this, SLOT(newBill()));
+	connect(timer, SIGNAL(timeout()), this, SLOT(offScreen()));
 	
 	timer->start();
 }
