@@ -2,29 +2,29 @@
 
 Goomba::Goomba(QPixmap *pm, int lx, int ly) : Thing(pm, lx, ly)
 {
+	type = goombaEnemy;
 	goomba1 = new QPixmap("img/goombaw1.gif");
 	goomba2 = new QPixmap("img/goombaw2.gif");
 	right = true;
-	pix1 = true;
+	frame = 1;
 }
 
 Goomba::~Goomba()
 {
-
+	delete goomba1;
+	delete goomba2;
 }
 
 void Goomba::move() 
 {
-	if(pix1) {
+	if(frame == 1) {
 		setPixmap(*goomba2);
+		frame++;
 	}
 	else {
 		setPixmap(*goomba1);
+		frame = 1;
 	}
-	if(pix1)
-		pix1 = false;
-	else
-		pix1 = true;
 	if(cnt == 10000) {
 		vely++;
 		cnt = 0;
@@ -37,9 +37,9 @@ void Goomba::move()
 	else if(locx <= 0)
 		right = true;
 	if(right)
-		locx++;
+		locx += 5;
 	else
-		locx--;
+		locx -= 5;
 	update();
 	cnt++;
 }

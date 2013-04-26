@@ -11,7 +11,5 @@ class Goomba : public Thing
 	private:
 		QPixmap *goomba1;
 		QPixmap *goomba2;
-		bool right;
-		bool pix1;
 };
 #endif

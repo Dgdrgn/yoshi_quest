@@ -16,7 +16,6 @@ class Yoshi : public Thing
 		void jump();
 		void crouch();
 		void stop();
-		bool right;
 	
 	private:
 		QPixmap *yoshiCrouchR;

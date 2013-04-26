@@ -13,7 +13,5 @@ class Koopa : public Thing
 		QPixmap *koopa2L;
 		QPixmap *koopa1R;
 		QPixmap *koopa2R;
-		bool pix1;
-		bool right;
 };
 #endif

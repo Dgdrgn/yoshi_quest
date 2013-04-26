@@ -5,8 +5,12 @@
 class Kamek : public Thing
 {
 	public:
-		Kamek(QPixmap *pm, int lx, int ly);
+		Kamek(QPixmap *pm, int lx, int ly, bool r);
 		~Kamek();
 		void move();
+	private:
+		QPixmap *kamek1;
+		QPixmap *kamek2;
+		QPixmap *kamek3;
 };
 #endif

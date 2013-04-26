@@ -101,7 +101,6 @@ void Main::keyReleaseEvent(QKeyEvent *e)
 
 void Main::switchGame()
 {
-	std::cout << "HI" << std::endl;
 	layout->removeWidget(sScreen);
 	layout->addWidget(gScreen);
 	setCentralWidget(gScreen);

@@ -5,8 +5,10 @@
 class Bill : public Thing
 {
 	public:
-		Bill(QPixmap *pm, int lx, int ly);
+		Bill(QPixmap *pm, int lx, int ly, bool right);
 		~Bill();
 		void move();
+	private:
+		QPixmap *bill;
 };
 #endif

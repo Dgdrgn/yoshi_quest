@@ -19,6 +19,9 @@
 #include "coin.h"
 #include "goomba.h"
 #include "koopa.h"
+#include "kamek.h"
+#include "bill.h"
+#include "magic.h"
 #include "bplatform.h"
 #include "mplatform.h"
 #include "splatform.h"
@@ -32,10 +35,7 @@ class Game : public QGraphicsView
 		explicit Game();
 		~Game();
 		QTimer *timer;
-		QTimer *yTimer;
-		QTimer *cTimer;
-		QTimer *eTimer;
-		int koopaCnt;
+		
 	private:
 		QGraphicsScene *gScene;
 		QPixmap *yPix;
@@ -45,14 +45,18 @@ class Game : public QGraphicsView
 		QPixmap *spPix;
 		QPixmap *mpPix;
 		QPixmap *bpPix;
-		QPixmap *cPix;
-		QPixmap *gPix;
+		QPixmap *coinPix;
+		QPixmap *goombaPix;
 		QPixmap *koopaPix;
+		QPixmap *kamekLPix;
+		QPixmap *kamekRPix;
+		QPixmap *billLPix;
+		QPixmap *billRPix;
+		QPixmap *magicPix;
 		Bg *background;
 		Bg *background2;
 		Heart *heart;
 		Lava *lava;
-		Coin *coin;
 		Queue<Platform*> platforms;
 		MyList<Thing*> things;
 		Coin *sCoin;
@@ -66,13 +70,22 @@ class Game : public QGraphicsView
 		QGraphicsSimpleTextItem* lAmount;
 		QGraphicsSimpleTextItem* cAmount;
 		QFont font;
+		int goombaCnt;
+		int koopaCnt;
+		int kamekCnt;
+		int billCnt;
+		int coinCnt;
 		
 	public slots:
 		void animate();
 		void newCoin();
 		void newGoomba();
-		void collisions();
 		void newKoopa();
+		void newKamek();
+		void newBill();
+		void newMagic();
+		void offScreen();
+		void collisions();
 };
 
 #endif

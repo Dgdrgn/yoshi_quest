@@ -12,6 +12,5 @@ class Lava : public Thing
 		QPixmap *lava1;
 		QPixmap *lava2;
 		QPixmap *lava3;
-		int lavas;
 };
 #endif

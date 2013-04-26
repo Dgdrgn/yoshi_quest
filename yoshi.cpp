@@ -2,7 +2,9 @@
 
 Yoshi::Yoshi(QPixmap *pm, int lx, int ly) : Thing(pm, lx, ly)
 {
+	type = hero;
 	right = true;
+	frame = 0;
 	yoshiCrouchR = new QPixmap("img/yoshic.gif");
 	yoshiCrouchL = new QPixmap("img/yoshicr.gif");
 	yoshiJumpR = new QPixmap("img/yoshij11.gif");

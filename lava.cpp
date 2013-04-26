@@ -2,10 +2,12 @@
 
 Lava::Lava(QPixmap *pm, int lx, int ly) : Thing(pm, lx, ly)
 {
+	type = other;
 	lava1 = new QPixmap("img/lava1.gif");
 	lava2 = new QPixmap("img/lava2.gif");
 	lava3 = new QPixmap("img/lava3.gif");
-	lavas = 1;
+	frame = 1;
+	right = false;
 }
 
 Lava::~Lava()
@@ -15,18 +17,18 @@ Lava::~Lava()
 
 void Lava::move()
 {
-	switch(lavas) {
+	switch(frame) {
 		case 1:
 			setPixmap(*lava2);
-			lavas = 2;
+			frame++;
 			break;
 		case 2:
 			setPixmap(*lava3);
-			lavas = 3;
+			frame++;
 			break;
 		case 3:
 			setPixmap(*lava1);
-			lavas = 1;
+			frame = 1;
 			break;
 	}
 }

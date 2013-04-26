@@ -5,10 +5,24 @@
 class Thing : public QGraphicsPixmapItem
 {
 	public:
+		enum Type {
+			hero,
+			goombaEnemy,
+			koopaEnemy,
+			kamekEnemy,
+			billEnemy,
+			ammo,
+			item,
+			floor,
+			other
+		};
+		int frame;
+		bool right;
 		Thing(QPixmap *pm, int lx, int ly);
 		~Thing();
 		void update();
 		virtual void move() = 0;
+		Type type;
 		int getLocx() {return locx;};
 		int getLocy() {return locy;};
 		int getWidth() {return width;};
