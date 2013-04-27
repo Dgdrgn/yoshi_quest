@@ -1,6 +1,17 @@
 #include "gamewindow.h"
 
 /****************************************************************/
+/*STOPS TIME!*/
+void Game::pause()
+{
+	if(timer->isActive())
+		timer->stop();
+	else
+		timer->start();
+}
+
+
+/****************************************************************/
 /*respawns player*/
 void Game::respawn()
 {
@@ -12,37 +23,34 @@ void Game::respawn()
 /*checks for collisions*/
 void Game::collisions()
 {
-	bool getOut = false;
 	for(int i=0; i<things.size(); i++) {
 		/*platforms*/
 		if(things[i]->type != Thing::item && things[i]->type != Thing::billEnemy) {
 			for(int j=0; j<platforms.size(); j++) {
+				int pLocy = platforms[j]->getLocy();
+				int pLocx = platforms[j]->getLocx();
+				int pWidth = platforms[j]->getWidth();
+				int tLocy = things[i]->getLocy();
+				int tLocx = things[i]->getLocx();
+				int tWidth = things[i]->getWidth();
+				int tHeight = things[i]->getHeight();
 				//stay
-				if(((things[i]->getHeight() + things[i]->getLocy()) >= 
-				platforms[j]->getLocy()) && ((things[i]->getHeight() + 
-				things[i]->getLocy()) <= platforms[j]->getLocy()+10) && (things[i]->getLocx() + 
-				things[i]->getWidth() > platforms[j]->getLocx()) 
-				&& ((things[i]->getLocx()) < (platforms[j]->getLocx() + 
-				platforms[j]->getWidth()))) {
-					getOut = true;
+				if(pLocy-(tLocy+tHeight) == 0 && (pLocx < (tLocx+tWidth) && (pLocx+pWidth) > tLocx)) {
+					break;
 				}
 				//fall
 				else {
-					getOut = false;
-					things[i]->setLocy((things[i]->getLocy())+1);
+					things[i]->setLocy(things[i]->getLocy()+1);
 					things[i]->update();
 				}
-				if(getOut) {
-					break;
-				}
 			}
-			/*for(int k=0; k<things.size(); k++) {
-				if(i == j) {
-					continue;
-				}
-				else if(
-			}*/
 		}
+		/*for(int k=0; k<things.size(); k++) {
+		if(i == j) {
+			continue;
+		}
+		else if(
+		}*/
 	}
 }
 
@@ -126,6 +134,9 @@ void Game::animate()
 		}
 		gScene->addItem(platforms.back());
 	}
+	
+	//collisions
+	collisions();
 }
 
 /****************************************************************/
@@ -377,7 +388,6 @@ Game::Game()
 	
 	//connect to slot functions
 	connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
-	connect(timer, SIGNAL(timeout()), this, SLOT(collisions()));
 	connect(timer, SIGNAL(timeout()), this, SLOT(newCoin()));
 	connect(timer, SIGNAL(timeout()), this, SLOT(newGoomba()));
 	connect(timer, SIGNAL(timeout()), this, SLOT(newKoopa()));

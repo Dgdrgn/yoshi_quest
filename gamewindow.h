@@ -87,6 +87,7 @@ class Game : public QGraphicsView
 		void newBill();
 		void offScreen();
 		void collisions();
+		void pause();
 };
 
 #endif
