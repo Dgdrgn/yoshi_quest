@@ -18,8 +18,8 @@ Magic::~Magic()
 
 void Magic::move()
 {
-	locx += 20;
-	if(right) {
+	if(!right) {
+		locx -= 20;
 		switch(frame) {
 			case 1:
 				setPixmap(*magic4);
@@ -35,11 +35,12 @@ void Magic::move()
 				break;
 			case 4:
 				setPixmap(*magic);
-				frame = 0;
+				frame = 1;
 				break;
 		}
 	}
 	else {
+		locx += 20;
 		switch(frame) {
 			case 1:
 				setPixmap(*magic2);
@@ -55,17 +56,9 @@ void Magic::move()
 				break;
 			case 4:
 				setPixmap(*magic);
-				frame = 0;
+				frame = 1;
 				break;
 		}
 	}
-	if(cnt == 10000) {
-		vely++;
-		cnt = 0;
-	}
-	locy += vely;
-	if(locy >= 680)
-		locy = -680;
 	update();
-	cnt++;
 }

@@ -5,7 +5,7 @@
 class Goomba : public Thing
 {
 	public:
-		Goomba(QPixmap *pm, int lx, int ly);
+		Goomba(QPixmap *pm, int lx, int ly, bool r);
 		~Goomba();
 		void move();
 	private:

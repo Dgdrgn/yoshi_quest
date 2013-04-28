@@ -12,5 +12,6 @@ class Kamek : public Thing
 		QPixmap *kamek1;
 		QPixmap *kamek2;
 		QPixmap *kamek3;
+		int changeFrame;
 };
 #endif

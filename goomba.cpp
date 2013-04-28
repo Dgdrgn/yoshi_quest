@@ -1,11 +1,11 @@
 #include "goomba.h"
 
-Goomba::Goomba(QPixmap *pm, int lx, int ly) : Thing(pm, lx, ly)
+Goomba::Goomba(QPixmap *pm, int lx, int ly, bool r) : Thing(pm, lx, ly)
 {
 	type = goombaEnemy;
 	goomba1 = new QPixmap("img/goombaw1.gif");
 	goomba2 = new QPixmap("img/goombaw2.gif");
-	right = true;
+	right = r;
 	frame = 1;
 }
 
@@ -25,17 +25,6 @@ void Goomba::move()
 		setPixmap(*goomba1);
 		frame = 1;
 	}
-	if(cnt == 10000) {
-		vely++;
-		cnt = 0;
-	}
-	locy += vely;
-	if(locy >= 680)
-		locy = -680;
-	if(locx+width >= 500)
-		right = false;
-	else if(locx <= 0)
-		right = true;
 	if(right)
 		locx += 5;
 	else

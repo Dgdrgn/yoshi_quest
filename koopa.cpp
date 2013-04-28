@@ -1,6 +1,6 @@
 #include "koopa.h"
 
-Koopa::Koopa(QPixmap *pm, int lx, int ly) : Thing(pm, lx, ly)
+Koopa::Koopa(QPixmap *pm, int lx, int ly, bool r) : Thing(pm, lx, ly)
 {
 	type = koopaEnemy;
 	koopa1L = new QPixmap("img/koopaw1.gif");
@@ -8,7 +8,7 @@ Koopa::Koopa(QPixmap *pm, int lx, int ly) : Thing(pm, lx, ly)
 	koopa1R = new QPixmap("img/koopaw1r.gif");
 	koopa2R = new QPixmap("img/koopaw2r.gif");
 	frame = 1;
-	right = true;
+	right = r;
 }
 
 Koopa::~Koopa()
@@ -35,21 +35,10 @@ void Koopa::move()
 			setPixmap(*koopa2L);
 		frame = 1;
 	}
-	if(cnt == 10000) {
-		vely++;
-		cnt = 0;
-	}
-	locy += vely;
-	if(locy >= 680)
-		locy = -680;
-	if(locx+width >= 500)
-		right = false;
-	else if(locx <= 0)
-		right = true;
 	if(right)
-		locx++;
+		locx+=5;
 	else
-		locx--;
+		locx-=5;
 	update();
 	cnt++;
 }

@@ -17,7 +17,7 @@ class Thing : public QGraphicsPixmapItem
 			other
 		};
 		int frame;
-		bool right;
+		bool right, del;
 		Thing(QPixmap *pm, int lx, int ly);
 		~Thing();
 		void update();

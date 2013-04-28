@@ -3,9 +3,14 @@
 Start::Start()
 {
 	sScene = new QGraphicsScene();
-	setScene(sScene);
+	sView = new QGraphicsView();
+	sView->setScene(sScene);
 	sMenu = new QGraphicsPixmapItem(QPixmap("img/start.gif"));
 	sScene->addItem(sMenu);
+	layout = new QVBoxLayout;
+	layout->addWidget(sView);
+	setLayout(layout);
+	
 }
 
 Start::~Start()

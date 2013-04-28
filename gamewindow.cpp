@@ -1,21 +1,10 @@
 #include "gamewindow.h"
 
 /****************************************************************/
-/*STOPS TIME!*/
-void Game::pause()
-{
-	if(timer->isActive())
-		timer->stop();
-	else
-		timer->start();
-}
-
-
-/****************************************************************/
 /*respawns player*/
 void Game::respawn()
 {
-	things.push_back(new Yoshi(yPix, 200, 0));
+	things.push_back(new Yoshi(yPix, 225, 390));
 	gScene->addItem(things.back());
 }
 
@@ -25,20 +14,18 @@ void Game::collisions()
 {
 	for(int i=0; i<things.size(); i++) {
 		/*platforms*/
-		if(things[i]->type != Thing::item && things[i]->type != Thing::billEnemy) {
+		if(things[i]->type != Thing::item && things[i]->type != Thing::billEnemy && things[i]->type != Thing::ammo) {
 			for(int j=0; j<platforms.size(); j++) {
-				int pLocy = platforms[j]->getLocy();
-				int pLocx = platforms[j]->getLocx();
-				int pWidth = platforms[j]->getWidth();
-				int tLocy = things[i]->getLocy();
-				int tLocx = things[i]->getLocx();
-				int tWidth = things[i]->getWidth();
-				int tHeight = things[i]->getHeight();
-				//stay
-				if(pLocy-(tLocy+tHeight) == 0 && (pLocx < (tLocx+tWidth) && (pLocx+pWidth) > tLocx)) {
+				int tX = things[i]->getLocx();
+				int tY = things[i]->getLocy();
+				int tW = things[i]->getWidth();
+				int tH = things[i]->getHeight();
+				int pX = platforms[j]->getLocx();
+				int pW = platforms[j]->getWidth();
+				if((tY+tH-50)%100 == 0 && (tX > pX))
 					break;
-				}
-				//fall
+				else if(tY+tH == 450)
+					break;
 				else {
 					things[i]->setLocy(things[i]->getLocy()+1);
 					things[i]->update();
@@ -68,71 +55,26 @@ void Game::animate()
 	sAmount->setFont(font);
 	sAmount->setZValue(2);
 	gScene->addItem(sAmount);
-	
-	//moves background
-	background->move();
-	background2->move();
-	
-	//animates lava
-	lava->move();
-	
+		
 	//moves all other things
 	for(int l=0; l<things.size(); l++) {
 		things[l]->move();
-	}
-	
-	//moves all platforms
-	for(int i=0; i<platforms.size(); i++)
-		platforms[i]->move();
-	
-	//removes platforms that are out of screen and adds a new one
-	if(platforms.front()->getLocy() >= 500) {
-		gScene->removeItem(platforms.front());
-		platforms.pop_front();
-		pSize = rand()%3;
-		pLoc = rand()%3;
-		switch(pSize) {
-			case 0:
-				switch(pLoc) {
-					case 0:
-						platforms.push_back(new SPlatform(spPix, 0, 0)); 
-						break;
-					case 1:
-						platforms.push_back(new SPlatform(spPix, 200, 0));
-						break;
-					case 2:
-						platforms.push_back(new SPlatform(spPix, 400, 0));
-						break;
-				}
-				break;
-			case 1:
-				switch(pLoc) {
-					case 0:
-						platforms.push_back(new MPlatform(mpPix, 0, 0));
-						break;
-					case 1:
-						platforms.push_back(new MPlatform(mpPix, 150, 0));
-						break;
-					case 2:
-						platforms.push_back(new MPlatform(mpPix, 300, 0));
-						break;
-				}
-				break;
-			case 2:
-				switch(pLoc) {
-					case 0:
-						platforms.push_back(new BPlatform(bpPix, 0, 0));
-						break;
-					case 1:
-						platforms.push_back(new BPlatform(bpPix, 50, 0));
-						break;
-					case 2:
-						platforms.push_back(new BPlatform(bpPix, 100, 0));
-						break;
-				}
-				break;
+		if(things[l]->type == Thing::kamekEnemy && things[l]->frame == 4) {
+			if(things[l]->right) {
+				int y = things[l]->getLocy();
+				int x = things[l]->getLocx() - 28;
+				newMagic(x, y, 1);
+			}
+			else {
+				int y = things[l]->getLocy();
+				int x = things[l]->getLocx() + 3;
+				newMagic(x, y, 0);
+			}
 		}
-		gScene->addItem(platforms.back());
+		if(things[l]->type == Thing::kamekEnemy && things[l]->del) {
+			gScene->removeItem(things[l]);
+			things.pop(l);
+		}
 	}
 	
 	//collisions
@@ -143,7 +85,7 @@ void Game::animate()
 /*adds a new coin*/
 void Game::newCoin()
 {
-	if(coinCnt >= 200) {
+	if(coinCnt >= 1000) {
 		int randx = rand()%400;
 		things.push_back(new Coin(coinPix, randx, 0));
 		gScene->addItem(things.back());
@@ -182,7 +124,15 @@ void Game::newGoomba()
 {
 	if(goombaCnt >= 100) {
 		int randx = rand()%450;
-		things.push_back(new Goomba(goombaPix, randx, 0));
+		int randy = ((rand()%5)*100)-50;
+		switch(rand()%2) {
+			case 0:
+				things.push_back(new Goomba(goombaPix, randx, randy, 0));
+				break;
+			case 1:
+				things.push_back(new Goomba(goombaPix, randx, randy, 1));
+				break;
+		}
 		gScene->addItem(things.back());
 		goombaCnt = 0;
 	}
@@ -196,7 +146,14 @@ void Game::newKoopa()
 {
 	if(koopaCnt >= 150) {
 		int randx = rand()%450;
-		things.push_back(new Koopa(koopaPix, randx, 0));
+		switch(rand()%2) {
+			case 0:
+				things.push_back(new Koopa(koopaPix, randx, 0, 0));
+				break;
+			case 1:
+				things.push_back(new Koopa(koopaPix, randx, 0, 1));
+				break;
+		}
 		gScene->addItem(things.back());
 		koopaCnt = 0;
 	}
@@ -210,11 +167,11 @@ void Game::newKamek()
 {
 	if(kamekCnt >= 500) {
 		int randx = rand()%450;
-		int randy = rand()%300;
+		int randy = ((rand()%5)*100)-50;
 		if(randx <= 250)
-			things.push_back(new Kamek(kamekLPix, randx, randy, 0));
+			things.push_back(new Kamek(kamekRPix, randx, randy, 0));
 		else
-			things.push_back(new Kamek(kamekRPix, randx, randy, 1));
+			things.push_back(new Kamek(kamekLPix, randx, randy, 1));
 		gScene->addItem(things.back());
 		kamekCnt = 0;
 	}
@@ -245,32 +202,18 @@ void Game::newBill()
 
 /****************************************************************/
 /*adds a new magic item*/
-void Game::newMagic()
+void Game::newMagic(int x, int y, bool r)
 {
-	for(int i=0; i<things.size(); i++) {
-		if(things[i]->type == Thing::kamekEnemy) {
-			if(things[i]->frame == 3) {
-				if(things[i]->right) {
-					int y = things[i]->getLocy();
-					int x = things[i]->getLocx() - 28;
-					things.push_back(new Magic(magicPix, x, y, 1));
-					gScene->addItem(things.back());
-				}
-				else {
-					int y = things[i]->getLocy();
-					int x = things[i]->getLocx() + 3;
-					things.push_back(new Magic(magicPix, x, y, 0));
-					gScene->addItem(things.back());
-				}
-			}
-		}
-	}
+	things.push_back(new Magic(magicPix, x, y, r));
+	gScene->addItem(things.back());
 }
 
 /****************************************************************/
 /*constructor of the game graphics view*/
-Game::Game()
+Game::Game(QTimer *t)
 {
+	setFixedSize(525, 525);
+
 	//removes scroll bars
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -282,9 +225,8 @@ Game::Game()
 	
 	//creates the Pixmaps of all the "things" for their constructors
 	yPix = new QPixmap("img/yoshiw2.gif");
-	bPix = new QPixmap("img/bg.gif");
+	bPix = new QPixmap("img/bg.jpg");
 	hPix = new QPixmap("img/heart.gif");
-	lPix = new QPixmap("img/lava1.gif");
 	bpPix = new QPixmap("img/bPlatform.gif");
 	mpPix = new QPixmap("img/mPlatform.gif");
 	spPix = new QPixmap("img/sPlatform.gif");
@@ -300,10 +242,9 @@ Game::Game()
 	/*creates "things"*/
 	//background
 	background = new Bg(bPix, 0, 0);
-	background2 = new Bg(bPix, 0, -680);
 	
 	//adds Yoshi (playable character) to list
-	things.push_back(new Yoshi(yPix, 125, 125));
+	things.push_back(new Yoshi(yPix, 225, 390));
 	
 	//coin on stats panel (lava)
 	sCoin = new Coin(coinPix, 170, 460);
@@ -347,21 +288,22 @@ Game::Game()
 	cAmount->setFont(font);
 	cAmount->setZValue(2);
 	
-	//lava (stats panel)
-	lava = new Lava(lPix, 0, 451);
-	lava->setZValue(1);
 	
 	//platforms (preset)
-	platforms.push_back(new BPlatform(bpPix, 50, 400));
-	platforms.push_back(new BPlatform(bpPix, 50, 300));
-	platforms.push_back(new MPlatform(mpPix, 150, 200));
-	platforms.push_back(new MPlatform(mpPix, 150, 100));
-	platforms.push_back(new SPlatform(spPix, 200, 0));
+	platforms.push_back(new BPlatform(bpPix, 0, 50));
+	platforms.push_back(new BPlatform(bpPix, 300, 50));
+	platforms.push_back(new BPlatform(bpPix, 150, 150));
+	platforms.push_back(new BPlatform(bpPix, 150, 350));
+	platforms.push_back(new MPlatform(mpPix, 50, 250));
+	platforms.push_back(new MPlatform(mpPix, 200, 250));
+	platforms.push_back(new MPlatform(mpPix, 350, 250));
+	platforms.push_back(new SPlatform(spPix, 0, 150));
+	platforms.push_back(new SPlatform(spPix, 450, 150));
+	platforms.push_back(new SPlatform(spPix, 0, 350));
+	platforms.push_back(new SPlatform(spPix, 450, 350));
 	
 	//now barrage the scene with the items!
 	gScene->addItem(background);
-	gScene->addItem(background2);
-	gScene->addItem(lava);
 	gScene->addItem(heart);
 	gScene->addItem(sCoin);
 	gScene->addItem(sLabel);
@@ -376,8 +318,7 @@ Game::Game()
 	
 	
 	//timers
-	timer = new QTimer(this);
-	timer->setInterval(50);
+	timer = t;
 	
 	//counters
 	goombaCnt = 0;
@@ -395,12 +336,12 @@ Game::Game()
 	connect(timer, SIGNAL(timeout()), this, SLOT(newBill()));
 	connect(timer, SIGNAL(timeout()), this, SLOT(offScreen()));
 	
-	timer->start();
+	//timer->start();
 }
 
 /****************************************************************/
 /*destructor*/
 Game::~Game()
 {
-	delete gScene;
+	
 }

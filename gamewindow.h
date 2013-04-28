@@ -14,7 +14,6 @@
 #include "queue.h"
 #include "yoshi.h"
 #include "bg.h"
-#include "lava.h"
 #include "heart.h"
 #include "coin.h"
 #include "goomba.h"
@@ -32,7 +31,7 @@ class Game : public QGraphicsView
 	Q_OBJECT
 	
 	public:
-		explicit Game();
+		explicit Game(QTimer *t);
 		~Game();
 		QTimer *timer;
 		
@@ -41,7 +40,6 @@ class Game : public QGraphicsView
 		QPixmap *yPix;
 		QPixmap *bPix;
 		QPixmap *hPix;
-		QPixmap *lPix;
 		QPixmap *spPix;
 		QPixmap *mpPix;
 		QPixmap *bpPix;
@@ -54,14 +52,10 @@ class Game : public QGraphicsView
 		QPixmap *billRPix;
 		QPixmap *magicPix;
 		Bg *background;
-		Bg *background2;
 		Heart *heart;
-		Lava *lava;
 		Queue<Platform*> platforms;
 		MyList<Thing*> things;
 		Coin *sCoin;
-		int pSize;
-		int pLoc;
 		int score;
 		int lives;
 		int nCoins;
@@ -76,7 +70,7 @@ class Game : public QGraphicsView
 		int billCnt;
 		int coinCnt;
 		void respawn();
-		void newMagic();
+		void newMagic(int x, int y, bool r);
 		
 	public slots:
 		void animate();
@@ -87,7 +81,6 @@ class Game : public QGraphicsView
 		void newBill();
 		void offScreen();
 		void collisions();
-		void pause();
 };
 
 #endif

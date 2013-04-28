@@ -2,6 +2,7 @@
 
 Kamek::Kamek(QPixmap *pm, int lx, int ly, bool r) : Thing(pm, lx, ly)
 {
+	changeFrame = 0;
 	type = kamekEnemy;
 	frame = 1;
 	right = r;
@@ -15,6 +16,7 @@ Kamek::Kamek(QPixmap *pm, int lx, int ly, bool r) : Thing(pm, lx, ly)
 		kamek2 = new QPixmap("img/kamek22.gif");
 		kamek3 = new QPixmap("img/kamek23.gif");
 	}
+	del = false;
 }
 
 Kamek::~Kamek()
@@ -27,22 +29,34 @@ Kamek::~Kamek()
 void Kamek::move()
 {
 	if(frame == 1) {
-		setPixmap(*kamek2);
-		frame++;
+		changeFrame++;
+		if(changeFrame == 4) {
+			setPixmap(*kamek2);
+			frame++;
+			changeFrame = 0;
+		}
 	}
 	else if(frame == 2) {
-		setPixmap(*kamek3);
-		frame++;
+		changeFrame++;
+		if(changeFrame == 4) {
+			setPixmap(*kamek3);
+			frame++;
+			changeFrame = 0;
+		}
 	}
-	else
-		setPixmap(*kamek1);
-	if(cnt == 10000) {
-		vely++;
-		cnt = 0;
+	else if(frame == 3){
+		changeFrame++;
+		if(changeFrame == 4) {
+			setPixmap(*kamek1);
+			frame++;
+			changeFrame = 0;
+		}
 	}
-	locy += vely;
-	if(locy >= 680)
-		locy = -680;
+	else {
+		changeFrame++;
+		if(changeFrame == 4)
+			del = true;
+	}
 	update();
 	cnt++;
 }

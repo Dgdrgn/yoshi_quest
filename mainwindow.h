@@ -2,16 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QApplication>
-#include <QMainWindow>
-#include <QGraphicsScene>
-#include <QGraphicsView>
-#include <QGraphicsItemAnimation>
-#include <QTimer>
-#include <QMenuBar>
-#include <QMenu>
-#include <QAction>
-#include <QLayout>
-#include <QKeyEvent>
+#include <QtGui>
 #include "gamewindow.h"
 #include "startwindow.h"
 #include "yoshi.h"
@@ -19,8 +10,8 @@
 
 class QAction;
 
-#define WINDOW_MAX_X 525
-#define WINDOW_MAX_Y 525
+#define WINDOW_MAX_X 600
+#define WINDOW_MAX_Y 500
 
 class Main : public QMainWindow
 {
@@ -29,27 +20,27 @@ class Main : public QMainWindow
 	public:
 		explicit Main();
 		~Main();
-		void show();
 		void switchGame();
+		QPushButton *startG;
+		QPushButton *pauseG;
+		QPushButton *quitG;
+		QFormLayout *form;
+		QTextEdit *info;
+		
 	private:
 		Start *sScreen;
 		Game *gScreen;
 		QTimer *time;
+		QDockWidget *dWidget;
+		QWidget *dock;
 		QVBoxLayout *layout;
-		void createActions();
-		void createMenus();
-		QMenu *fileMenu;
-		QAction *exitAct;
-		QWidget *window;
-	protected:
-		void keyPressEvent(QKeyEvent *e);
-		void keyReleaseEvent(QKeyEvent *e);
-	private slots:
-		
-/*	public slots:
-		game();
-		pause();
-		start();*/
+	//protected:
+		//void keyPressEvent(QKeyEvent *e);
+		//void keyReleaseEvent(QKeyEvent *e);
+	public slots:
+		//void game();
+		void pause();
+		void start();
 };
 
 #endif
