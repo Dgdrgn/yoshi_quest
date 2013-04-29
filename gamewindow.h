@@ -31,11 +31,14 @@ class Game : public QGraphicsView
 	Q_OBJECT
 	
 	public:
-		explicit Game(QTimer *t);
+		explicit Game(QTimer *t, QString n);
 		~Game();
 		QTimer *timer;
 		void yoshiW1();
 		void yoshiW2();
+		void yoshiJ();
+		void yoshiC();
+		void yoshiI();
 		
 	private:
 		QGraphicsScene *gScene;
@@ -66,14 +69,20 @@ class Game : public QGraphicsView
 		QGraphicsSimpleTextItem* sAmount;
 		QGraphicsSimpleTextItem* lAmount;
 		QGraphicsSimpleTextItem* cAmount;
+		QGraphicsSimpleTextItem* nLabel;
 		QFont font;
+		QFont fontT;
 		int goombaCnt;
 		int koopaCnt;
 		int kamekCnt;
 		int billCnt;
 		int coinCnt;
 		int heartCnt;
-		void respawn();
+		int spawnCnt;
+		int timeCnt;
+		int yoshiJCnt;
+		bool boolMagic;
+		void life(int choice);
 		void newMagic(int x, int y, bool r);
 		
 	public slots:

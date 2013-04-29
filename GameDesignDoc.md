@@ -3,65 +3,57 @@ Game Design Document
 
 Objective
 --------------------
-The objective of the game is to climb to the top
-to avoid the rising lava and avoid the enemies along
-the way.
+The objective of the game is to stay alive by avoiding the enemies.
 
 Objects
 --------------------
 My game will include the following "objects":
 - Yoshi (playable character) - moves by the player's command
-![Yoshi](/img/yoshiw2.jpg)
+![Yoshi](/img/yoshiw2.gif)
 	
-- Goomba (enemy) - moves right and left
-![Goomba](/img/goombaw1.jpg)
+- Goomba (enemy) - sinks right and left
+![Goomba](/img/goombaw1.gif)
 	
-- Koopa (enemy) - moves right and left
-![Koopa](/img/koopaw1.jpg)
+- Koopa (enemy) - sinks right and left
+![Koopa](/img/koopaw1.gif)
 	
-- Bullet Bill (enemy) - moves from right to left or left to right
-![Bullet Bill](/img/rbill.jpg)
+- Bullet Bill (enemy) - shoots from right to left or left to right
+![Bullet Bill](/img/rbill.gif)
 	
-- Kamek (enemy) - appears and shoots magic
-![Kamek](/img/kamek1.jpg)
+- Kamek (enemy) - appears at a random location and shoots magic
+![Kamek](/img/kamek1.gif)
 	
-- Magic (enemy ammo) - moves across
-![magic](/img/magic.jpg)
+- Magic (enemy ammo) - moves at a sine motion
+![magic](/img/magic.gif)
 	
-- Coin (item) - still object
-![coin](/img/coin.jpg)
+- Coin (item) - sinks straight down
+![coin](/img/coin.gif)
+
+- Heart (item) - appears at a random location
+![heart](/img/heart.gif)
+
+Controls
+--------------------
+WASD keys are used to move up, left, down, and right respectively.
 
 Score
 --------------------
 The scoring is as follows:
 
-- 100 points for every second that passes
+- 10 points for every second that passes
 	
 - 50 points for every coin collected
-	
-- 100 points for every killed enemy
 	
 Life
 --------------------
 The player starts with three lives. He or she 
-can obtain more lives by collecting five coins.
+can obtain more lives by collecting five coins or a heart.
 If the player touches an enemy or magic, he or she
 loses a life. When a player loses all of his or her
 lives, its game over.
 
 Layout
 --------------------
-![Layout](/img/gLayout.jpg)
-
 On the game screen, the lives, coins, and score will be
-displayed on the bottom with the lava. The game will be displayed on top.
-During the game, the player can press 'p' to pause.
-
-![Pause Layout](img/pLayout.jpg)
-![Start Layout](img/sLayout.jpg)
-
-On the pause menu, the screen will show options to 
-go back to the start menu, unpause, or show the
-controls of the game. On the start menu, the screen
-will show buttons to start, show the instructions, 
-show the controls, and quit the window.
+displayed on the bottom. The game will be displayed on top.
+During the game, the player can press the pause button to pause.

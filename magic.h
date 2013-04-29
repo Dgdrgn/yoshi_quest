@@ -10,8 +10,5 @@ class Magic : public Thing
 		void move();
 	private:
 		QPixmap *magic;
-		QPixmap *magic2;
-		QPixmap *magic3;
-		QPixmap *magic4;
 };
 #endif

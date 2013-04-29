@@ -10,8 +10,6 @@ class Koopa : public Thing
 		void move();
 	private:
 		QPixmap *koopa1L;
-		QPixmap *koopa2L;
 		QPixmap *koopa1R;
-		QPixmap *koopa2R;
 };
 #endif

@@ -10,6 +10,5 @@ class Goomba : public Thing
 		void move();
 	private:
 		QPixmap *goomba1;
-		QPixmap *goomba2;
 };
 #endif

@@ -10,8 +10,8 @@
 
 class QAction;
 
-#define WINDOW_MAX_X 700
-#define WINDOW_MAX_Y 500
+#define WINDOW_MAX_X 725
+#define WINDOW_MAX_Y 525
 
 class Main : public QMainWindow
 {
@@ -26,6 +26,8 @@ class Main : public QMainWindow
 		QPushButton *quitG;
 		QFormLayout *form;
 		QTextEdit *info;
+		QTextEdit *name;
+		QString n;
 		
 	private:
 		Start *sScreen;
@@ -36,6 +38,7 @@ class Main : public QMainWindow
 		QVBoxLayout *layout;
 	protected:
 		void keyPressEvent(QKeyEvent *e);
+		void keyReleaseEvent(QKeyEvent *e);
 	public slots:
 		//void game();
 		void pause();

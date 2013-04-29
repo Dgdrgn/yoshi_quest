@@ -9,10 +9,8 @@ class Yoshi : public Thing
 		~Yoshi();
 		void move();
 		void idle();
-		void walk1();
-		void walk2();
-		void walk3();
-		void walk4();
+		void walkR();
+		void walkL();
 		void jump();
 		void crouch();
 		void stop();
@@ -26,11 +24,7 @@ class Yoshi : public Thing
 		QPixmap *yoshiAirL;
 		QPixmap *yoshiFallR;
 		QPixmap *yoshiFallL;
-		QPixmap *yoshiWalk1R;
-		QPixmap *yoshiWalk1L;
 		QPixmap *yoshiWalk2R;
 		QPixmap *yoshiWalk2L;
-		QPixmap *yoshiWalk3R;
-		QPixmap *yoshiWalk3L;
 };
 #endif

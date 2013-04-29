@@ -1,43 +1,124 @@
 #include "gamewindow.h"
+#include <cmath>
 
-/****************************************************************/
-/*respawns player*/
-void Game::respawn()
+void Game::life(int choice)
 {
-	things.push_back(new Yoshi(yPix, 225, 390));
-	gScene->addItem(things.back());
+	QString temp = "";
+	switch(choice) {
+		case 0:
+			lives--;
+			gScene->removeItem(lAmount);
+			temp = QString::number(lives);
+			lAmount = new QGraphicsSimpleTextItem(temp);
+			lAmount->setPos(70, 460);
+			lAmount->setFont(font);
+			lAmount->setZValue(2);
+			gScene->addItem(lAmount);
+			break;
+		case 1:
+			lives++;
+			gScene->removeItem(lAmount);
+			temp = QString::number(lives);
+			lAmount = new QGraphicsSimpleTextItem(temp);
+			lAmount->setPos(70, 460);
+			lAmount->setFont(font);
+			lAmount->setZValue(2);
+			gScene->addItem(lAmount);
+			break;
+	}
+	if(lives == 0) {
+		QGraphicsSimpleTextItem *over = new QGraphicsSimpleTextItem("Game Over!");
+		over->setPos(50, 100);
+		QFont *fonto = new QFont;
+		fonto->setPixelSize(50);
+		over->setFont(*fonto);
+		over->setZValue(3);
+		gScene->addItem(over);
+		timer->stop();
+	}
 }
 
 /****************************************************************/
 /*checks for collisions*/
 void Game::collisions()
 {
-	for(int i=0; i<things.size(); i++) {
-		/*platforms*/
-		if(things[i]->type != Thing::item && things[i]->type != Thing::billEnemy && things[i]->type != Thing::ammo && things[i]->type != Thing::other) {
-			for(int j=0; j<platforms.size(); j++) {
-				int tX = things[i]->getLocx();
-				int tY = things[i]->getLocy();
-				int tW = things[i]->getWidth();
-				int tH = things[i]->getHeight();
-				int pX = platforms[j]->getLocx();
-				int pW = platforms[j]->getWidth();
-				if((tY+tH-50)%100 == 0 && (tX > pX))
-					break;
-				else if(tY+tH == 450)
-					break;
-				else {
+	int tX = yoshi->getLocx();
+	int tY = yoshi->getLocy();
+	int tX2 = yoshi->getLocy() + yoshi->getHeight();
+	int tY2 = yoshi->getLocy() + yoshi->getHeight();
+	if(tY2 != 450) {
+		things[0]->setLocy(things[0]->getLocy()+1);
+		things[0]->update();
+	}
+	
+	for(int i=1; i<things.size(); i++) {
+		if(things[i] != NULL && things[i]->type != Thing::item && things[i]->type != Thing::billEnemy && things[i]->type != Thing::ammo && things[i]->type != Thing::life) {
+			int tX = things[i]->getLocx();
+			int tY = things[i]->getLocy();
+			int tX2 = things[i]->getLocy() + things[i]->getHeight();
+			int tY2 = things[i]->getLocy() + things[i]->getHeight();
+			if(tY2 != 450) {
 					things[i]->setLocy(things[i]->getLocy()+1);
 					things[i]->update();
 				}
 			}
+		for(int k=0; k<things.size(); k++) {
+			if(i == k) {
+				continue;
+			}
+			int tX = things[i]->getLocx();
+			int tY = things[i]->getLocy();
+			int pX = things[k]->getLocx();
+			int pY = things[k]->getLocy();
+			int tX2 = things[i]->getLocy() + things[i]->getHeight();
+			int pX2 = things[k]->getLocy() + things[k]->getHeight();
+			int tY2 = things[i]->getLocy() + things[i]->getHeight();
+			int pY2 = things[k]->getLocy() + things[k]->getHeight();
+			if(tY2 != 450 && abs(tX-pX) < 10 && abs(tY-pY) < 10) {
+				if(things[k]->type == Thing::hero && spawnCnt >=10) {
+					if(things[i]->type == Thing::goombaEnemy) {
+						life(0);
+					}
+					else if(things[i]->type == Thing::koopaEnemy) {
+						life(0);
+					}
+					else if(things[i]->type == Thing::billEnemy) {
+						life(0);
+					}
+					else if(things[i]->type == Thing::kamekEnemy) {
+						life(0);
+					}
+					else if(things[i]->type == Thing::ammo) {
+						life(0);
+					}
+					else if(things[i]->type == Thing::item) {
+						gScene->removeItem(things[i]);
+						things.pop(i);
+						nCoins++;
+						gScene->removeItem(cAmount);
+						QString temp = QString::number(nCoins);
+						cAmount = new QGraphicsSimpleTextItem(temp);
+						cAmount->setPos(210, 460);
+						cAmount->setFont(font);
+						cAmount->setZValue(2);
+						gScene->addItem(cAmount);
+						if(nCoins == 5) {
+							life(1);
+							nCoins = 0;
+						}
+					}
+					else if(things[i]->type == Thing::life) {
+						gScene->removeItem(things[i]);
+						things.pop(i);
+						life(1);
+					}
+					spawnCnt = 0;
+				}
+				else if(things[k]->type == Thing::hero && spawnCnt < 10) {
+					spawnCnt++;
+				}
+			}
 		}
-		/*for(int k=0; k<things.size(); k++) {
-		if(i == j) {
-			continue;
-		}
-		else if(
-		}*/
 	}
 }
 
@@ -52,7 +133,7 @@ void Game::animate()
 	QString temp = QString::number(score);
 	sAmount = new QGraphicsSimpleTextItem(temp);
 	sAmount->setPos(400, 460);
-	sAmount->setFont(font);
+	sAmount->setFont(fontT);
 	sAmount->setZValue(2);
 	gScene->addItem(sAmount);
 		
@@ -76,7 +157,15 @@ void Game::animate()
 			things.pop(l);
 		}
 	}
-	
+	if(timeCnt >= 1000) {
+		for(int m=1; m<things.size(); m++) {
+			things[m]->addVelx();
+			things[m]->addVely();
+		}	
+		timeCnt = 0;	
+	}
+	else
+		timeCnt++;
 	//collisions
 	collisions();
 }
@@ -148,7 +237,6 @@ void Game::offScreen()
 				lAmount->setFont(font);
 				lAmount->setZValue(2);
 				gScene->addItem(lAmount);
-				respawn();
 			}
 			gScene->removeItem(things[i]);
 			things.pop(i);
@@ -212,6 +300,7 @@ void Game::newKamek()
 			things.push_back(new Kamek(kamekLPix, randx, randy, 1));
 		gScene->addItem(things.back());
 		kamekCnt = 0;
+		boolMagic = false;
 	}
 	else
 		kamekCnt++;	
@@ -242,13 +331,16 @@ void Game::newBill()
 /*adds a new magic item*/
 void Game::newMagic(int x, int y, bool r)
 {
-	things.push_back(new Magic(magicPix, x, y, r));
-	gScene->addItem(things.back());
+	if(!boolMagic) {
+		things.push_back(new Magic(magicPix, x, y, r));
+		gScene->addItem(things.back());
+		boolMagic = true;
+	}
 }
 
 /****************************************************************/
 /*constructor of the game graphics view*/
-Game::Game(QTimer *t)
+Game::Game(QTimer *t, QString n)
 {
 	setFixedSize(525, 525);
 	setFocus();
@@ -266,9 +358,6 @@ Game::Game(QTimer *t)
 	yPix = new QPixmap("img/yoshiw2.gif");
 	bPix = new QPixmap("img/bg.jpg");
 	hPix = new QPixmap("img/heart.gif");
-	bpPix = new QPixmap("img/bPlatform.gif");
-	mpPix = new QPixmap("img/mPlatform.gif");
-	spPix = new QPixmap("img/sPlatform.gif");
 	coinPix = new QPixmap("img/coin.gif");
 	goombaPix = new QPixmap("img/goombaw1.gif");
 	koopaPix = new QPixmap("img/koopaw1r.gif");
@@ -283,7 +372,8 @@ Game::Game(QTimer *t)
 	background = new Bg(bPix, 0, 0);
 	
 	//adds Yoshi (playable character) to list
-	yoshi = new Yoshi(yPix, 225, 390);
+	yoshi = new Yoshi(yPix, 225, 405);
+	things.push_back(yoshi);
 	
 	//coin on stats panel (lava)
 	sCoin = new Coin(coinPix, 170, 460);
@@ -296,11 +386,12 @@ Game::Game(QTimer *t)
 	/*create text*/
 	//font size
 	font.setPixelSize(30);
+	fontT.setPixelSize(15);
 	
 	//word "Score"
 	sLabel = new QGraphicsSimpleTextItem("Score: ");
 	sLabel->setPos(300, 460);
-	sLabel->setFont(font);
+	sLabel->setFont(fontT);
 	sLabel->setZValue(2);
 	
 	//actual score value
@@ -308,7 +399,7 @@ Game::Game(QTimer *t)
 	QString temp = QString::number(score);
 	sAmount = new QGraphicsSimpleTextItem(temp);
 	sAmount->setPos(400, 460);
-	sAmount->setFont(font);
+	sAmount->setFont(fontT);
 	sAmount->setZValue(2);
 	
 	//lives
@@ -328,32 +419,24 @@ Game::Game(QTimer *t)
 	cAmount->setZValue(2);
 	
 	
-	//platforms (preset)
-	platforms.push_back(new BPlatform(bpPix, 0, 50));
-	platforms.push_back(new BPlatform(bpPix, 300, 50));
-	platforms.push_back(new BPlatform(bpPix, 150, 150));
-	platforms.push_back(new BPlatform(bpPix, 150, 350));
-	platforms.push_back(new MPlatform(mpPix, 50, 250));
-	platforms.push_back(new MPlatform(mpPix, 200, 250));
-	platforms.push_back(new MPlatform(mpPix, 350, 250));
-	platforms.push_back(new SPlatform(spPix, 0, 150));
-	platforms.push_back(new SPlatform(spPix, 450, 150));
-	platforms.push_back(new SPlatform(spPix, 0, 350));
-	platforms.push_back(new SPlatform(spPix, 450, 350));
+	//name
+	nLabel = new QGraphicsSimpleTextItem(n);
+	nLabel->setPos(300, 480);
+	nLabel->setFont(fontT);
+	nLabel->setZValue(2);
+	
 	
 	//now barrage the scene with the items!
 	gScene->addItem(background);
 	gScene->addItem(heart);
 	gScene->addItem(sCoin);
 	gScene->addItem(sLabel);
+	gScene->addItem(nLabel);
 	gScene->addItem(sAmount);
 	gScene->addItem(lAmount);
 	gScene->addItem(cAmount);
 	
-	for(int i=0; i<platforms.size(); i++)
-		gScene->addItem(platforms[i]);
-		
-	for(int k=0; k<things.size(); k++)
+	for(int k=1; k<things.size(); k++)
 		gScene->addItem(things[k]);
 	
 	gScene->addItem(yoshi);
@@ -368,6 +451,10 @@ Game::Game(QTimer *t)
 	billCnt = 0;
 	coinCnt = 0;
 	heartCnt = 0;
+	yoshiJCnt = 0;
+	spawnCnt = 0;
+	timeCnt = 0;
+	boolMagic = false;
 	
 	//connect to slot functions
 	connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
@@ -393,10 +480,32 @@ Game::~Game()
 /*for keyboard inputs*/
 void Game::yoshiW1()
 {
-	yoshi->walk1();
+	if(yoshi && timer->isActive())
+		yoshi->walkR();
 }
 
 void Game::yoshiW2()
 {
-	yoshi->walk2();
+	if(yoshi && timer->isActive())
+		yoshi->walkL();
+}
+
+void Game::yoshiC()
+{
+	if(yoshi && timer->isActive())
+		yoshi->crouch();
+}
+
+void Game::yoshiJ()
+{
+	if(yoshi && timer->isActive()) {
+		yoshi->jump();
+		yoshiJCnt++;
+	}
+}
+
+void Game::yoshiI()
+{
+	yoshiJCnt = 14;
+	yoshi->stop();
 }

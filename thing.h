@@ -14,7 +14,8 @@ class Thing : public QGraphicsPixmapItem
 			ammo,
 			item,
 			floor,
-			other
+			other,
+			life
 		};
 		int frame;
 		bool right, del;
@@ -29,6 +30,8 @@ class Thing : public QGraphicsPixmapItem
 		int getHeight() {return height;};
 		void setLocx(int lx) {locx = lx;};
 		void setLocy(int ly) {locy = ly;};
+		void addVelx() {velx++;};
+		void addVely() {vely++;};
 		void updateWH(QPixmap *p) {width = p->width(); height = p->height();};
 	protected:
 		int cnt;

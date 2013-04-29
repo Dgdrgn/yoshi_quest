@@ -5,9 +5,10 @@ Main::Main()
 	setWindowTitle("Yoshi's Quest");
 	setFixedSize(WINDOW_MAX_X, WINDOW_MAX_Y);
 	time = new QTimer(this);
-	time->setInterval(50);
+	time->setInterval(100);
+	n = "";
 	sScreen = new Start;
-	gScreen = new Game(time);
+	gScreen = new Game(time, n);
 	setCentralWidget(sScreen);
 	QWidget::layout()->setContentsMargins(0, 0, 0, 0);
 	
@@ -18,14 +19,20 @@ Main::Main()
 	connect(pauseG, SIGNAL(clicked()), this, SLOT(pause()));
 	connect(quitG, SIGNAL(clicked()), qApp, SLOT(quit()));
 	
+	name = new QTextEdit;
+	name->setFixedWidth(100);
+	name->setFixedHeight(25);
+	name->setFontPointSize(8);
+	name->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	
 	info = new QTextEdit;
 	info->setReadOnly(true);
 	info->setFixedWidth(90);
-	info->setFixedHeight(350);
 	info->setFontPointSize(8);
 	info->setPlainText("Instructions: Yoshi is on a quest! Use the WSAD keys to move Yoshi around to avoid the enemies. Collect coins for extra points. Collecting five coins or a heart will give Yoshi an extra life. When Yoshi loses all of his lives, its game over.");
 	
 	layout = new QVBoxLayout;
+	layout->addWidget(name);
 	layout->addWidget(info);
 	layout->addWidget(startG);
 	layout->addWidget(pauseG);
@@ -42,8 +49,7 @@ Main::Main()
 
 Main::~Main()
 {
-	delete sScreen;
-	delete gScreen;
+	//
 }
 
 /*void Main::game()
@@ -62,9 +68,12 @@ void Main::pause()
 
 void Main::start()
 {
-	gScreen = new Game(time);
-	switchGame();
-	time->start();
+	n = name->toPlainText();
+	if(n != "") {
+		gScreen = new Game(time, n);
+		switchGame();
+		time->start();
+	}
 }
 
 void Main::switchGame()
@@ -86,8 +95,19 @@ void Main::keyPressEvent(QKeyEvent *e)
 		case Qt::Key_A:
 			gScreen->yoshiW2();
 			break;
+		case Qt::Key_W:
+			gScreen->yoshiJ();
+			break;
+		case Qt::Key_S:
+			gScreen->yoshiC();
+			break;
 		default:
-			//nothing
+			gScreen->yoshiI();
 			break;
 	}
+}
+
+void Main::keyReleaseEvent(QKeyEvent *e)
+{
+	gScreen->yoshiI();
 }

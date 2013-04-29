@@ -4,7 +4,7 @@
 #include <QApplication>
 #include <QtGui>
 
-class Start : public QWidget
+class Start : public QGraphicsView
 {
 	Q_OBJECT
 	
@@ -13,8 +13,6 @@ class Start : public QWidget
 		~Start();
 		void show();
 	private:
-		QVBoxLayout *layout;
-		QGraphicsView *sView;
 		QGraphicsScene *sScene;
 		QGraphicsPixmapItem *sMenu;
 		
