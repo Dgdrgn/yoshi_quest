@@ -7,7 +7,7 @@
 Heart::Heart(QPixmap *pm, int lx, int ly) : Thing(pm, lx, ly)
 {
 	type = life;
-	heart = new QPixmap("img/heart.gif");
+	heart = new QPixmap("img/heart.png");
 	right = false;
 	frame = 0;
 }

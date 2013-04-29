@@ -11,14 +11,14 @@ Kamek::Kamek(QPixmap *pm, int lx, int ly, bool r) : Thing(pm, lx, ly)
 	frame = 1;
 	right = r;
 	if(r) {
-		kamek1 = pm;
-		kamek2 = new QPixmap("img/kamek2.gif");
-		kamek3 = new QPixmap("img/kamek3.gif");
+		kamek1 = new QPixmap("img/kamek1.png");
+		kamek2 = new QPixmap("img/kamek2.png");
+		kamek3 = new QPixmap("img/kamek3.png");
 	}
 	else {
-		kamek1 = pm;
-		kamek2 = new QPixmap("img/kamek22.gif");
-		kamek3 = new QPixmap("img/kamek23.gif");
+		kamek1 = new QPixmap("img/kamek21.png");
+		kamek2 = new QPixmap("img/kamek22.png");
+		kamek3 = new QPixmap("img/kamek23.png");
 	}
 	del = false;
 }

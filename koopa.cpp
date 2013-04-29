@@ -7,8 +7,8 @@
 Koopa::Koopa(QPixmap *pm, int lx, int ly, bool r) : Thing(pm, lx, ly)
 {
 	type = koopaEnemy;
-	koopa1L = new QPixmap("img/koopaw1.gif");
-	koopa1R = new QPixmap("img/koopaw1r.gif");
+	koopa1L = new QPixmap("img/koopaw1.png");
+	koopa1R = new QPixmap("img/koopaw1r.png");
 	frame = 1;
 	right = r;
 }

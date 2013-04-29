@@ -10,12 +10,12 @@ Yoshi::Yoshi(QPixmap *pm, int lx, int ly) : Thing(pm, lx, ly)
 	type = hero;
 	right = true;
 	frame = 1;
-	yoshiCrouchR = new QPixmap("img/yoshij13.gif");
-	yoshiCrouchL = new QPixmap("img/yoshij13r.gif");
-	yoshiJumpR = new QPixmap("img/yoshij11.gif");
-	yoshiJumpL = new QPixmap("img/yoshij11r.gif");
-	yoshiWalk2R = new QPixmap("img/yoshiw2.gif");
-	yoshiWalk2L = new QPixmap("img/yoshiw2r.gif");
+	yoshiCrouchR = new QPixmap("img/yoshij13.png");
+	yoshiCrouchL = new QPixmap("img/yoshij13r.png");
+	yoshiJumpR = new QPixmap("img/yoshij11.png");
+	yoshiJumpL = new QPixmap("img/yoshij11r.png");
+	yoshiWalk2R = new QPixmap("img/yoshiw2.png");
+	yoshiWalk2L = new QPixmap("img/yoshiw2r.png");
 }
 
 /**Destructor*/

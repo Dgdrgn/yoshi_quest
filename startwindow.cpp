@@ -8,7 +8,7 @@ Start::Start()
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	sScene = new QGraphicsScene();
 	setScene(sScene);
-	sMenu = new QGraphicsPixmapItem(QPixmap("img/start.jpg"));
+	sMenu = new QGraphicsPixmapItem(QPixmap("img/start.png"));
 	sScene->addItem(sMenu);
 }
 

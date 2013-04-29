@@ -8,7 +8,7 @@
 Goomba::Goomba(QPixmap *pm, int lx, int ly, bool r) : Thing(pm, lx, ly)
 {
 	type = goombaEnemy;
-	goomba1 = new QPixmap("img/goombaw1.gif");
+	goomba1 = new QPixmap("img/goombaw1.png");
 	right = r;
 	frame = 1;
 }

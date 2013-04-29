@@ -145,7 +145,7 @@ void Game::animate()
 			things.pop(l);
 		}
 	}
-	if(timeCnt >= 1000) {
+	if(timeCnt >= 500) {
 		for(int m=1; m<things.size(); m++) {
 			things[m]->addVelx();
 			things[m]->addVely();
@@ -169,7 +169,7 @@ void Game::animate()
 /**Adds a new coin*/
 void Game::newCoin()
 {
-	if(coinCnt >= 250) {
+	if(coinCnt >= 150) {
 		int randx = rand()%450;
 		things.push_back(new Coin(coinPix, randx, 0));
 		gScene->addItem(things.back());
@@ -182,13 +182,13 @@ void Game::newCoin()
 /**Adds a new heart*/
 void Game::newHeart()
 {
-	if(heartCnt == 500) {
+	if(heartCnt -= 50) {
 		for(int i=0; i<things.size(); i++) {
-			if(things[i]->type == Thing::other)
+			if(things[i]->type == Thing::heart)
 				things.pop(i);
 		}
 	}
-	if(heartCnt >= 2000) {
+	if(heartCnt >= 500) {
 		int randx = rand()%450;
 		int randy = 0;
 		switch(rand()%5) {
@@ -346,17 +346,17 @@ Game::Game(QTimer *t, QString n)
 	setScene(gScene);
 	
 	//creates the Pixmaps of all the "things" for their constructors
-	yPix = new QPixmap("img/yoshiw2.gif");
-	bPix = new QPixmap("img/bg.jpg");
-	hPix = new QPixmap("img/heart.gif");
-	coinPix = new QPixmap("img/coin.gif");
-	goombaPix = new QPixmap("img/goombaw1.gif");
-	koopaPix = new QPixmap("img/koopaw1r.gif");
-	kamekLPix = new QPixmap("img/kamek1.gif");
-	kamekRPix = new QPixmap("img/kamek21.gif");
-	billLPix = new QPixmap("img/lbill.gif");
-	billRPix = new QPixmap("img/rbill.gif");
-	magicPix = new QPixmap("img/magic.gif");
+	yPix = new QPixmap("img/yoshiw2.png");
+	bPix = new QPixmap("img/bg.png");
+	hPix = new QPixmap("img/heart.png");
+	coinPix = new QPixmap("img/coin.png");
+	goombaPix = new QPixmap("img/goombaw1.png");
+	koopaPix = new QPixmap("img/koopaw1r.png");
+	kamekLPix = new QPixmap("img/kamek1.png");
+	kamekRPix = new QPixmap("img/kamek21.png");
+	billLPix = new QPixmap("img/lbill.png");
+	billRPix = new QPixmap("img/rbill.png");
+	magicPix = new QPixmap("img/magic.png");
 	
 	/*creates "things"*/
 	//background
@@ -473,8 +473,6 @@ Game::Game(QTimer *t, QString n)
 	connect(timer, SIGNAL(timeout()), this, SLOT(newBill()));
 	connect(timer, SIGNAL(timeout()), this, SLOT(newHeart()));
 	connect(timer, SIGNAL(timeout()), this, SLOT(offScreen()));
-	
-	//timer->start();
 }
 
 /**Destructor*/
