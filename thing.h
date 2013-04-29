@@ -29,6 +29,8 @@ class Thing : public QGraphicsPixmapItem
 		int frame;
 		/**Boolean that determines direction*/
 		bool right;
+		/**Boolean that determines when to delete object (mainly for Kamek)*/
+		bool del;
 		/**Type of Thing*/
 		Type type;
 		

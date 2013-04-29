@@ -34,5 +34,4 @@ void Koopa::move()
 	else
 		locx-=velx*5;
 	update();
-	cnt++;
 }

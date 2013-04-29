@@ -132,12 +132,12 @@ void Game::animate()
 			if(things[l]->right) {
 				int y = things[l]->getLocy();
 				int x = things[l]->getLocx() - 28;
-				newMagic(x, y, 1);
+				newMagic(x, y, 0);
 			}
 			else {
 				int y = things[l]->getLocy();
 				int x = things[l]->getLocx() + 3;
-				newMagic(x, y, 0);
+				newMagic(x, y, 1);
 			}
 		}
 		if(things[l]->type == Thing::kamekEnemy && things[l]->del) {
@@ -285,9 +285,9 @@ void Game::newKamek()
 		int randx = rand()%450;
 		int randy = ((rand()%5)*100)-50;
 		if(randx <= 250)
-			things.push_back(new Kamek(kamekRPix, randx, randy, 0));
+			things.push_back(new Kamek(kamekRPix, randx, randy, 1));
 		else
-			things.push_back(new Kamek(kamekLPix, randx, randy, 1));
+			things.push_back(new Kamek(kamekLPix, randx, randy, 0));
 		gScene->addItem(things.back());
 		kamekCnt = 0;
 		boolMagic = false;

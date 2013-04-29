@@ -30,5 +30,4 @@ void Goomba::move()
 	else
 		locx -= velx*5;
 	update();
-	cnt++;
 }

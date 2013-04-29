@@ -5,7 +5,6 @@
 #include <QtGui>
 #include <cstdlib>
 #include "mylist.h"
-#include "queue.h"
 #include "yoshi.h"
 #include "bg.h"
 #include "heart.h"

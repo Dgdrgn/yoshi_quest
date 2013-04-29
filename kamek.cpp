@@ -62,5 +62,4 @@ void Kamek::move()
 			del = true;
 	}
 	update();
-	cnt++;
 }

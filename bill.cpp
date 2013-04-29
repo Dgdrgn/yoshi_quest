@@ -22,7 +22,7 @@ Bill::~Bill()
 	delete bill;
 }
 
-/**Move function from inherited Thing class
+/**Move function from inherited Thing class*/
 void Bill::move()
 {
 	if(right) {
@@ -32,5 +32,4 @@ void Bill::move()
 		locx += velx*20;
 	}
 	update();
-	cnt++;
 }

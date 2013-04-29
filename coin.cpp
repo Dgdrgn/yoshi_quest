@@ -24,13 +24,9 @@ Coin::~Coin()
 
 /**
 Move function from inherited Thing class
+*/
 void Coin::move()
 {
-	if(cnt == 10000) {
-		vely++;
-		cnt = 0;
-	}
 	locy += vely*2;
 	update();
-	cnt++;
 }
