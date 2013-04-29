@@ -44,7 +44,7 @@ void Game::collisions()
 {
 	int tX = yoshi->getLocx();
 	int tY = yoshi->getLocy();
-	if(tY2 != 450) {
+	if(tY+yoshi->getHeight() != 450) {
 		things[0]->setLocy(things[0]->getLocy()+1);
 		things[0]->update();
 	}
