@@ -51,7 +51,7 @@ void Game::collisions()
 	for(int k=0; k<things.size(); k++) {
 		int pX = things[k]->getLocx();
 		int pY = things[k]->getLocy();
-		if(abs(tX-pX) < 30 && abs(tY-pY) < 30) {
+		if(abs(tX-pX) < 60 && abs(tY-pY) < 60) {
 			if(spawnCnt >=10) {
 				if(things[k]->type == Thing::goombaEnemy) {
 					life(0);
