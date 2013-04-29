@@ -5,7 +5,7 @@ Main::Main()
 	setWindowTitle("Yoshi's Quest");
 	setFixedSize(WINDOW_MAX_X, WINDOW_MAX_Y);
 	time = new QTimer(this);
-	time->setInterval(100);
+	time->setInterval(50);
 	n = "";
 	sScreen = new Start;
 	gScreen = new Game(time, n);

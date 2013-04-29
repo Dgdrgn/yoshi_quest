@@ -39,14 +39,14 @@ void Yoshi::idle()
 
 void Yoshi::walkR()
 {
-	locx++;
+	locx+= velx*5;
 	right = false;
 	update();
 }
 
 void Yoshi::walkL()
 {
-	locx--;
+	locx-=velx*5;
 	right = true;
 	update();
 }

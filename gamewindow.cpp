@@ -51,7 +51,7 @@ void Game::collisions()
 		things[0]->update();
 	}
 	
-	for(int i=1; i<things.size(); i++) {
+	for(int i=0; i<things.size(); i++) {
 		if(things[i] != NULL && things[i]->type != Thing::item && things[i]->type != Thing::billEnemy && things[i]->type != Thing::ammo && things[i]->type != Thing::life) {
 			int tX = things[i]->getLocx();
 			int tY = things[i]->getLocy();
@@ -66,61 +66,63 @@ void Game::collisions()
 			if(i == k) {
 				continue;
 			}
-			int tX = things[i]->getLocx();
-			int tY = things[i]->getLocy();
-			int pX = things[k]->getLocx();
-			int pY = things[k]->getLocy();
-			int tX2 = things[i]->getLocy() + things[i]->getHeight();
-			int pX2 = things[k]->getLocy() + things[k]->getHeight();
-			int tY2 = things[i]->getLocy() + things[i]->getHeight();
-			int pY2 = things[k]->getLocy() + things[k]->getHeight();
-			if(tY2 != 450 && abs(tX-pX) < 10 && abs(tY-pY) < 10) {
-				if(things[k]->type == Thing::hero && spawnCnt >=10) {
-					if(things[i]->type == Thing::goombaEnemy) {
-						life(0);
-					}
-					else if(things[i]->type == Thing::koopaEnemy) {
-						life(0);
-					}
-					else if(things[i]->type == Thing::billEnemy) {
-						life(0);
-					}
-					else if(things[i]->type == Thing::kamekEnemy) {
-						life(0);
-					}
-					else if(things[i]->type == Thing::ammo) {
-						life(0);
-					}
-					else if(things[i]->type == Thing::item) {
-						gScene->removeItem(things[i]);
-						things.pop(i);
-						nCoins++;
-						gScene->removeItem(cAmount);
-						QString temp = QString::number(nCoins);
-						cAmount = new QGraphicsSimpleTextItem(temp);
-						cAmount->setPos(210, 460);
-						cAmount->setFont(font);
-						cAmount->setZValue(2);
-						gScene->addItem(cAmount);
-						if(nCoins == 5) {
-							life(1);
-							nCoins = 0;
+			else {
+				int tX = things[i]->getLocx();
+				int tY = things[i]->getLocy();
+				int pX = things[k]->getLocx();
+				int pY = things[k]->getLocy();
+				int tX2 = things[i]->getLocy() + things[i]->getHeight();
+				int pX2 = things[k]->getLocy() + things[k]->getHeight();
+				int tY2 = things[i]->getLocy() + things[i]->getHeight();
+				int pY2 = things[k]->getLocy() + things[k]->getHeight();
+				if(abs(tX-pX2) < 30 && abs(tY-pY) < 30) {
+					if(things[k]->type == Thing::hero && spawnCnt >=10) {
+						if(things[i]->type == Thing::goombaEnemy) {
+							life(0);
 						}
+						else if(things[i]->type == Thing::koopaEnemy) {
+							life(0);
+							}
+						else if(things[i]->type == Thing::billEnemy) {
+							life(0);
+						}
+						else if(things[i]->type == Thing::kamekEnemy) {
+							life(0);
+						}
+						else if(things[i]->type == Thing::ammo) {
+							life(0);
+						}
+						else if(things[i]->type == Thing::item) {
+							gScene->removeItem(things[i]);
+							things.pop(i);
+							nCoins++;
+							gScene->removeItem(cAmount);
+							QString temp = QString::number(nCoins);
+							cAmount = new QGraphicsSimpleTextItem(temp);
+							cAmount->setPos(210, 460);
+							cAmount->setFont(font);
+							cAmount->setZValue(2);
+							gScene->addItem(cAmount);
+							if(nCoins == 5) {
+									life(1);
+								nCoins = 0;
+							}
+						}
+						else if(things[i]->type == Thing::life) {
+							gScene->removeItem(things[i]);
+							things.pop(i);
+							life(1);
+							}
+						spawnCnt = 0;
 					}
-					else if(things[i]->type == Thing::life) {
-						gScene->removeItem(things[i]);
-						things.pop(i);
-						life(1);
+					else if(things[k]->type == Thing::hero && spawnCnt < 10) {
+						spawnCnt++;
 					}
-					spawnCnt = 0;
-				}
-				else if(things[k]->type == Thing::hero && spawnCnt < 10) {
-					spawnCnt++;
 				}
 			}
 		}
 	}
-}
+}	
 
 /****************************************************************/
 /*animates the game (moves the enemies, platforms, etc.)*/

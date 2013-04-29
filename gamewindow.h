@@ -21,10 +21,6 @@
 #include "kamek.h"
 #include "bill.h"
 #include "magic.h"
-#include "bplatform.h"
-#include "mplatform.h"
-#include "splatform.h"
-#include "platform.h"
 
 class Game : public QGraphicsView
 {
@@ -59,7 +55,6 @@ class Game : public QGraphicsView
 		Bg *background;
 		Heart *heart;
 		Yoshi *yoshi;
-		Queue<Platform*> platforms;
 		MyList<Thing*> things;
 		Coin *sCoin;
 		int score;
