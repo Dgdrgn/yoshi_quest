@@ -2,6 +2,8 @@
 #define YOSHI_H
 #include "thing.h"
 
+/**A class for the Yoshi object
+@author Jesus Garcia*/
 class Yoshi : public Thing
 {
 	public:
@@ -16,6 +18,7 @@ class Yoshi : public Thing
 		void stop();
 	
 	private:
+		/**Pixmap images*/
 		QPixmap *yoshiCrouchR;
 		QPixmap *yoshiCrouchL;
 		QPixmap *yoshiJumpR;

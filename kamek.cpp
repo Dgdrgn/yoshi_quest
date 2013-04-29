@@ -1,5 +1,9 @@
 #include "kamek.h"
-
+/**Constructor
+@param pm A pointer for the pixmap image
+@param lx The x location of the object
+@param ly The y location of the object
+@param r Boolean that determines direction of movement*/
 Kamek::Kamek(QPixmap *pm, int lx, int ly, bool r) : Thing(pm, lx, ly)
 {
 	changeFrame = 0;
@@ -18,14 +22,14 @@ Kamek::Kamek(QPixmap *pm, int lx, int ly, bool r) : Thing(pm, lx, ly)
 	}
 	del = false;
 }
-
+/**Destructor*/
 Kamek::~Kamek()
 {
 	delete kamek1;
 	delete kamek2;
 	delete kamek3;
 }
-
+/**Move function from Thing class*/
 void Kamek::move()
 {
 	if(frame == 1) {

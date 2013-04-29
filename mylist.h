@@ -11,24 +11,55 @@ using namespace std;
 
 const int DEFAULT_CAPACITY = 3;
 
+/**A templated dynamic unbounded array list
+@author Jesus Garcia*/
+
 template <typename T>
 class MyList {
 	public:
+		/**Default Constructor*/
 		MyList();
+		/**Constructor with set capacity
+		@param capacity The max amount that fits in list*/
 		MyList(int capacity);
+		/**Destructor*/
 		~MyList();
+		/**Adds item to back of list.
+		@param fname Item to be pushed in list*/
 		void push_back(const T& fname);
+		/**Returns size
+		@return Size of list*/
 		int size();
+		/**Returns item at location
+		@param loc Location of item
+		@return Reference to item*/
 		T& at(int loc);
+		/**Removes item from list
+		@param val Item to be removed
+		@return Boolean whether or not the item was removed*/
 		bool remove(T val);
+		/**Removes item from list
+		@param Location where the item is
+		@return Item removed*/
 		T pop(int loc);
+		/**Operator overloader of brackets
+		@param loc Location of item
+		@return Item*/
 		T& operator[](int loc);
+		/**Clears list*/
 		void clear();
+		/**Return front of list
+		@return Reference to item*/
 		T& front();
+		/**Return back of list
+		@return Reference to item*/
 		T& back();
 	private:
+		/**Array*/
 		T *data_;
+		/**Size*/
 		int size_;
+		/**Capacity*/
 		int capacity_;
 };
 

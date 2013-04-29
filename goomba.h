@@ -1,7 +1,11 @@
 #ifndef GOOMBA_H
 #define GOOMBA_H
 #include "thing.h"
+/**
+A class for Goomba objects
 
+@author Jesus Garcia
+*/
 class Goomba : public Thing
 {
 	public:
@@ -9,6 +13,7 @@ class Goomba : public Thing
 		~Goomba();
 		void move();
 	private:
+		/**Goomba image*/
 		QPixmap *goomba1;
 };
 #endif

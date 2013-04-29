@@ -2,6 +2,8 @@
 #define HEART_H
 #include "thing.h"
 
+/** A class for Heart objects
+@author Jesus Garcia*/
 class Heart : public Thing
 {
 	public:
@@ -9,6 +11,7 @@ class Heart : public Thing
 		~Heart();
 		void move();
 	private:
+		/*Pixmap image*/
 		QPixmap *heart;
 };
 #endif

@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "iostream"
+
+/**Constructor for main window. Creates the layout of the main window*/
 Main::Main()
 {
 	setWindowTitle("Yoshi's Quest");
@@ -10,7 +12,6 @@ Main::Main()
 	sScreen = new Start;
 	gScreen = new Game(time, n);
 	setCentralWidget(sScreen);
-	QWidget::layout()->setContentsMargins(0, 0, 0, 0);
 	
 	startG = new QPushButton("Start Game");
 	pauseG = new QPushButton("Pause Game");
@@ -20,16 +21,16 @@ Main::Main()
 	connect(quitG, SIGNAL(clicked()), qApp, SLOT(quit()));
 	
 	name = new QTextEdit;
-	name->setFixedWidth(100);
+	name->setFixedWidth(180);
 	name->setFixedHeight(25);
 	name->setFontPointSize(8);
 	name->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	
 	info = new QTextEdit;
 	info->setReadOnly(true);
-	info->setFixedWidth(90);
-	info->setFontPointSize(8);
-	info->setPlainText("Instructions: Yoshi is on a quest! Use the WSAD keys to move Yoshi around to avoid the enemies. Collect coins for extra points. Collecting five coins or a heart will give Yoshi an extra life. When Yoshi loses all of his lives, its game over.");
+	info->setFixedWidth(180);
+	info->setFontPointSize(12);
+	info->setPlainText("Instructions: Yoshi is on a quest! Use the WSAD keys to move Yoshi around to avoid the enemies. Collect coins for extra points. Collecting five coins or a heart will give Yoshi an extra life. When Yoshi loses all of his lives, its game over. Note: To start the game, please enter your name above and press start. Ignore the spacebar comment on the screen.");
 	
 	layout = new QVBoxLayout;
 	layout->addWidget(name);
@@ -46,18 +47,12 @@ Main::Main()
 	dWidget->setFeatures(QDockWidget::NoDockWidgetFeatures);
 	addDockWidget(Qt::RightDockWidgetArea, dWidget);
 }
-
+/**Destructor*/
 Main::~Main()
 {
-	//
+	
 }
-
-/*void Main::game()
-{
-
-}
-*/
-
+/**Pauses the game*/
 void Main::pause()
 {
 	if(time->isActive())
@@ -65,7 +60,7 @@ void Main::pause()
 	else
 		time->start();
 }
-
+/**Starts the game*/
 void Main::start()
 {
 	n = name->toPlainText();
@@ -75,7 +70,7 @@ void Main::start()
 		time->start();
 	}
 }
-
+/**Switches from the start screen to the game screen*/
 void Main::switchGame()
 {
 	layout->removeWidget(sScreen);
@@ -84,8 +79,7 @@ void Main::switchGame()
 	show();
 }
 
-/****************************************************************/
-/*Keyboard inputs*/
+/**Reads keys that are pressed*/
 void Main::keyPressEvent(QKeyEvent *e)
 {
 	switch(e->key()) {
@@ -107,6 +101,7 @@ void Main::keyPressEvent(QKeyEvent *e)
 	}
 }
 
+/**Reads keys that are released*/
 void Main::keyReleaseEvent(QKeyEvent *e)
 {
 	gScreen->yoshiI();

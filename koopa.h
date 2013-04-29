@@ -1,7 +1,8 @@
 #ifndef KOOPA_H
 #define KOOPA_H
 #include "thing.h"
-
+/** A class for Koopa objects
+@author Jesus Garcia*/
 class Koopa : public Thing
 {
 	public:
@@ -9,6 +10,7 @@ class Koopa : public Thing
 		~Koopa();
 		void move();
 	private:
+		/**Pixmap images*/
 		QPixmap *koopa1L;
 		QPixmap *koopa1R;
 };

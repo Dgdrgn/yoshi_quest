@@ -2,13 +2,7 @@
 #define GAMEWINDOW_H
 
 #include <QApplication>
-#include <QMainWindow>
-#include <QGraphicsScene>
-#include <QGraphicsView>
-#include <QGraphicsItemAnimation>
-#include <QTimer>
-#include <QPixmap>
-#include <QFont>
+#include <QtGui>
 #include <cstdlib>
 #include "mylist.h"
 #include "queue.h"
@@ -21,6 +15,13 @@
 #include "kamek.h"
 #include "bill.h"
 #include "magic.h"
+
+/**
+A class for the main game window, which contains all of the 
+elements of the actual gameplay
+
+@author Jesus Garcia
+*/
 
 class Game : public QGraphicsView
 {
@@ -37,7 +38,10 @@ class Game : public QGraphicsView
 		void yoshiI();
 		
 	private:
+		/**Scene of the game*/
 		QGraphicsScene *gScene;
+		
+		/**Pixmap image of different objects*/
 		QPixmap *yPix;
 		QPixmap *bPix;
 		QPixmap *hPix;
@@ -52,21 +56,32 @@ class Game : public QGraphicsView
 		QPixmap *billLPix;
 		QPixmap *billRPix;
 		QPixmap *magicPix;
+		
+		/**Status Panel Objects*/
 		Bg *background;
 		Heart *heart;
-		Yoshi *yoshi;
-		MyList<Thing*> things;
 		Coin *sCoin;
 		int score;
 		int lives;
 		int nCoins;
 		QGraphicsSimpleTextItem* sLabel;
+		QGraphicsSimpleTextItem* nameLabel;
+		QGraphicsSimpleTextItem* levelLabel;
 		QGraphicsSimpleTextItem* sAmount;
 		QGraphicsSimpleTextItem* lAmount;
+		QGraphicsSimpleTextItem* levelAmount;
 		QGraphicsSimpleTextItem* cAmount;
 		QGraphicsSimpleTextItem* nLabel;
 		QFont font;
 		QFont fontT;
+		
+		/**Playable Character*/
+		Yoshi *yoshi;
+		
+		/**List of other Things*/
+		MyList<Thing*> things;
+		
+		/**Counters*/
 		int goombaCnt;
 		int koopaCnt;
 		int kamekCnt;
@@ -76,6 +91,7 @@ class Game : public QGraphicsView
 		int spawnCnt;
 		int timeCnt;
 		int yoshiJCnt;
+		int levelCnt;
 		bool boolMagic;
 		void life(int choice);
 		void newMagic(int x, int y, bool r);

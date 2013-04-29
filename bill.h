@@ -2,6 +2,11 @@
 #define BILL_H
 #include "thing.h"
 
+/**
+A class for a bullet bill object.
+
+@author Jesus Garcia
+*/
 class Bill : public Thing
 {
 	public:
@@ -9,6 +14,7 @@ class Bill : public Thing
 		~Bill();
 		void move();
 	private:
+		/**A pointer to the pixmap image*/
 		QPixmap *bill;
 };
 #endif

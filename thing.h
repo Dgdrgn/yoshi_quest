@@ -2,9 +2,17 @@
 #define THING_H
 #include <QGraphicsPixmapItem>
 
+/**Base class for all Things(enemies, items, players, etc.)
+@author Jesus Garcia*/
 class Thing : public QGraphicsPixmapItem
 {
 	public:
+		Thing(QPixmap *pm, int lx, int ly);
+		~Thing();
+		void update();
+		/** Moves the object depending on the object*/
+		virtual void move() = 0;
+		/**Enumeration for the type of Thing*/
 		enum Type {
 			hero,
 			goombaEnemy,
@@ -17,31 +25,39 @@ class Thing : public QGraphicsPixmapItem
 			other,
 			life
 		};
+		/**Integer that determines frame image*/
 		int frame;
-		bool right, del;
-		Thing(QPixmap *pm, int lx, int ly);
-		~Thing();
-		void update();
-		virtual void move() = 0;
+		/**Boolean that determines direction*/
+		bool right;
+		/**Type of Thing*/
 		Type type;
+		
+		/**Accessors and Mutators*/
 		int getLocx() {return locx;};
 		int getLocy() {return locy;};
 		int getWidth() {return width;};
 		int getHeight() {return height;};
 		void setLocx(int lx) {locx = lx;};
 		void setLocy(int ly) {locy = ly;};
-		void addVelx() {velx++;};
-		void addVely() {vely++;};
+		void addVelx() {velx=velx*2;};
+		void addVely() {vely=vely*2;};
+
+		/**Updates width and height of Thing after frame is changed*/
 		void updateWH(QPixmap *p) {width = p->width(); height = p->height();};
 	protected:
-		int cnt;
+		/**x location*/
 		int locx;
+		/**y location*/
 		int locy;
+		/**width*/
 		int width;
+		/**height*/
 		int height;
+		/**x velocity*/
 		int velx;
+		/**y velocity*/
 		int vely;
-		int id;
+		/**Pixmap image*/
 		QPixmap *pixMap;
 };
 #endif

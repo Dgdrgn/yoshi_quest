@@ -2,6 +2,11 @@
 #define COIN_H
 #include "thing.h"
 
+/**
+A class for coins
+
+@author Jesus Garcia
+*/
 class Coin : public Thing
 {
 	public:
@@ -9,6 +14,7 @@ class Coin : public Thing
 		~Coin();
 		void move();
 	private:
+		/**A pointer to the pixmap image*/
 		QPixmap *coin;
 };
 #endif

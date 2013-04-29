@@ -1,6 +1,10 @@
 #include "gamewindow.h"
 #include <cmath>
 
+/**
+Either increments or decrements a life. Checks for game over.
+@param choice Integer that determines whether life increments or decrements.
+*/
 void Game::life(int choice)
 {
 	QString temp = "";
@@ -38,21 +42,22 @@ void Game::life(int choice)
 	}
 }
 
-/****************************************************************/
-/*checks for collisions*/
+/**
+Checks for collisions between the player and objects
+*/
 void Game::collisions()
 {
 	int tX = yoshi->getLocx();
 	int tY = yoshi->getLocy();
-	if(tY+yoshi->getHeight() != 450) {
+	if(tY+yoshi->getHeight() < 450) {
 		things[0]->setLocy(things[0]->getLocy()+1);
 		things[0]->update();
 	}
 	for(int k=0; k<things.size(); k++) {
 		int pX = things[k]->getLocx();
 		int pY = things[k]->getLocy();
-		if(abs(tX-pX) < 60 && abs(tY-pY) < 60) {
-			if(spawnCnt >=10) {
+		if(abs(tX-pX) < 50 && abs(tY-pY) < 40) {
+			if(spawnCnt >= 20) {
 				if(things[k]->type == Thing::goombaEnemy) {
 					life(0);
 				}
@@ -72,6 +77,10 @@ void Game::collisions()
 					gScene->removeItem(things[k]);
 					things.pop(k);
 					nCoins++;
+					if(nCoins == 5) {
+						life(1);
+						nCoins = 0;
+					}
 					gScene->removeItem(cAmount);
 					QString temp = QString::number(nCoins);
 					cAmount = new QGraphicsSimpleTextItem(temp);
@@ -79,10 +88,14 @@ void Game::collisions()
 					cAmount->setFont(font);
 					cAmount->setZValue(2);
 					gScene->addItem(cAmount);
-					if(nCoins == 5) {
-							life(1);
-						nCoins = 0;
-					}
+					gScene->removeItem(sAmount);
+					score += 50;
+					temp = QString::number(score);
+					sAmount = new QGraphicsSimpleTextItem(temp);
+					sAmount->setPos(400, 450);
+					sAmount->setFont(fontT);
+					sAmount->setZValue(2);
+					gScene->addItem(sAmount);
 				}
 				else if(things[k]->type == Thing::life) {
 					gScene->removeItem(things[k]);
@@ -91,15 +104,14 @@ void Game::collisions()
 				}
 				spawnCnt = 0;
 			}
-			else if(things[k]->type == Thing::hero && spawnCnt < 10) {
+			else if(things[k]->type == Thing::hero && spawnCnt < 20) {
 				spawnCnt++;
 			}
 		}
 	}
 }	
 
-/****************************************************************/
-/*animates the game (moves the enemies, platforms, etc.)*/
+/**Moves the objects in the game*/
 void Game::animate()
 {
 	
@@ -108,7 +120,7 @@ void Game::animate()
 	score += 10;
 	QString temp = QString::number(score);
 	sAmount = new QGraphicsSimpleTextItem(temp);
-	sAmount->setPos(400, 460);
+	sAmount->setPos(400, 450);
 	sAmount->setFont(fontT);
 	sAmount->setZValue(2);
 	gScene->addItem(sAmount);
@@ -138,7 +150,15 @@ void Game::animate()
 			things[m]->addVelx();
 			things[m]->addVely();
 		}	
-		timeCnt = 0;	
+		timeCnt = 0;
+		levelCnt++;
+		gScene->removeItem(levelAmount);
+		temp = QString::number(levelCnt);
+		levelAmount = new QGraphicsSimpleTextItem(temp);
+		levelAmount->setPos(400, 480);
+		levelAmount->setFont(fontT);
+		levelAmount->setZValue(2);
+		gScene->addItem(levelAmount);
 	}
 	else
 		timeCnt++;
@@ -146,11 +166,10 @@ void Game::animate()
 	collisions();
 }
 
-/****************************************************************/
-/*adds a new coin*/
+/**Adds a new coin*/
 void Game::newCoin()
 {
-	if(coinCnt >= 1000) {
+	if(coinCnt >= 250) {
 		int randx = rand()%450;
 		things.push_back(new Coin(coinPix, randx, 0));
 		gScene->addItem(things.back());
@@ -160,11 +179,10 @@ void Game::newCoin()
 		coinCnt++;
 }
 
-/****************************************************************/
-/*adds a new heart*/
+/**Adds a new heart*/
 void Game::newHeart()
 {
-	if(heartCnt == 1000) {
+	if(heartCnt == 500) {
 		for(int i=0; i<things.size(); i++) {
 			if(things[i]->type == Thing::other)
 				things.pop(i);
@@ -198,8 +216,7 @@ void Game::newHeart()
 		heartCnt++;
 }
 
-/****************************************************************/
-/*deletes any "thing" that goes off screen*/
+/*Deletes any "thing" that goes off screen*/
 void Game::offScreen()
 {
 	for(int i=0; i<things.size(); i++) {
@@ -220,11 +237,10 @@ void Game::offScreen()
 	}
 }
 
-/****************************************************************/
-/*adds a new goomba*/
+/**Adds a new goomba*/
 void Game::newGoomba()
 {
-	if(goombaCnt >= 100) {
+	if(goombaCnt >= 50) {
 		int randx = rand()%450;
 		int randy = ((rand()%5)*100)-50;
 		switch(rand()%2) {
@@ -242,11 +258,10 @@ void Game::newGoomba()
 		goombaCnt++;
 }
 
-/****************************************************************/
-/*adds a new koopa*/
+/**Adds a new koopa*/
 void Game::newKoopa()
 {
-	if(koopaCnt >= 150) {
+	if(koopaCnt >= 100) {
 		int randx = rand()%450;
 		switch(rand()%2) {
 			case 0:
@@ -263,11 +278,10 @@ void Game::newKoopa()
 		koopaCnt++;
 }
 
-/****************************************************************/
-/*adds a new kamek*/
+/**Adds a new kamek*/
 void Game::newKamek()
 {
-	if(kamekCnt >= 500) {
+	if(kamekCnt >= 250) {
 		int randx = rand()%450;
 		int randy = ((rand()%5)*100)-50;
 		if(randx <= 250)
@@ -282,11 +296,10 @@ void Game::newKamek()
 		kamekCnt++;	
 }
 
-/****************************************************************/
-/*adds a new bill*/
+/**Adds a new bill*/
 void Game::newBill()
 {
-	if(billCnt >= 750) {
+	if(billCnt >= 500) {
 		int randy = rand()%450;
 		switch(rand()%2) {
 			case 0:
@@ -303,8 +316,11 @@ void Game::newBill()
 		billCnt++;
 }
 
-/****************************************************************/
-/*adds a new magic item*/
+/**Adds a new magic item
+@param x The x location of the magic item
+@param y The y location of the magic item
+@param r Boolean that determines what direction to go to
+*/
 void Game::newMagic(int x, int y, bool r)
 {
 	if(!boolMagic) {
@@ -314,11 +330,10 @@ void Game::newMagic(int x, int y, bool r)
 	}
 }
 
-/****************************************************************/
-/*constructor of the game graphics view*/
+/**Constructor*/
 Game::Game(QTimer *t, QString n)
 {
-	setFixedSize(525, 525);
+	setFixedSize(500, 500);
 	setFocus();
 	
 	//removes scroll bars
@@ -362,21 +377,29 @@ Game::Game(QTimer *t, QString n)
 	/*create text*/
 	//font size
 	font.setPixelSize(30);
-	fontT.setPixelSize(15);
+	fontT.setPixelSize(14);
 	
 	//word "Score"
 	sLabel = new QGraphicsSimpleTextItem("Score: ");
-	sLabel->setPos(300, 460);
+	sLabel->setPos(300, 450);
 	sLabel->setFont(fontT);
-	sLabel->setZValue(2);
+	sLabel->setZValue(3);
+	nameLabel = new QGraphicsSimpleTextItem("Name: ");
+	nameLabel->setPos(300, 465);
+	nameLabel->setFont(fontT);
+	nameLabel->setZValue(3);
+	levelLabel = new QGraphicsSimpleTextItem("Level: ");
+	levelLabel->setPos(300, 480);
+	levelLabel->setFont(fontT);
+	levelLabel->setZValue(3);
 	
 	//actual score value
 	score = 0;
 	QString temp = QString::number(score);
 	sAmount = new QGraphicsSimpleTextItem(temp);
-	sAmount->setPos(400, 460);
+	sAmount->setPos(400, 450);
 	sAmount->setFont(fontT);
-	sAmount->setZValue(2);
+	sAmount->setZValue(3);
 	
 	//lives
 	lives = 3;
@@ -384,7 +407,7 @@ Game::Game(QTimer *t, QString n)
 	lAmount = new QGraphicsSimpleTextItem(temp);
 	lAmount->setPos(70, 460);
 	lAmount->setFont(font);
-	lAmount->setZValue(2);
+	lAmount->setZValue(3);
 	
 	//number of coins collected
 	nCoins = 0;
@@ -394,10 +417,18 @@ Game::Game(QTimer *t, QString n)
 	cAmount->setFont(font);
 	cAmount->setZValue(2);
 	
+	//level
+	levelCnt = 1;
+	temp = QString::number(levelCnt);
+	levelAmount = new QGraphicsSimpleTextItem(temp);
+	levelAmount->setPos(400, 480);
+	levelAmount->setFont(fontT);
+	levelAmount->setZValue(2);
+	gScene->addItem(levelAmount);
 	
 	//name
 	nLabel = new QGraphicsSimpleTextItem(n);
-	nLabel->setPos(300, 480);
+	nLabel->setPos(400, 465);
 	nLabel->setFont(fontT);
 	nLabel->setZValue(2);
 	
@@ -411,7 +442,8 @@ Game::Game(QTimer *t, QString n)
 	gScene->addItem(sAmount);
 	gScene->addItem(lAmount);
 	gScene->addItem(cAmount);
-	
+	gScene->addItem(nameLabel);
+	gScene->addItem(levelLabel);
 	for(int k=1; k<things.size(); k++)
 		gScene->addItem(things[k]);
 	
@@ -445,15 +477,13 @@ Game::Game(QTimer *t, QString n)
 	//timer->start();
 }
 
-/****************************************************************/
-/*destructor*/
+/**Destructor*/
 Game::~Game()
 {
 	
 }
 
-/****************************************************************/
-/*for keyboard inputs*/
+/*Fuctions that are called in the Main class by keyboard inputs*/
 void Game::yoshiW1()
 {
 	if(yoshi && timer->isActive())
@@ -468,20 +498,19 @@ void Game::yoshiW2()
 
 void Game::yoshiC()
 {
-	if(yoshi && timer->isActive())
-		yoshi->crouch();
+	if(yoshi && timer->isActive()) {
+			yoshi->crouch();
+	}
 }
 
 void Game::yoshiJ()
 {
 	if(yoshi && timer->isActive()) {
 		yoshi->jump();
-		yoshiJCnt++;
 	}
 }
 
 void Game::yoshiI()
 {
-	yoshiJCnt = 14;
-	yoshi->stop();
+	yoshi->idle();
 }

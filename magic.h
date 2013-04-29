@@ -1,7 +1,8 @@
 #ifndef MAGIC_H
 #define MAGIC_H
 #include "thing.h"
-
+/** A class for magic objects
+@author Jesus Garcia*/
 class Magic : public Thing
 {
 	public:
@@ -9,6 +10,7 @@ class Magic : public Thing
 		~Magic();
 		void move();
 	private:
+		/**Pixmap images*/
 		QPixmap *magic;
 };
 #endif

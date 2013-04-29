@@ -1,7 +1,11 @@
 #ifndef BG_H
 #define BG_H
 #include "thing.h"
+/**
+A class for the background image
 
+@author Jesus Garcia
+*/
 class Bg : public Thing
 {
 	public:
@@ -9,6 +13,7 @@ class Bg : public Thing
 		~Bg();
 		void move();
 	private:
+		/**A pointer to the pixmap image*/
 		QPixmap *back;
 };
 #endif
