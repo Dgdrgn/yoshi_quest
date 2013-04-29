@@ -5,6 +5,7 @@ Main::Main()
 	setWindowTitle("Yoshi's Quest");
 	setFixedSize(WINDOW_MAX_X, WINDOW_MAX_Y);
 	time = new QTimer(this);
+	time->setInterval(50);
 	sScreen = new Start;
 	gScreen = new Game(time);
 	setCentralWidget(sScreen);
@@ -21,6 +22,7 @@ Main::Main()
 	info->setReadOnly(true);
 	info->setFixedWidth(90);
 	info->setFixedHeight(350);
+	info->setFontPointSize(8);
 	info->setPlainText("Instructions: Yoshi is on a quest! Use the WSAD keys to move Yoshi around to avoid the enemies. Collect coins for extra points. Collecting five coins or a heart will give Yoshi an extra life. When Yoshi loses all of his lives, its game over.");
 	
 	layout = new QVBoxLayout;
@@ -36,26 +38,6 @@ Main::Main()
 	dWidget->setWidget(dock);
 	dWidget->setFeatures(QDockWidget::NoDockWidgetFeatures);
 	addDockWidget(Qt::RightDockWidgetArea, dWidget);
-	/*
-	toolbar = new QVBoxLayout;
-	layout = new QHBoxLayout;
-	
-	
-	
-	window->setWindowTitle("Yoshi's Quest");
-	window->setFixedSize(WINDOW_MAX_X, WINDOW_MAX_Y);
-	toolbar->addWidget(startG);
-	toolbar->addWidget(pauseG);
-	toolbar->addWidget(quitG);
-	layout->addWidget(sScreen);
-	window->setLayout(layout);
-	dock->setLayout(toolbar);
-	
-	dWidget->setWidget(dock);
-	
-	
-	setFocus();
-	std::cout << "has focus" << hasFocus() << std::endl;*/
 }
 
 Main::~Main()
@@ -80,6 +62,7 @@ void Main::pause()
 
 void Main::start()
 {
+	gScreen = new Game(time);
 	switchGame();
 	time->start();
 }
@@ -90,4 +73,21 @@ void Main::switchGame()
 	layout->addWidget(gScreen);
 	setCentralWidget(gScreen);
 	show();
+}
+
+/****************************************************************/
+/*Keyboard inputs*/
+void Main::keyPressEvent(QKeyEvent *e)
+{
+	switch(e->key()) {
+		case Qt::Key_D:
+			gScreen->yoshiW1();
+			break;
+		case Qt::Key_A:
+			gScreen->yoshiW2();
+			break;
+		default:
+			//nothing
+			break;
+	}
 }

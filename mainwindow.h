@@ -10,7 +10,7 @@
 
 class QAction;
 
-#define WINDOW_MAX_X 600
+#define WINDOW_MAX_X 700
 #define WINDOW_MAX_Y 500
 
 class Main : public QMainWindow
@@ -34,9 +34,8 @@ class Main : public QMainWindow
 		QDockWidget *dWidget;
 		QWidget *dock;
 		QVBoxLayout *layout;
-	//protected:
-		//void keyPressEvent(QKeyEvent *e);
-		//void keyReleaseEvent(QKeyEvent *e);
+	protected:
+		void keyPressEvent(QKeyEvent *e);
 	public slots:
 		//void game();
 		void pause();

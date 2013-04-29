@@ -14,7 +14,7 @@ void Game::collisions()
 {
 	for(int i=0; i<things.size(); i++) {
 		/*platforms*/
-		if(things[i]->type != Thing::item && things[i]->type != Thing::billEnemy && things[i]->type != Thing::ammo) {
+		if(things[i]->type != Thing::item && things[i]->type != Thing::billEnemy && things[i]->type != Thing::ammo && things[i]->type != Thing::other) {
 			for(int j=0; j<platforms.size(); j++) {
 				int tX = things[i]->getLocx();
 				int tY = things[i]->getLocy();
@@ -86,13 +86,51 @@ void Game::animate()
 void Game::newCoin()
 {
 	if(coinCnt >= 1000) {
-		int randx = rand()%400;
+		int randx = rand()%450;
 		things.push_back(new Coin(coinPix, randx, 0));
 		gScene->addItem(things.back());
 		coinCnt = 0;
 	}
 	else
 		coinCnt++;
+}
+
+/****************************************************************/
+/*adds a new heart*/
+void Game::newHeart()
+{
+	if(heartCnt == 1000) {
+		for(int i=0; i<things.size(); i++) {
+			if(things[i]->type == Thing::other)
+				things.pop(i);
+		}
+	}
+	if(heartCnt >= 2000) {
+		int randx = rand()%450;
+		int randy = 0;
+		switch(rand()%5) {
+			case 0:
+				randy = 25;
+				break;
+			case 1:
+				randy = 125;
+				break;
+			case 2:
+				randy = 225;
+				break;
+			case 3:
+				randy = 325;
+				break;
+			case 4:
+				randy = 425;
+				break;
+		}
+		things.push_back(new Heart(hPix, randx, randy));
+		gScene->addItem(things.back());
+		heartCnt = 0;
+	}
+	else
+		heartCnt++;
 }
 
 /****************************************************************/
@@ -213,7 +251,8 @@ void Game::newMagic(int x, int y, bool r)
 Game::Game(QTimer *t)
 {
 	setFixedSize(525, 525);
-
+	setFocus();
+	
 	//removes scroll bars
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -244,7 +283,7 @@ Game::Game(QTimer *t)
 	background = new Bg(bPix, 0, 0);
 	
 	//adds Yoshi (playable character) to list
-	things.push_back(new Yoshi(yPix, 225, 390));
+	yoshi = new Yoshi(yPix, 225, 390);
 	
 	//coin on stats panel (lava)
 	sCoin = new Coin(coinPix, 170, 460);
@@ -310,12 +349,14 @@ Game::Game(QTimer *t)
 	gScene->addItem(sAmount);
 	gScene->addItem(lAmount);
 	gScene->addItem(cAmount);
-	for(int k=0; k<things.size(); k++)
-		gScene->addItem(things[k]);
 	
 	for(int i=0; i<platforms.size(); i++)
 		gScene->addItem(platforms[i]);
+		
+	for(int k=0; k<things.size(); k++)
+		gScene->addItem(things[k]);
 	
+	gScene->addItem(yoshi);
 	
 	//timers
 	timer = t;
@@ -326,6 +367,7 @@ Game::Game(QTimer *t)
 	kamekCnt = 0;
 	billCnt = 0;
 	coinCnt = 0;
+	heartCnt = 0;
 	
 	//connect to slot functions
 	connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
@@ -334,6 +376,7 @@ Game::Game(QTimer *t)
 	connect(timer, SIGNAL(timeout()), this, SLOT(newKoopa()));
 	connect(timer, SIGNAL(timeout()), this, SLOT(newKamek()));
 	connect(timer, SIGNAL(timeout()), this, SLOT(newBill()));
+	connect(timer, SIGNAL(timeout()), this, SLOT(newHeart()));
 	connect(timer, SIGNAL(timeout()), this, SLOT(offScreen()));
 	
 	//timer->start();
@@ -344,4 +387,16 @@ Game::Game(QTimer *t)
 Game::~Game()
 {
 	
+}
+
+/****************************************************************/
+/*for keyboard inputs*/
+void Game::yoshiW1()
+{
+	yoshi->walk1();
+}
+
+void Game::yoshiW2()
+{
+	yoshi->walk2();
 }

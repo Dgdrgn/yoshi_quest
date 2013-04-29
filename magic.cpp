@@ -1,4 +1,5 @@
 #include "magic.h"
+#include <cmath>
 
 Magic::Magic(QPixmap *pm, int lx, int ly, bool r) : Thing(pm, lx, ly)
 {
@@ -19,7 +20,8 @@ Magic::~Magic()
 void Magic::move()
 {
 	if(!right) {
-		locx -= 20;
+		locx -= velx;
+		locy = sin(locx);
 		switch(frame) {
 			case 1:
 				setPixmap(*magic4);
@@ -40,7 +42,8 @@ void Magic::move()
 		}
 	}
 	else {
-		locx += 20;
+		locx += velx;
+		locy = sin(locx);
 		switch(frame) {
 			case 1:
 				setPixmap(*magic2);

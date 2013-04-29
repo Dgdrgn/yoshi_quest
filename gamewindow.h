@@ -34,6 +34,8 @@ class Game : public QGraphicsView
 		explicit Game(QTimer *t);
 		~Game();
 		QTimer *timer;
+		void yoshiW1();
+		void yoshiW2();
 		
 	private:
 		QGraphicsScene *gScene;
@@ -53,6 +55,7 @@ class Game : public QGraphicsView
 		QPixmap *magicPix;
 		Bg *background;
 		Heart *heart;
+		Yoshi *yoshi;
 		Queue<Platform*> platforms;
 		MyList<Thing*> things;
 		Coin *sCoin;
@@ -69,6 +72,7 @@ class Game : public QGraphicsView
 		int kamekCnt;
 		int billCnt;
 		int coinCnt;
+		int heartCnt;
 		void respawn();
 		void newMagic(int x, int y, bool r);
 		
@@ -79,6 +83,7 @@ class Game : public QGraphicsView
 		void newKoopa();
 		void newKamek();
 		void newBill();
+		void newHeart();
 		void offScreen();
 		void collisions();
 };
