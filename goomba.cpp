@@ -5,7 +5,7 @@
 @param lx The x location of the object
 @param ly The y location of the object
 @param r Boolean that determines direction of movement*/
-Goomba::Goomba(QPixmap *pm, int lx, int ly, bool r) : Thing(pm, lx, ly)
+Goomba::Goomba(QPixmap *pm, int lx, int ly, int vx, int vy, bool r) : Thing(pm, lx, ly, vx, vy)
 {
 	type = goombaEnemy;
 	goomba1 = new QPixmap("img/goombaw1.png");
@@ -26,8 +26,8 @@ void Goomba::move()
 		locy+=vely;
 	}
 	if(right)
-		locx += velx*5;
+		locx += velx;
 	else
-		locx -= velx*5;
+		locx -= velx;
 	update();
 }

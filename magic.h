@@ -6,7 +6,7 @@
 class Magic : public Thing
 {
 	public:
-		Magic(QPixmap *pm, int lx, int ly, bool r);
+		Magic(QPixmap *pm, int lx, int ly, int vx, int vy, bool r);
 		~Magic();
 		void move();
 	private:

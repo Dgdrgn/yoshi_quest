@@ -4,7 +4,7 @@
 @param lx The x location of the object
 @param ly The y location of the object
 @param r Boolean that determines direction of movement*/
-Kamek::Kamek(QPixmap *pm, int lx, int ly, bool r) : Thing(pm, lx, ly)
+Kamek::Kamek(QPixmap *pm, int lx, int ly, int vx, int vy, bool r) : Thing(pm, lx, ly, vx, vy)
 {
 	changeFrame = 0;
 	type = kamekEnemy;

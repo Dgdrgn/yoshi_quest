@@ -10,7 +10,7 @@ A class for coins
 class Coin : public Thing
 {
 	public:
-		Coin(QPixmap *pm, int lx, int ly);
+		Coin(QPixmap *pm, int lx, int ly, int vx, int vy);
 		~Coin();
 		void move();
 	private:

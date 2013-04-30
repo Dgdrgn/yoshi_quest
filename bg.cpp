@@ -6,7 +6,7 @@ Constructor
 @param lx The x location of the image.
 @param ly The y location of the image.
 */
-Bg::Bg(QPixmap *pm, int lx, int ly) : Thing(pm, lx, ly)
+Bg::Bg(QPixmap *pm, int lx, int ly, int vx, int vy) : Thing(pm, lx, ly, vx, vy)
 {
 	type = other;
 	back = new QPixmap("img/bg.png");

@@ -6,7 +6,7 @@ Constructor
 @param ly The y location of the image.
 @param r A boolean that tells whether it is facing right or left
 */
-Bill::Bill(QPixmap *pm, int lx, int ly, bool r) : Thing(pm, lx, ly)
+Bill::Bill(QPixmap *pm, int lx, int ly, int vx, int vy, bool r) : Thing(pm, lx, ly, vx, vy)
 {
 	type = billEnemy;
 	bill = pm;
@@ -26,10 +26,10 @@ Bill::~Bill()
 void Bill::move()
 {
 	if(right) {
-		locx -= velx*20;
+		locx -= velx*5;
 	}
 	else {
-		locx += velx*20;
+		locx += velx*5;
 	}
 	update();
 }

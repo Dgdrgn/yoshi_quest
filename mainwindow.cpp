@@ -23,14 +23,13 @@ Main::Main()
 	name = new QTextEdit;
 	name->setFixedWidth(180);
 	name->setFixedHeight(25);
-	name->setFontPointSize(8);
 	name->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	
 	info = new QTextEdit;
 	info->setReadOnly(true);
 	info->setFixedWidth(180);
 	info->setFontPointSize(12);
-	info->setPlainText("Instructions: Yoshi is on a quest for treasure! Use the WSAD keys to move Yoshi around to avoid the enemies. Collect the treasure chest to complete each level. Collect coins for extra points. Collecting five coins or a heart will give Yoshi an extra life. When Yoshi loses all of his lives, its game over. Note: To start the game, please enter your name above and press start. To reset, press start again.");
+	info->setPlainText("Instructions: Yoshi is on a quest for treasure! Use the WSAD keys to move Yoshi around to avoid the enemies. Collect coins for extra points. Collecting five coins or a heart will give Yoshi an extra life. When Yoshi loses all of his lives, its game over. Note: To start the game, please enter your name above and press start. To reset, press start again. If the game freezes, press pause to resume(glitch).");
 	
 	layout = new QVBoxLayout;
 	layout->addWidget(name);
@@ -46,10 +45,6 @@ Main::Main()
 	dWidget->setWidget(dock);
 	dWidget->setFeatures(QDockWidget::NoDockWidgetFeatures);
 	addDockWidget(Qt::RightDockWidgetArea, dWidget);
-
-	gMusic = new QSound("img/mp.wav");
-	gMusic->setLoops(-1);
-	connect(time, SIGNAL(timeout()), this, SLOT(musicPlay()));
 }
 /**Destructor*/
 Main::~Main()
@@ -111,17 +106,4 @@ void Main::keyPressEvent(QKeyEvent *e)
 void Main::keyReleaseEvent(QKeyEvent *e)
 {
 	gScreen->yoshiI();
-}
-
-/**Controls music*/
-void Main::musicPlay()
-{
-	if(time->isActive()) {
-		if(gMusic->isFinished()) {
-			gMusic->play();
-		}
-	}
-	else {
-		gMusic->stop();
-	}
 }

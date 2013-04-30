@@ -10,7 +10,7 @@ A class for a bullet bill object.
 class Bill : public Thing
 {
 	public:
-		Bill(QPixmap *pm, int lx, int ly, bool right);
+		Bill(QPixmap *pm, int lx, int ly, int vx, int vy, bool right);
 		~Bill();
 		void move();
 	private:

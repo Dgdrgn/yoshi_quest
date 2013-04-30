@@ -9,7 +9,7 @@ A class for Goomba objects
 class Goomba : public Thing
 {
 	public:
-		Goomba(QPixmap *pm, int lx, int ly, bool r);
+		Goomba(QPixmap *pm, int lx, int ly, int vx, int vy, bool r);
 		~Goomba();
 		void move();
 	private:

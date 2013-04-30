@@ -4,7 +4,7 @@
 @param lx The x location of the object
 @param ly The y location of the object
 @param r Boolean that determines direction of movement*/
-Koopa::Koopa(QPixmap *pm, int lx, int ly, bool r) : Thing(pm, lx, ly)
+Koopa::Koopa(QPixmap *pm, int lx, int ly, int vx, int vy, bool r) : Thing(pm, lx, ly, vx, vy)
 {
 	type = koopaEnemy;
 	koopa1L = new QPixmap("img/koopaw1.png");
@@ -30,8 +30,8 @@ void Koopa::move()
 		setPixmap(*koopa1L);
 	}
 	if(right)
-		locx+=velx*5;
+		locx+=velx;
 	else
-		locx-=velx*5;
+		locx-=velx;
 	update();
 }

@@ -32,7 +32,7 @@ void Game::life(int choice)
 	}
 	if(lives == 0) {
 		QGraphicsSimpleTextItem *over = new QGraphicsSimpleTextItem("Game Over!");
-		over->setPos(50, 100);
+		over->setPos(100, 225);
 		QFont *fonto = new QFont;
 		fonto->setPixelSize(50);
 		over->setFont(*fonto);
@@ -53,26 +53,36 @@ void Game::collisions()
 		things[0]->setLocy(things[0]->getLocy()+1);
 		things[0]->update();
 	}
-	for(int k=0; k<things.size(); k++) {
-		int pX = things[k]->getLocx();
-		int pY = things[k]->getLocy();
-		if(abs(tX-pX) < 50 && abs(tY-pY) < 40) {
-			if(spawnCnt >= 20) {
+	if(spawnCnt >= 100) {
+		for(int k=0; k<things.size(); k++) {
+			int pX = things[k]->getLocx();
+			int pY = things[k]->getLocy();
+			if(abs(tX-pX) < 32 && abs(tY-pY) < 32) {
 				if(things[k]->type == Thing::goombaEnemy) {
 					life(0);
+					spawnCnt = 0;
 				}
+				
 				else if(things[k]->type == Thing::koopaEnemy) {
 					life(0);
+					spawnCnt = 0;
 				}
+				
 				else if(things[k]->type == Thing::billEnemy) {
 					life(0);
+					spawnCnt = 0;
 				}
+				
 				else if(things[k]->type == Thing::kamekEnemy) {
 					life(0);
+					spawnCnt = 0;
 				}
+				
 				else if(things[k]->type == Thing::ammo) {
 					life(0);
+					spawnCnt = 0;
 				}
+				
 				else if(things[k]->type == Thing::item) {
 					gScene->removeItem(things[k]);
 					things.pop(k);
@@ -96,18 +106,18 @@ void Game::collisions()
 					sAmount->setFont(fontT);
 					sAmount->setZValue(2);
 					gScene->addItem(sAmount);
-				}
+				}	
+					
 				else if(things[k]->type == Thing::life) {
 					gScene->removeItem(things[k]);
 					things.pop(k);
 					life(1);
 				}
-				spawnCnt = 0;
-			}
-			else if(things[k]->type == Thing::hero && spawnCnt < 20) {
-				spawnCnt++;
 			}
 		}
+	}
+	else {
+		spawnCnt++;
 	}
 }	
 
@@ -131,12 +141,12 @@ void Game::animate()
 		if(things[l]->type == Thing::kamekEnemy && things[l]->frame == 4) {
 			if(things[l]->right) {
 				int y = things[l]->getLocy();
-				int x = things[l]->getLocx() - 28;
+				int x = things[l]->getLocx() +3;
 				newMagic(x, y, 0);
 			}
 			else {
 				int y = things[l]->getLocy();
-				int x = things[l]->getLocx() + 3;
+				int x = things[l]->getLocx() -28;
 				newMagic(x, y, 1);
 			}
 		}
@@ -146,10 +156,8 @@ void Game::animate()
 		}
 	}
 	if(timeCnt >= 500) {
-		for(int m=1; m<things.size(); m++) {
-			things[m]->addVelx();
-			things[m]->addVely();
-		}	
+		interval -= (interval/64);
+		timer->setInterval(interval);
 		timeCnt = 0;
 		levelCnt++;
 		gScene->removeItem(levelAmount);
@@ -171,7 +179,7 @@ void Game::newCoin()
 {
 	if(coinCnt >= 150) {
 		int randx = rand()%450;
-		things.push_back(new Coin(coinPix, randx, 0));
+		things.push_back(new Coin(coinPix, randx, 0, velx, vely));
 		gScene->addItem(things.back());
 		coinCnt = 0;
 	}
@@ -182,10 +190,12 @@ void Game::newCoin()
 /**Adds a new heart*/
 void Game::newHeart()
 {
-	if(heartCnt -= 50) {
+	if(heartCnt >= 100) {
 		for(int i=0; i<things.size(); i++) {
-			if(things[i]->type == Thing::heart)
+			if(things[i]->type == Thing::life) {
+				gScene->removeItem(things[i]);
 				things.pop(i);
+			}
 		}
 	}
 	if(heartCnt >= 500) {
@@ -208,7 +218,7 @@ void Game::newHeart()
 				randy = 425;
 				break;
 		}
-		things.push_back(new Heart(hPix, randx, randy));
+		things.push_back(new Heart(hPix, randx, randy, 0, 0));
 		gScene->addItem(things.back());
 		heartCnt = 0;
 	}
@@ -240,15 +250,15 @@ void Game::offScreen()
 /**Adds a new goomba*/
 void Game::newGoomba()
 {
-	if(goombaCnt >= 50) {
+	if(goombaCnt >= 100) {
 		int randx = rand()%450;
 		int randy = ((rand()%5)*100)-50;
 		switch(rand()%2) {
 			case 0:
-				things.push_back(new Goomba(goombaPix, randx, randy, 0));
+				things.push_back(new Goomba(goombaPix, randx, randy, velx, vely, 0));
 				break;
 			case 1:
-				things.push_back(new Goomba(goombaPix, randx, randy, 1));
+				things.push_back(new Goomba(goombaPix, randx, randy, velx, vely, 1));
 				break;
 		}
 		gScene->addItem(things.back());
@@ -261,14 +271,14 @@ void Game::newGoomba()
 /**Adds a new koopa*/
 void Game::newKoopa()
 {
-	if(koopaCnt >= 100) {
+	if(koopaCnt >= 150) {
 		int randx = rand()%450;
 		switch(rand()%2) {
 			case 0:
-				things.push_back(new Koopa(koopaPix, randx, 0, 0));
+				things.push_back(new Koopa(koopaPix, randx, 0, velx, vely, 0));
 				break;
 			case 1:
-				things.push_back(new Koopa(koopaPix, randx, 0, 1));
+				things.push_back(new Koopa(koopaPix, randx, 0, velx, vely, 1));
 				break;
 		}
 		gScene->addItem(things.back());
@@ -285,12 +295,12 @@ void Game::newKamek()
 		int randx = rand()%450;
 		int randy = ((rand()%5)*100)-50;
 		if(randx <= 250)
-			things.push_back(new Kamek(kamekRPix, randx, randy, 1));
+			things.push_back(new Kamek(kamekLPix, randx, randy, velx, vely, 1));
 		else
-			things.push_back(new Kamek(kamekLPix, randx, randy, 0));
+			things.push_back(new Kamek(kamekRPix, randx, randy, velx, vely, 0));
 		gScene->addItem(things.back());
 		kamekCnt = 0;
-		boolMagic = false;
+		boolMagic = true;
 	}
 	else
 		kamekCnt++;	
@@ -299,14 +309,14 @@ void Game::newKamek()
 /**Adds a new bill*/
 void Game::newBill()
 {
-	if(billCnt >= 500) {
+	if(billCnt >= 450) {
 		int randy = rand()%450;
 		switch(rand()%2) {
 			case 0:
-				things.push_back(new Bill(billLPix, -68, randy, 0));
+				things.push_back(new Bill(billLPix, -68, randy, velx, vely, 0));
 				break;
 			case 1:
-				things.push_back(new Bill(billRPix, 500, randy, 1));
+				things.push_back(new Bill(billRPix, 500, randy, velx, vely, 1));
 				break;
 		}
 		gScene->addItem(things.back());
@@ -323,10 +333,10 @@ void Game::newBill()
 */
 void Game::newMagic(int x, int y, bool r)
 {
-	if(!boolMagic) {
-		things.push_back(new Magic(magicPix, x, y, r));
+	if(boolMagic) {
+		things.push_back(new Magic(magicPix, x, y, velx, vely, !r));
 		gScene->addItem(things.back());
-		boolMagic = true;
+		boolMagic = false;
 	}
 }
 
@@ -360,18 +370,18 @@ Game::Game(QTimer *t, QString n)
 	
 	/*creates "things"*/
 	//background
-	background = new Bg(bPix, 0, 0);
+	background = new Bg(bPix, 0, 0, 0, 0);
 	
 	//adds Yoshi (playable character) to list
-	yoshi = new Yoshi(yPix, 225, 405);
+	yoshi = new Yoshi(yPix, 225, 405, 1, 1);
 	things.push_back(yoshi);
-	
+	yoshi->setZValue(3);
 	//coin on stats panel (lava)
-	sCoin = new Coin(coinPix, 170, 460);
+	sCoin = new Coin(coinPix, 170, 460, 0, 0);
 	sCoin->setZValue(2);
 	
 	//heart
-	heart = new Heart(hPix, 20, 465);
+	heart = new Heart(hPix, 20, 465, 0, 0);
 	heart->setZValue(2);
 	
 	/*create text*/
@@ -460,8 +470,11 @@ Game::Game(QTimer *t, QString n)
 	coinCnt = 0;
 	heartCnt = 0;
 	yoshiJCnt = 0;
-	spawnCnt = 0;
+	spawnCnt = 100;
 	timeCnt = 0;
+	interval = timer->interval();
+	velx = 1;
+	vely = 1;
 	boolMagic = false;
 	
 	//connect to slot functions

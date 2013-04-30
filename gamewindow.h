@@ -91,6 +91,8 @@ class Game : public QGraphicsView
 		int timeCnt;
 		int yoshiJCnt;
 		int levelCnt;
+		int velx, vely;
+		int interval;
 		bool boolMagic;
 		void life(int choice);
 		void newMagic(int x, int y, bool r);

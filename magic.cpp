@@ -5,7 +5,7 @@
 @param lx The x location of the object
 @param ly The y location of the object
 @param r Boolean that determines direction of movement*/
-Magic::Magic(QPixmap *pm, int lx, int ly, bool r) : Thing(pm, lx, ly)
+Magic::Magic(QPixmap *pm, int lx, int ly, int vx, int vy, bool r) : Thing(pm, lx, ly, vx, vy)
 {
 	type = ammo;
 	right = r;
@@ -21,11 +21,11 @@ Magic::~Magic()
 void Magic::move()
 {
 	if(!right) {
-		locx -= velx*10;
+		locx -= velx;
 		locy += 10*sin(locx);
 	}
 	else {
-		locx += velx*10;
+		locx += velx;
 		locy += 10*sin(locx);
 	}
 	update();

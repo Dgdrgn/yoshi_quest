@@ -5,7 +5,7 @@
 @param pm A pointer for the pixmap image
 @param lx The x location of the object
 @param ly The y location of the object*/
-Yoshi::Yoshi(QPixmap *pm, int lx, int ly) : Thing(pm, lx, ly)
+Yoshi::Yoshi(QPixmap *pm, int lx, int ly, int vx, int vy) : Thing(pm, lx, ly, vx, vy)
 {
 	type = hero;
 	right = true;
@@ -33,7 +33,7 @@ void Yoshi::move()
 /**Switches frame when Yoshi does not move*/
 void Yoshi::idle()
 {
-	if(locy+height < 450) {
+	if(locy+height < 445) {
 		if(right) {
 			setPixmap(*yoshiCrouchL);
 			updateWH(yoshiCrouchL);
@@ -43,7 +43,7 @@ void Yoshi::idle()
 			updateWH(yoshiCrouchR);
 		}
 	}
-	if(locy+height == 450) {
+	if(locy+height >= 445) {
 		if(right) {
 			setPixmap(*yoshiWalk2L);
 			updateWH(yoshiWalk2L);
@@ -59,17 +59,21 @@ void Yoshi::idle()
 /**Makes Yoshi swim right*/
 void Yoshi::walkR()
 {
-	locx+= velx*5;
-	right = false;
-	update();
+	if(locx+width < 500) {
+		locx+= velx*5;
+		right = false;
+		update();
+	}
 }
 
 /**Makes Yoshi swim left*/
 void Yoshi::walkL()
 {
-	locx-=velx*5;
-	right = true;
-	update();
+	if(locx > 0) {
+		locx-=velx*5;
+		right = true;
+		update();
+	}
 }
 
 /**Makes Yoshi swim up*/
@@ -83,8 +87,10 @@ void Yoshi::jump()
 		setPixmap(*yoshiJumpR);
 		updateWH(yoshiJumpR);
 	}
-	locy-= 10;
-	update();
+	if(locy > 0) {
+		locy-= 10;
+		update();
+	}
 }
 
 /**Makes Yoshi swim down*/

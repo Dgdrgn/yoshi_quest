@@ -9,7 +9,7 @@ A class for the background image
 class Bg : public Thing
 {
 	public:
-		Bg(QPixmap *pm, int lx, int ly);
+		Bg(QPixmap *pm, int lx, int ly, int vx, int vy);
 		~Bg();
 		void move();
 	private:

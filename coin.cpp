@@ -6,7 +6,7 @@ Constructor
 @param lx The x location of the image.
 @param ly The y location of the image.
 */
-Coin::Coin(QPixmap *pm, int lx, int ly) : Thing(pm, lx, ly)
+Coin::Coin(QPixmap *pm, int lx, int ly, int vx, int vy) : Thing(pm, lx, ly, vx, vy)
 {
 	type = item;
 	coin = new QPixmap("img/coin.gif");
@@ -27,6 +27,6 @@ Move function from inherited Thing class
 */
 void Coin::move()
 {
-	locy += vely*2;
+	locy += vely;
 	update();
 }

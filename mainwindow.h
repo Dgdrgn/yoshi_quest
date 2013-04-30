@@ -46,16 +46,12 @@ class Main : public QMainWindow
 		QWidget *dock;
 		/**Layout of widget*/
 		QVBoxLayout *layout;
-		/**Music*/
-		QSound *gMusic;
-		bool isMusicPlaying;
 	protected:
 		void keyPressEvent(QKeyEvent *e);
 		void keyReleaseEvent(QKeyEvent *e);
 	public slots:
 		void pause();
 		void start();
-		void musicPlay();
 };
 
 #endif

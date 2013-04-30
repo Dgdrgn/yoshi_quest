@@ -7,7 +7,7 @@
 class Thing : public QGraphicsPixmapItem
 {
 	public:
-		Thing(QPixmap *pm, int lx, int ly);
+		Thing(QPixmap *pm, int lx, int ly, int vx, int vy);
 		~Thing();
 		void update();
 		/** Moves the object depending on the object*/
@@ -41,8 +41,6 @@ class Thing : public QGraphicsPixmapItem
 		int getHeight() {return height;};
 		void setLocx(int lx) {locx = lx;};
 		void setLocy(int ly) {locy = ly;};
-		void addVelx() {velx=velx*2;};
-		void addVely() {vely=vely*2;};
 
 		/**Updates width and height of Thing after frame is changed*/
 		void updateWH(QPixmap *p) {width = p->width(); height = p->height();};
