@@ -1,5 +1,8 @@
 #include "gamewindow.h"
 #include <cmath>
+#include <sstream>
+#include <fstream>
+#include <iostream>
 
 /**
 Either increments or decrements a life. Checks for game over.
@@ -39,6 +42,29 @@ void Game::life(int choice)
 		over->setZValue(3);
 		gScene->addItem(over);
 		timer->stop();
+		
+		if(scores.size() < 11) {
+			Pair* newScore = new Pair;
+			newScore->score = score;
+			newScore->name = nameString;
+			scores.push(newScore);
+		}
+		else if(scores.size() >= 11 && scores.top()->score < score) {
+			scores.pop();
+			Pair* newScore = new Pair;
+			newScore->score = score;
+			newScore->name = nameString;
+			scores.push(newScore);
+		}
+		ofstream newScores;
+		newScores.open("scores.txt");
+		for(int i=scores.size()-1; i>0; i--) {
+			stringstream ss;
+			ss << scores.top()->score;
+			newScores << i << ". " << scores.top()->name << " " << ss.str() << endl;
+			scores.pop();
+		}
+		newScores.close();
 	}
 }
 
@@ -205,14 +231,14 @@ void Game::animate()
 		}
 	}
 	if(timeCnt >= 1000) {
-		if(!already) {
+		/*if(!already) {
 			gScene->addItem(chomp);
 			for(int i=0; i<7; i++)
 				gScene->addItem(balls[i]);
 			gScene->addItem(chest);
 			already = true;
 		}
-		if(gotIt) {
+		if(gotIt) {*/
 			interval -= (interval/16);
 			timer->setInterval(interval);
 			timeCnt = 0;
@@ -234,7 +260,7 @@ void Game::animate()
 		}
 		else
 			timeCnt++;
-	}
+	//}
 	//collisions
 	collisions();
 }
@@ -408,6 +434,8 @@ void Game::newMagic(int x, int y, bool r)
 /**Constructor*/
 Game::Game(QTimer *t, QString n)
 {
+	nameString = n.toStdString();
+	
 	setFixedSize(500, 500);
 	setFocus();
 	
@@ -560,6 +588,24 @@ Game::Game(QTimer *t, QString n)
 	gotIt = false;
 	already = false;
 	
+	//high scores
+	ifstream scoreFile;
+	scoreFile.open("scores.txt");
+	string rank, stringS;
+	Pair* tScore;
+	while(scoreFile.good()) {
+		tScore = new Pair;
+		getline(scoreFile, rank, '\"');
+		getline(scoreFile, tScore->name, '\"');
+		getline(scoreFile, stringS, '\n');
+		int intS = 0;
+		if(stringS != "")
+			intS = atoi(stringS.c_str());
+		tScore->score = intS;
+		scores.push(tScore);
+	}
+	scoreFile.close();
+	
 	//connect to slot functions
 	connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
 	connect(timer, SIGNAL(timeout()), this, SLOT(newCoin()));
@@ -574,7 +620,28 @@ Game::Game(QTimer *t, QString n)
 /**Destructor*/
 Game::~Game()
 {
-	
+	if(scores.size() < 11) {
+		Pair* newScore = new Pair;
+		newScore->score = score;
+		newScore->name = nameString;
+		scores.push(newScore);
+	}
+	else if(scores.size() >= 11 && scores.top()->score < score) {
+		scores.pop();
+		Pair* newScore = new Pair;
+		newScore->score = score;
+		newScore->name = nameString;
+		scores.push(newScore);
+	}
+	ofstream newScores;
+	newScores.open("scores.txt", ios::app);
+	for(int i=scores.size()-1; i>0; i--) {
+		stringstream ss;
+		ss << scores.top()->score;
+		newScores << i << ". " << scores.top()->name << " " << ss.str() << endl;
+		scores.pop();
+	}
+	newScores.close();
 }
 
 /*Fuctions that are called in the Main class by keyboard inputs*/

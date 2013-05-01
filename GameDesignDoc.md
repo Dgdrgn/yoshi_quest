@@ -9,28 +9,28 @@ Objects
 --------------------
 My game will include the following "objects":
 - Yoshi (playable character) - moves by the player's command
-![Yoshi](/img/yoshiw2.gif)
+![Yoshi](/img/yoshiw2.png)
 	
 - Goomba (enemy) - sinks right and left
-![Goomba](/img/goombaw1.gif)
+![Goomba](/img/goombaw1.png)
 	
 - Koopa (enemy) - sinks right and left
-![Koopa](/img/koopaw1.gif)
+![Koopa](/img/koopaw1.png)
 	
 - Bullet Bill (enemy) - shoots from right to left or left to right
-![Bullet Bill](/img/rbill.gif)
+![Bullet Bill](/img/rbill.png)
 	
 - Kamek (enemy) - appears at a random location and shoots magic
-![Kamek](/img/kamek1.gif)
+![Kamek](/img/kamek1.png)
 	
 - Magic (enemy ammo) - moves at a sine motion
-![magic](/img/magic.gif)
+![magic](/img/magic.png)
 	
 - Coin (item) - sinks straight down
-![coin](/img/coin.gif)
+![coin](/img/coin.png)
 
 - Heart (item) - appears at a random location
-![heart](/img/heart.gif)
+![heart](/img/heart.png)
 
 Controls
 --------------------
