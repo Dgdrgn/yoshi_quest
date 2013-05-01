@@ -54,6 +54,8 @@ lives, its game over.
 
 Layout
 --------------------
+![layout](/img/screenshot1.png)
+
 On the game screen, the lives, coins, and score will be
 displayed on the bottom. The game will be displayed on top.
 During the game, the player can press the pause button to pause.
