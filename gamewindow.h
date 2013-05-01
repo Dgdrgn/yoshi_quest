@@ -14,6 +14,9 @@
 #include "kamek.h"
 #include "bill.h"
 #include "magic.h"
+#include "chomp.h"
+#include "chest.h"
+#include "chompball.h"
 
 /**
 A class for the main game window, which contains all of the 
@@ -55,6 +58,9 @@ class Game : public QGraphicsView
 		QPixmap *billLPix;
 		QPixmap *billRPix;
 		QPixmap *magicPix;
+		QPixmap *chestPix;
+		QPixmap *chompPix;
+		QPixmap *ballPix;
 		
 		/**Status Panel Objects*/
 		Bg *background;
@@ -77,6 +83,11 @@ class Game : public QGraphicsView
 		/**Playable Character*/
 		Yoshi *yoshi;
 		
+		/**Boss and Treasure*/
+		Chomp *chomp;
+		Chest *chest;
+		MyList<ChompBall*> balls;
+		
 		/**List of other Things*/
 		MyList<Thing*> things;
 		
@@ -89,6 +100,12 @@ class Game : public QGraphicsView
 		int heartCnt;
 		int spawnCnt;
 		int timeCnt;
+		int goombaMax;
+		int koopaMax;
+		int kamekMax;
+		int billMax;
+		int coinMax;
+		int heartMax;
 		int yoshiJCnt;
 		int levelCnt;
 		int velx, vely;
@@ -96,6 +113,8 @@ class Game : public QGraphicsView
 		bool boolMagic;
 		void life(int choice);
 		void newMagic(int x, int y, bool r);
+		bool gotIt;
+		bool already;
 		
 	public slots:
 		void animate();

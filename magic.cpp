@@ -21,11 +21,11 @@ Magic::~Magic()
 void Magic::move()
 {
 	if(!right) {
-		locx -= velx;
+		locx -= velx*5;
 		locy += 10*sin(locx);
 	}
 	else {
-		locx += velx;
+		locx += velx*5;
 		locy += 10*sin(locx);
 	}
 	update();

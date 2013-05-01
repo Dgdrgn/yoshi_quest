@@ -54,9 +54,43 @@ void Game::collisions()
 		things[0]->update();
 	}
 	if(spawnCnt >= 100) {
+		int pX = chomp->getLocx();
+		int pY = chomp->getLocy();
+		if(abs(tX-pX) < 32 && abs(tY-pY) < 32) {
+				life(0);
+				spawnCnt = 0;
+				if(gotIt) {
+					gScene->removeItem(chomp);
+					chomp->setPos(0, rand()%450);
+					gScene->removeItem(balls[0]);
+					balls[0]->setPos(0, chomp->getLocy());
+				for(int i=1; i<7; i++) {
+						gScene->removeItem(balls[i]);
+						balls[i]->setPos(0, balls[i-1]->getLocy());
+					}
+				}
+			}
+			
+			pX = chest->getLocx();
+			pY = chest->getLocy();
+			if(abs(tX-pX) < 32 && abs(tY-pY) < 32) {
+				gScene->removeItem(chomp);
+				chest->setPos(0, balls.back()->getLocy());
+				
+				gScene->removeItem(sAmount);
+				score += 100;
+				QString temp = QString::number(score);
+				sAmount = new QGraphicsSimpleTextItem(temp);
+				sAmount->setPos(400, 450);
+				sAmount->setFont(fontT);
+				sAmount->setZValue(2);
+				gScene->addItem(sAmount);
+				
+				gotIt = true;
+			}
 		for(int k=0; k<things.size(); k++) {
-			int pX = things[k]->getLocx();
-			int pY = things[k]->getLocy();
+			pX = things[k]->getLocx();
+			pY = things[k]->getLocy();
 			if(abs(tX-pX) < 32 && abs(tY-pY) < 32) {
 				if(things[k]->type == Thing::goombaEnemy) {
 					life(0);
@@ -137,39 +171,70 @@ void Game::animate()
 		
 	//moves all other things
 	for(int l=0; l<things.size(); l++) {
-		things[l]->move();
-		if(things[l]->type == Thing::kamekEnemy && things[l]->frame == 4) {
-			if(things[l]->right) {
-				int y = things[l]->getLocy();
-				int x = things[l]->getLocx() +3;
-				newMagic(x, y, 0);
+		if(things[l]->type != Thing::chompEnemy || things[l]->type != Thing::chestItem || things[l]->type != Thing::other) {
+			things[l]->move();
+			if(things[l]->type == Thing::kamekEnemy && things[l]->frame == 4) {
+				if(things[l]->right) {
+					int y = things[l]->getLocy();
+					int x = things[l]->getLocx() +3;
+					newMagic(x, y, 0);
+				}
+				else {
+					int y = things[l]->getLocy();
+					int x = things[l]->getLocx() -28;
+					newMagic(x, y, 1);
+				}
 			}
-			else {
-				int y = things[l]->getLocy();
-				int x = things[l]->getLocx() -28;
-				newMagic(x, y, 1);
+			if(things[l]->type == Thing::kamekEnemy && things[l]->del) {
+				gScene->removeItem(things[l]);
+				things.pop(l);
 			}
 		}
-		if(things[l]->type == Thing::kamekEnemy && things[l]->del) {
-			gScene->removeItem(things[l]);
-			things.pop(l);
+		if(already) {
+			chomp->moveIt(yoshi->getLocx(), yoshi->getLocy());
+			if(chomp->getLocx() > 0) {
+				balls[0]->moveIt(chomp->getLocx(), chomp->getLocy());
+				for(int i=1; i<7; i++) {
+					if(balls[i-1]->getLocx() > 0) {
+						balls[i]->moveIt(balls[i-1]->getLocx(), balls[i-1]->getLocy());
+					}
+				}
+				if(balls.back()->getLocx() > 0)
+					chest->moveIt(balls.back()->getLocx(), balls.back()->getLocy());
+			}
 		}
 	}
-	if(timeCnt >= 500) {
-		interval -= (interval/64);
-		timer->setInterval(interval);
-		timeCnt = 0;
-		levelCnt++;
-		gScene->removeItem(levelAmount);
-		temp = QString::number(levelCnt);
-		levelAmount = new QGraphicsSimpleTextItem(temp);
-		levelAmount->setPos(400, 480);
-		levelAmount->setFont(fontT);
-		levelAmount->setZValue(2);
-		gScene->addItem(levelAmount);
+	if(timeCnt >= 1000) {
+		if(!already) {
+			gScene->addItem(chomp);
+			for(int i=0; i<7; i++)
+				gScene->addItem(balls[i]);
+			gScene->addItem(chest);
+			already = true;
+		}
+		if(gotIt) {
+			interval -= (interval/16);
+			timer->setInterval(interval);
+			timeCnt = 0;
+			goombaMax-=goombaMax*1/4;
+			koopaMax-=koopaMax*1/4;
+			kamekMax-=kamekMax*1/4;
+			billMax-=billMax*1/4;
+			
+			levelCnt++;
+			gScene->removeItem(levelAmount);
+			temp = QString::number(levelCnt);
+			levelAmount = new QGraphicsSimpleTextItem(temp);
+			levelAmount->setPos(400, 480);
+			levelAmount->setFont(fontT);
+			levelAmount->setZValue(2);
+			gScene->addItem(levelAmount);
+			gotIt = false;
+			already = false;
+		}
+		else
+			timeCnt++;
 	}
-	else
-		timeCnt++;
 	//collisions
 	collisions();
 }
@@ -177,7 +242,7 @@ void Game::animate()
 /**Adds a new coin*/
 void Game::newCoin()
 {
-	if(coinCnt >= 150) {
+	if(coinCnt >= coinMax) {
 		int randx = rand()%450;
 		things.push_back(new Coin(coinPix, randx, 0, velx, vely));
 		gScene->addItem(things.back());
@@ -198,7 +263,7 @@ void Game::newHeart()
 			}
 		}
 	}
-	if(heartCnt >= 500) {
+	if(heartCnt >= heartMax) {
 		int randx = rand()%450;
 		int randy = 0;
 		switch(rand()%5) {
@@ -250,7 +315,7 @@ void Game::offScreen()
 /**Adds a new goomba*/
 void Game::newGoomba()
 {
-	if(goombaCnt >= 100) {
+	if(goombaCnt >= goombaMax) {
 		int randx = rand()%450;
 		int randy = ((rand()%5)*100)-50;
 		switch(rand()%2) {
@@ -271,7 +336,7 @@ void Game::newGoomba()
 /**Adds a new koopa*/
 void Game::newKoopa()
 {
-	if(koopaCnt >= 150) {
+	if(koopaCnt >= koopaMax) {
 		int randx = rand()%450;
 		switch(rand()%2) {
 			case 0:
@@ -291,9 +356,9 @@ void Game::newKoopa()
 /**Adds a new kamek*/
 void Game::newKamek()
 {
-	if(kamekCnt >= 250) {
+	if(kamekCnt >= kamekMax) {
 		int randx = rand()%450;
-		int randy = ((rand()%5)*100)-50;
+		int randy = rand()%400+50;
 		if(randx <= 250)
 			things.push_back(new Kamek(kamekLPix, randx, randy, velx, vely, 1));
 		else
@@ -309,7 +374,7 @@ void Game::newKamek()
 /**Adds a new bill*/
 void Game::newBill()
 {
-	if(billCnt >= 450) {
+	if(billCnt >= billMax) {
 		int randy = rand()%450;
 		switch(rand()%2) {
 			case 0:
@@ -367,15 +432,25 @@ Game::Game(QTimer *t, QString n)
 	billLPix = new QPixmap("img/lbill.png");
 	billRPix = new QPixmap("img/rbill.png");
 	magicPix = new QPixmap("img/magic.png");
+	chompPix = new QPixmap("img/chomp.png");
+	chestPix = new QPixmap("img/chest.png");
+	ballPix = new QPixmap("img/chompball.png");
 	
 	/*creates "things"*/
 	//background
 	background = new Bg(bPix, 0, 0, 0, 0);
 	
+	//chomp and chest
+	chomp = new Chomp(chompPix, 0, rand()%450, 1, 1, 0);
+	for(int i=0; i<7; i++)
+		balls.push_back(new ChompBall(ballPix, 0, chomp->getLocy(), 1, 1, 0));
+	chest = new Chest(chestPix, 0, chomp->getLocy(), 1, 1, 0);
+	
 	//adds Yoshi (playable character) to list
 	yoshi = new Yoshi(yPix, 225, 405, 1, 1);
 	things.push_back(yoshi);
 	yoshi->setZValue(3);
+	
 	//coin on stats panel (lava)
 	sCoin = new Coin(coinPix, 170, 460, 0, 0);
 	sCoin->setZValue(2);
@@ -469,6 +544,12 @@ Game::Game(QTimer *t, QString n)
 	billCnt = 0;
 	coinCnt = 0;
 	heartCnt = 0;
+	goombaMax = 150;
+	koopaMax = 200;
+	kamekMax = 300;
+	billMax = 400;
+	coinMax = 200;
+	heartMax = 450;
 	yoshiJCnt = 0;
 	spawnCnt = 100;
 	timeCnt = 0;
@@ -476,6 +557,8 @@ Game::Game(QTimer *t, QString n)
 	velx = 1;
 	vely = 1;
 	boolMagic = false;
+	gotIt = false;
+	already = false;
 	
 	//connect to slot functions
 	connect(timer, SIGNAL(timeout()), this, SLOT(animate()));

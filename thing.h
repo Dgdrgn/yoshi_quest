@@ -19,8 +19,10 @@ class Thing : public QGraphicsPixmapItem
 			koopaEnemy,
 			kamekEnemy,
 			billEnemy,
+			chompEnemy,
 			ammo,
 			item,
+			chestItem,
 			floor,
 			other,
 			life
