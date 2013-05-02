@@ -15,5 +15,7 @@ class Bg : public Thing
 	private:
 		/**A pointer to the pixmap image*/
 		QPixmap *back;
+		QPixmap *back2;
+		QPixmap *back3;
 };
 #endif

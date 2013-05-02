@@ -10,6 +10,9 @@ Bg::Bg(QPixmap *pm, int lx, int ly, int vx, int vy) : Thing(pm, lx, ly, vx, vy)
 {
 	type = other;
 	back = new QPixmap("img/bg.png");
+	back2 = new QPixmap("img/bg2.png");
+	back3 = new QPixmap("img/bg3.png");
+	frame = 1;
 }
 
 /**
@@ -21,9 +24,22 @@ Bg::~Bg()
 }
 
 /**
-Move function from inherited Thing class
+Move function from inherited Thing class. Changes background for each level.
 */
 void Bg::move()
 {
-	//doesn't move
+	switch(frame-1) {
+		case 0:
+			setPixmap(*back2);
+			frame++;
+			break;
+		case 1:
+			setPixmap(*back3);
+			frame++;
+			break;
+		case 2:
+			setPixmap(*back);
+			frame = 1;
+			break;
+	}
 }

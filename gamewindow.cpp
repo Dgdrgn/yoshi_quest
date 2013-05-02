@@ -247,6 +247,7 @@ void Game::animate()
 			kamekMax-=kamekMax*1/4;
 			billMax-=billMax*1/4;
 			
+			background->move();
 			levelCnt++;
 			gScene->removeItem(levelAmount);
 			temp = QString::number(levelCnt);

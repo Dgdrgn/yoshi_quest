@@ -4,7 +4,7 @@
 /**
 @mainpage Yoshi's Quest
 @section purpose Purpose/Overview
-The following classes are for the game "Yoshi's Underwater Adventure, 
+The following classes are for the game "Yoshi's Quest", 
 a game created using C++ and Qt.
 @section requirements Requirements
 The game must use timers to control movements, implement GUI user input 
