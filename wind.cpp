@@ -21,7 +21,7 @@ Wind::~Wind()
 void Wind::move(int x, int y)
 {
 	if(right)
-		velx += 2;
+		velx += 0.5;
 	else
 		velx -= 2;
 	vely = (y-locy)/15;

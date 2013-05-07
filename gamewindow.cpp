@@ -141,7 +141,7 @@ void Game::animate()
 		things[l]->move(yoshi->getLocx(), yoshi->getLocy());
 		if(things[l]->type == Thing::kamekEnemy && things[l]->frame == 4) {
 			int mod = levelCnt % 3;
-			if(mod == 0)
+			if(mod == 0 || levelCnt >= 3)
 				mod = 3;
 			if(things[l]->right) {
 				int y = things[l]->getLocy();
