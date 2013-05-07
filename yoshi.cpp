@@ -25,8 +25,10 @@ Yoshi::~Yoshi()
 }
 
 /**Move function from Thing class*/
-void Yoshi::move()
+void Yoshi::move(int x, int y)
 {
+	x++;
+	y++;
 	//does not automatically move
 }
 

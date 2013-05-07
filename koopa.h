@@ -8,7 +8,7 @@ class Koopa : public Thing
 	public:
 		Koopa(QPixmap *pm, int lx, int ly, int vx, int vy, bool r);
 		~Koopa();
-		void move();
+		void move(int x, int y);
 	private:
 		/**Pixmap images*/
 		QPixmap *koopa1L;

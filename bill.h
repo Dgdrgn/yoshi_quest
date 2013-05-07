@@ -12,7 +12,7 @@ class Bill : public Thing
 	public:
 		Bill(QPixmap *pm, int lx, int ly, int vx, int vy, bool right);
 		~Bill();
-		void move();
+		void move(int x, int y);
 	private:
 		/**A pointer to the pixmap image*/
 		QPixmap *bill;

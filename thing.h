@@ -11,7 +11,7 @@ class Thing : public QGraphicsPixmapItem
 		~Thing();
 		void update();
 		/** Moves the object depending on the object*/
-		virtual void move() = 0;
+		virtual void move(int x, int y) = 0;
 		/**Enumeration for the type of Thing*/
 		enum Type {
 			hero,
@@ -35,7 +35,8 @@ class Thing : public QGraphicsPixmapItem
 		bool del;
 		/**Type of Thing*/
 		Type type;
-		
+		/**counter*/
+		int cnt;
 		/**Accessors and Mutators*/
 		int getLocx() {return locx;};
 		int getLocy() {return locy;};

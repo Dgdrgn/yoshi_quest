@@ -1,7 +1,5 @@
 #include "gamewindow.h"
 #include <cmath>
-#include <sstream>
-#include <fstream>
 #include <iostream>
 
 /**
@@ -42,29 +40,6 @@ void Game::life(int choice)
 		over->setZValue(3);
 		gScene->addItem(over);
 		timer->stop();
-		
-		if(scores.size() < 11) {
-			Pair* newScore = new Pair;
-			newScore->score = score;
-			newScore->name = nameString;
-			scores.push(newScore);
-		}
-		else if(scores.size() >= 11 && scores.top()->score < score) {
-			scores.pop();
-			Pair* newScore = new Pair;
-			newScore->score = score;
-			newScore->name = nameString;
-			scores.push(newScore);
-		}
-		ofstream newScores;
-		newScores.open("scores.txt");
-		for(int i=scores.size()-1; i>0; i--) {
-			stringstream ss;
-			ss << scores.top()->score;
-			newScores << i << ". " << scores.top()->name << " " << ss.str() << endl;
-			scores.pop();
-		}
-		newScores.close();
 	}
 }
 
@@ -80,43 +55,9 @@ void Game::collisions()
 		things[0]->update();
 	}
 	if(spawnCnt >= 100) {
-		int pX = chomp->getLocx();
-		int pY = chomp->getLocy();
-		if(abs(tX-pX) < 32 && abs(tY-pY) < 32) {
-				life(0);
-				spawnCnt = 0;
-				if(gotIt) {
-					gScene->removeItem(chomp);
-					chomp->setPos(0, rand()%450);
-					gScene->removeItem(balls[0]);
-					balls[0]->setPos(0, chomp->getLocy());
-				for(int i=1; i<7; i++) {
-						gScene->removeItem(balls[i]);
-						balls[i]->setPos(0, balls[i-1]->getLocy());
-					}
-				}
-			}
-			
-			pX = chest->getLocx();
-			pY = chest->getLocy();
-			if(abs(tX-pX) < 32 && abs(tY-pY) < 32) {
-				gScene->removeItem(chomp);
-				chest->setPos(0, balls.back()->getLocy());
-				
-				gScene->removeItem(sAmount);
-				score += 100;
-				QString temp = QString::number(score);
-				sAmount = new QGraphicsSimpleTextItem(temp);
-				sAmount->setPos(400, 450);
-				sAmount->setFont(fontT);
-				sAmount->setZValue(2);
-				gScene->addItem(sAmount);
-				
-				gotIt = true;
-			}
 		for(int k=0; k<things.size(); k++) {
-			pX = things[k]->getLocx();
-			pY = things[k]->getLocy();
+			int pX = things[k]->getLocx();
+			int pY = things[k]->getLocy();
 			if(abs(tX-pX) < 32 && abs(tY-pY) < 32) {
 				if(things[k]->type == Thing::goombaEnemy) {
 					life(0);
@@ -141,6 +82,7 @@ void Game::collisions()
 				else if(things[k]->type == Thing::ammo) {
 					life(0);
 					spawnCnt = 0;
+					things[k]->del = true;
 				}
 				
 				else if(things[k]->type == Thing::item) {
@@ -184,7 +126,6 @@ void Game::collisions()
 /**Moves the objects in the game*/
 void Game::animate()
 {
-	
 	//updates score
 	gScene->removeItem(sAmount);
 	score += 10;
@@ -197,71 +138,70 @@ void Game::animate()
 		
 	//moves all other things
 	for(int l=0; l<things.size(); l++) {
-		if(things[l]->type != Thing::chompEnemy || things[l]->type != Thing::chestItem || things[l]->type != Thing::other) {
-			things[l]->move();
-			if(things[l]->type == Thing::kamekEnemy && things[l]->frame == 4) {
-				if(things[l]->right) {
-					int y = things[l]->getLocy();
-					int x = things[l]->getLocx() +3;
-					newMagic(x, y, 0);
-				}
-				else {
-					int y = things[l]->getLocy();
-					int x = things[l]->getLocx() -28;
-					newMagic(x, y, 1);
+		things[l]->move(yoshi->getLocx(), yoshi->getLocy());
+		if(things[l]->type == Thing::kamekEnemy && things[l]->frame == 4) {
+			int mod = levelCnt % 3;
+			if(mod == 0)
+				mod = 3;
+			if(things[l]->right) {
+				int y = things[l]->getLocy();
+				int x = things[l]->getLocx() +3;
+				switch(rand()%mod){
+					case 0:
+						newMagic(x, y, 0);
+						break;
+					case 1:
+						newBolt(x, y, 0);
+						break;
+					case 2:
+						newWind(x, y, 0);
+						break;
 				}
 			}
-			if(things[l]->type == Thing::kamekEnemy && things[l]->del) {
-				gScene->removeItem(things[l]);
-				things.pop(l);
+			else {
+				int y = things[l]->getLocy();
+				int x = things[l]->getLocx() -28;
+				switch(rand()%mod){
+					case 0:
+						newMagic(x, y, 1);
+						break;
+					case 1:
+						newBolt(x, y, 1);
+						break;
+					case 2:
+						newWind(x, y, 1);
+						break;
+				}
 			}
 		}
-		if(already) {
-			chomp->moveIt(yoshi->getLocx(), yoshi->getLocy());
-			if(chomp->getLocx() > 0) {
-				balls[0]->moveIt(chomp->getLocx(), chomp->getLocy());
-				for(int i=1; i<7; i++) {
-					if(balls[i-1]->getLocx() > 0) {
-						balls[i]->moveIt(balls[i-1]->getLocx(), balls[i-1]->getLocy());
-					}
-				}
-				if(balls.back()->getLocx() > 0)
-					chest->moveIt(balls.back()->getLocx(), balls.back()->getLocy());
-			}
+		if(things[l]->del) {
+			gScene->removeItem(things[l]);
+			things.pop(l);
 		}
 	}
 	if(timeCnt >= 1000) {
-		/*if(!already) {
-			gScene->addItem(chomp);
-			for(int i=0; i<7; i++)
-				gScene->addItem(balls[i]);
-			gScene->addItem(chest);
-			already = true;
-		}
-		if(gotIt) {*/
-			interval -= (interval/16);
-			timer->setInterval(interval);
-			timeCnt = 0;
-			goombaMax-=goombaMax*1/4;
-			koopaMax-=koopaMax*1/4;
-			kamekMax-=kamekMax*1/4;
-			billMax-=billMax*1/4;
+		
+		interval -= (interval/16);
+		timer->setInterval(interval);
+		timeCnt = 0;
+		goombaMax-=goombaMax*1/4;
+		koopaMax-=koopaMax*1/4;
+		kamekMax-=kamekMax*1/4;
+		billMax-=billMax*1/4;
 			
-			background->move();
-			levelCnt++;
-			gScene->removeItem(levelAmount);
-			temp = QString::number(levelCnt);
-			levelAmount = new QGraphicsSimpleTextItem(temp);
-			levelAmount->setPos(400, 480);
-			levelAmount->setFont(fontT);
-			levelAmount->setZValue(2);
-			gScene->addItem(levelAmount);
-			gotIt = false;
-			already = false;
-		}
-		else
-			timeCnt++;
-	//}
+		background->move(0, 0);
+		levelCnt++;
+		gScene->removeItem(levelAmount);
+		temp = QString::number(levelCnt);
+		levelAmount = new QGraphicsSimpleTextItem(temp);
+		levelAmount->setPos(400, 480);
+		levelAmount->setFont(fontT);
+		levelAmount->setZValue(2);
+		gScene->addItem(levelAmount);
+	}	
+	else
+		timeCnt++;
+	
 	//collisions
 	collisions();
 }
@@ -431,12 +371,36 @@ void Game::newMagic(int x, int y, bool r)
 		boolMagic = false;
 	}
 }
+/**Adds a new bolt item
+@param x The x location of the magic item
+@param y The y location of the magic item
+@param r Boolean that determines what direction to go to
+*/
+void Game::newBolt(int x, int y, bool r)
+{
+	if(boolMagic) {
+		things.push_back(new Bolt(boltPix, x, y, velx, vely, !r));
+		gScene->addItem(things.back());
+		boolMagic = false;
+	}
+}
+/**Adds a new wind item
+@param x The x location of the magic item
+@param y The y location of the magic item
+@param r Boolean that determines what direction to go to
+*/
+void Game::newWind(int x, int y, bool r)
+{
+	if(boolMagic) {
+		things.push_back(new Wind(windPix, x, y, velx, vely, !r));
+		gScene->addItem(things.back());
+		boolMagic = false;
+	}
+}
 
 /**Constructor*/
 Game::Game(QTimer *t, QString n)
-{
-	nameString = n.toStdString();
-	
+{	
 	setFixedSize(500, 500);
 	setFocus();
 	
@@ -461,19 +425,12 @@ Game::Game(QTimer *t, QString n)
 	billLPix = new QPixmap("img/lbill.png");
 	billRPix = new QPixmap("img/rbill.png");
 	magicPix = new QPixmap("img/magic.png");
-	chompPix = new QPixmap("img/chomp.png");
-	chestPix = new QPixmap("img/chest.png");
-	ballPix = new QPixmap("img/chompball.png");
+	boltPix = new QPixmap("img/bolt.png");
+	windPix = new QPixmap("img/wind.png");
 	
 	/*creates "things"*/
 	//background
 	background = new Bg(bPix, 0, 0, 0, 0);
-	
-	//chomp and chest
-	chomp = new Chomp(chompPix, 0, rand()%450, 1, 1, 0);
-	for(int i=0; i<7; i++)
-		balls.push_back(new ChompBall(ballPix, 0, chomp->getLocy(), 1, 1, 0));
-	chest = new Chest(chestPix, 0, chomp->getLocy(), 1, 1, 0);
 	
 	//adds Yoshi (playable character) to list
 	yoshi = new Yoshi(yPix, 225, 405, 1, 1);
@@ -586,26 +543,6 @@ Game::Game(QTimer *t, QString n)
 	velx = 1;
 	vely = 1;
 	boolMagic = false;
-	gotIt = false;
-	already = false;
-	
-	//high scores
-	ifstream scoreFile;
-	scoreFile.open("scores.txt");
-	string rank, stringS;
-	Pair* tScore;
-	while(scoreFile.good()) {
-		tScore = new Pair;
-		getline(scoreFile, rank, '\"');
-		getline(scoreFile, tScore->name, '\"');
-		getline(scoreFile, stringS, '\n');
-		int intS = 0;
-		if(stringS != "")
-			intS = atoi(stringS.c_str());
-		tScore->score = intS;
-		scores.push(tScore);
-	}
-	scoreFile.close();
 	
 	//connect to slot functions
 	connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
@@ -621,28 +558,7 @@ Game::Game(QTimer *t, QString n)
 /**Destructor*/
 Game::~Game()
 {
-	if(scores.size() < 11) {
-		Pair* newScore = new Pair;
-		newScore->score = score;
-		newScore->name = nameString;
-		scores.push(newScore);
-	}
-	else if(scores.size() >= 11 && scores.top()->score < score) {
-		scores.pop();
-		Pair* newScore = new Pair;
-		newScore->score = score;
-		newScore->name = nameString;
-		scores.push(newScore);
-	}
-	ofstream newScores;
-	newScores.open("scores.txt", ios::app);
-	for(int i=scores.size()-1; i>0; i--) {
-		stringstream ss;
-		ss << scores.top()->score;
-		newScores << i << ". " << scores.top()->name << " " << ss.str() << endl;
-		scores.pop();
-	}
-	newScores.close();
+
 }
 
 /*Fuctions that are called in the Main class by keyboard inputs*/

@@ -26,8 +26,10 @@ Bg::~Bg()
 /**
 Move function from inherited Thing class. Changes background for each level.
 */
-void Bg::move()
+void Bg::move(int x, int y)
 {
+	x++;
+	y++;
 	switch(frame-1) {
 		case 0:
 			setPixmap(*back2);

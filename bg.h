@@ -11,7 +11,7 @@ class Bg : public Thing
 	public:
 		Bg(QPixmap *pm, int lx, int ly, int vx, int vy);
 		~Bg();
-		void move();
+		void move(int x, int y);
 	private:
 		/**A pointer to the pixmap image*/
 		QPixmap *back;

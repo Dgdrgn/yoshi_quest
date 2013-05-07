@@ -25,8 +25,10 @@ Coin::~Coin()
 /**
 Move function from inherited Thing class
 */
-void Coin::move()
+void Coin::move(int x, int y)
 {
+	x++;
+	y++;
 	locy += vely;
 	update();
 }

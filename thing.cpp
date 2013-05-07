@@ -15,6 +15,8 @@ Thing::Thing(QPixmap *pm, int lx, int ly, int vx, int vy)
 	vely = vy;
 	width = pm->width();
 	height = pm->height();
+	cnt = 0;
+	del = false;
 }
 
 /**Destructor*/

@@ -11,7 +11,7 @@ class Goomba : public Thing
 	public:
 		Goomba(QPixmap *pm, int lx, int ly, int vx, int vy, bool r);
 		~Goomba();
-		void move();
+		void move(int x, int y);
 	private:
 		/**Goomba image*/
 		QPixmap *goomba1;

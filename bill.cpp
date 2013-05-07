@@ -23,8 +23,10 @@ Bill::~Bill()
 }
 
 /**Move function from inherited Thing class*/
-void Bill::move()
+void Bill::move(int x, int y)
 {
+	x++;
+	y++;
 	if(right) {
 		locx -= velx*5;
 	}

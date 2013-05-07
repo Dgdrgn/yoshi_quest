@@ -19,7 +19,9 @@ Heart::~Heart()
 }
 
 /**Move fuction from Thing class*/
-void Heart::move()
+void Heart::move(int x, int y)
 {
+	x++;
+	y++;
 	//does not move
 }

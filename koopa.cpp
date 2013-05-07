@@ -19,8 +19,10 @@ Koopa::~Koopa()
 	delete koopa1R;
 }
 /**Move function from Thing class*/
-void Koopa::move()
+void Koopa::move(int x, int y)
 {
+	x++;
+	y++;
 	if(locy+height < 450)
 		locy+=vely;
 	if(right) {

@@ -14,11 +14,8 @@
 #include "kamek.h"
 #include "bill.h"
 #include "magic.h"
-#include "chomp.h"
-#include "chest.h"
-#include "chompball.h"
-#include "minarrayheap.h"
-#include <string>
+#include "bolt.h"
+#include "wind.h"
 
 /**
 A class for the main game window, which contains all of the 
@@ -26,11 +23,6 @@ elements of the actual gameplay
 
 @author Jesus Garcia
 */
-
-struct Pair {
-	int score;
-	string name;
-};
 
 class Game : public QGraphicsView
 {
@@ -46,6 +38,7 @@ class Game : public QGraphicsView
 		void yoshiC();
 		void yoshiI();
 		
+		int score;
 	private:
 		/**Scene of the game*/
 		QGraphicsScene *gScene;
@@ -65,15 +58,13 @@ class Game : public QGraphicsView
 		QPixmap *billLPix;
 		QPixmap *billRPix;
 		QPixmap *magicPix;
-		QPixmap *chestPix;
-		QPixmap *chompPix;
-		QPixmap *ballPix;
+		QPixmap *boltPix;
+		QPixmap *windPix;
 		
 		/**Status Panel Objects*/
 		Bg *background;
 		Heart *heart;
 		Coin *sCoin;
-		int score;
 		int lives;
 		int nCoins;
 		QGraphicsSimpleTextItem* sLabel;
@@ -89,11 +80,6 @@ class Game : public QGraphicsView
 		
 		/**Playable Character*/
 		Yoshi *yoshi;
-		
-		/**Boss and Treasure*/
-		Chomp *chomp;
-		Chest *chest;
-		MyList<ChompBall*> balls;
 		
 		/**List of other Things*/
 		MyList<Thing*> things;
@@ -120,12 +106,9 @@ class Game : public QGraphicsView
 		bool boolMagic;
 		void life(int choice);
 		void newMagic(int x, int y, bool r);
-		bool gotIt;
-		bool already;
+		void newBolt(int x, int y, bool r);		
+		void newWind(int x, int y, bool r);
 		
-		//high scores
-		MinArrayHeap<Pair*>scores;
-		string nameString;
 		
 	public slots:
 		void animate();

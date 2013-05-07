@@ -9,7 +9,7 @@ class Yoshi : public Thing
 	public:
 		Yoshi(QPixmap *pm, int lx, int ly, int vx, int vy);
 		~Yoshi();
-		void move();
+		void move(int x, int y);
 		void idle();
 		void walkR();
 		void walkL();

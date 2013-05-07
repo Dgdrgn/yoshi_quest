@@ -20,8 +20,10 @@ Goomba::~Goomba()
 }
 
 /**Move function in Thing class*/
-void Goomba::move() 
+void Goomba::move(int x, int y) 
 {
+	x++;
+	y++;
 	if(locy+height < 450) {
 		locy+=vely;
 	}

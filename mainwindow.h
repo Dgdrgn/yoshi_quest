@@ -6,14 +6,26 @@
 #include "gamewindow.h"
 #include "startwindow.h"
 #include "yoshi.h"
+#include <deque>
+#include <string>
 
 class QAction;
 
-#define WINDOW_MAX_X 725
-#define WINDOW_MAX_Y 525
+#define WINDOW_MAX_X 500
+#define WINDOW_MAX_Y 500
 
 /** A class for the main window of the game
 @author Jesus Garcia*/
+
+struct ScorePair
+{
+	QString sc;
+	QString name;
+	bool operator < (const ScorePair& pair) const
+	{
+		return (sc.toInt() < (pair.sc.toInt()));
+	}
+};
 
 class Main : public QMainWindow
 {
@@ -23,15 +35,25 @@ class Main : public QMainWindow
 		explicit Main();
 		~Main();
 		void switchGame();
-		/**Push Buttons*/
-		QPushButton *startG;
-		QPushButton *pauseG;
-		QPushButton *quitG;
+		QWidget *star;
 		/**Text Boxes*/
-		QTextEdit *info;
 		QTextEdit *name;
 		/**String where textbox input is saved*/
 		QString n;
+		/**creates menu*/
+		void newMenus();
+		void newActions();
+		/**Actions for menu bar*/
+		QAction *quit;
+		QAction *start;
+		QAction *pause;
+		QAction *high;
+		QAction *instructions;
+		QAction *controls;
+		/**Menus for menu bar*/
+		QMenu *file;
+		QMenu *options;
+		QMenu *help;
 		
 	private:
 		/**Start screen object*/
@@ -46,12 +68,33 @@ class Main : public QMainWindow
 		QWidget *dock;
 		/**Layout of widget*/
 		QVBoxLayout *layout;
+		
+		void selectionSort();
+		
+		/**high scores*/
+		deque<ScorePair*> highSc;
+		QHBoxLayout *r1;
+		QHBoxLayout *r2;
+		QHBoxLayout *r3;
+		QHBoxLayout *r4;
+		QHBoxLayout *r5;
+		QHBoxLayout *r6;
+		QHBoxLayout *r7;
+		QHBoxLayout *r8;
+		QHBoxLayout *r9;
+		QHBoxLayout *r10;
+		QHBoxLayout *r11;
+		
 	protected:
 		void keyPressEvent(QKeyEvent *e);
 		void keyReleaseEvent(QKeyEvent *e);
 	public slots:
-		void pause();
-		void start();
+		void pauseGame();
+		void startGame();
+		void highScores();
+		void instruct();
+		void keyControls();
+		void startG();
 };
 
 #endif

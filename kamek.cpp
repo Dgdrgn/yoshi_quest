@@ -30,8 +30,10 @@ Kamek::~Kamek()
 	delete kamek3;
 }
 /**Move function from Thing class*/
-void Kamek::move()
+void Kamek::move(int x, int y)
 {
+	x++;
+	y++;
 	if(frame == 1) {
 		changeFrame++;
 		if(changeFrame == 4) {

@@ -1,34 +1,31 @@
-#include "magic.h"
+#include "bolt.h"
 #include <cmath>
 /**Constructor
 @param pm A pointer for the pixmap image
 @param lx The x location of the object
 @param ly The y location of the object
 @param r Boolean that determines direction of movement*/
-Magic::Magic(QPixmap *pm, int lx, int ly, int vx, int vy, bool r) : Thing(pm, lx, ly, vx, vy)
+Bolt::Bolt(QPixmap *pm, int lx, int ly, int vx, int vy, bool r) : Thing(pm, lx, ly, vx, vy)
 {
 	type = ammo;
 	right = r;
 	frame = 1;
-	magic = pm;
+	bolt = pm;
 }
 /**Destructor*/
-Magic::~Magic()
+Bolt::~Bolt()
 {
 
 }
 /**Move function from Thing class*/
-void Magic::move(int x, int y)
+void Bolt::move(int x, int y)
 {
-	x++;
-	y++;
-	if(!right) {
-		locx -= velx*5;
-		locy += 10*sin(locx);
-	}
-	else {
-		locx += velx*5;
-		locy += 10*sin(locx);
-	}
+	velx = (x-locx)/20;
+	vely = (y-locy)/20;
+	locx += velx;
+	locy += vely;
 	update();
+	cnt++;
+	if(cnt >= 150)
+		del = true;
 }
