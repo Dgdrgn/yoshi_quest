@@ -13,23 +13,17 @@ Main::Main()
 	sScreen = new Start;
 	gScreen = new Game(time, n);
 	setCentralWidget(sScreen);
-	
 	newActions();
 	newMenus();
 	
 	//retrieve current scores
-	QFile file("scores.txt");
-	file.open(QIODevice::ReadWrite);
-	QTextStream in(&file);
-	for(int i=0; i<10; i++) {
-		if(!in.atEnd()) {
-			ScorePair* pair = new ScorePair;
-			QString str = in.readLine();
-			QStringList list = str.split(QRegExp("\\s+"));
-			pair->name = list.at(0);
-			pair->sc = list.at(1);
-			highSc.push_back(pair);
-		}
+	ifstream file;
+	file.open("scores.txt");
+	while(file.good()) {
+		ScorePair* pair = new ScorePair;
+		file >> pair->name;
+		file >> pair->sc;
+		highSc.push_back(pair);
 	}
 	selectionSort();
 	file.close();
@@ -37,26 +31,33 @@ Main::Main()
 /**Destructor*/
 Main::~Main()
 {
-	ScorePair* pair = new ScorePair;
-	pair->name = n;
-	pair->sc = gScreen->score;
-	if(highSc.size() > 10 && (highSc[0]->sc).toInt() < (pair->sc).toInt()) {
-		highSc.pop_front();
-		highSc.push_back(pair);
-		selectionSort();
+	if(gScreen->overG) {
+		ScorePair* pair = new ScorePair;
+		pair->name = n.toStdString();
+		pair->sc = gScreen->score;
+		int highS = -1;
+		if(!highSc.empty())
+			int highS = highSc[0]->sc;
+		int pairSc = pair->sc;
+		if(highSc.size() > 10 && highS < pairSc) {
+			highSc.pop_front();
+			highSc.push_back(pair);
+			selectionSort();
+		}
+		else if(highSc.size() <= 10) {
+			highSc.push_back(pair);
+			selectionSort();
+		}
 	}
-	else if(highSc.size() <= 10) {
-		highSc.push_back(pair);
-		selectionSort();
-	}
-	QFile file("scores.txt");
-	file.open(QIODevice::ReadWrite);
-	QTextStream out(&file);
+	ofstream file;
+	file.open("scores.txt");
 	for(int i=0; i<10; i++) {
 		if(!highSc.empty()) {
-			out << (highSc[0]->name) << " " << (highSc[0]->sc) << endl;
-			highSc.pop_front();
+			//file << (highSc[i]->name) << " " << (highSc[i]->sc) << endl;
+			//highSc.pop_front();
 		}
+		else
+			break;
 	}
 	file.close();
 }
@@ -78,26 +79,32 @@ void Main::pauseGame()
 	if(time->isActive()) {
 		time->stop();
 	}
-	else {
+	else if(gScreen->overG == false) {
 		time->start();
 	}
 }
 /**Starts the game*/
 void Main::startG()
 {
-	ScorePair* pair = new ScorePair;
-	pair->name = n;
-	pair->sc = gScreen->score;
-	if(highSc.size() > 10 && (highSc[0]->sc).toInt() < (pair->sc).toInt()) {
-		highSc.pop_front();
-		highSc.push_back(pair);
-		selectionSort();
+	if(gScreen->overG) {
+		ScorePair* pair = new ScorePair;
+		pair->name = n.toStdString();
+		pair->sc = gScreen->score;
+		int highS = -1;
+		if(!highSc.empty())
+			int highS = highSc[0]->sc;
+		int pairSc = pair->sc;
+		if(highSc.size() > 10 && highS < pairSc) {
+			highSc.pop_front();
+			highSc.push_back(pair);
+			selectionSort();
+		}
+		else if(highSc.size() <= 10) {
+			highSc.push_back(pair);
+			selectionSort();
+		}
 	}
-	else if(highSc.size() <= 10) {
-		highSc.push_back(pair);
-		selectionSort();
-	}
-	n = name->toPlainText();
+	n = name->text();
 	if(n != "") {
 		star->close();
 		gScreen = new Game(time, n);
@@ -131,10 +138,10 @@ void Main::startGame()
 	star->setWindowTitle("Enter Username");
 	star->setFixedSize(200, 100);
 		
-	name = new QTextEdit;
+	name = new QLineEdit;
 	name->setFixedWidth(180);
 	name->setFixedHeight(25);
-	name->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	name->setMaxLength(10);
 	l->addWidget(name);
 	
 	QPushButton *st = new QPushButton("Start");

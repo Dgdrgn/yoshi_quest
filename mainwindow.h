@@ -19,11 +19,11 @@ class QAction;
 
 struct ScorePair
 {
-	QString sc;
-	QString name;
+	int sc;
+	string name;
 	bool operator < (const ScorePair& pair) const
 	{
-		return (sc.toInt() < (pair.sc.toInt()));
+		return (sc < pair.sc);
 	}
 };
 
@@ -37,7 +37,7 @@ class Main : public QMainWindow
 		void switchGame();
 		QWidget *star;
 		/**Text Boxes*/
-		QTextEdit *name;
+		QLineEdit *name;
 		/**String where textbox input is saved*/
 		QString n;
 		/**creates menu*/

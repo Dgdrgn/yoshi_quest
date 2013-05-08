@@ -39,6 +39,7 @@ class Game : public QGraphicsView
 		void yoshiI();
 		
 		int score;
+		bool overG;
 	private:
 		/**Scene of the game*/
 		QGraphicsScene *gScene;

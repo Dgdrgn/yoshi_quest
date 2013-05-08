@@ -40,6 +40,7 @@ void Game::life(int choice)
 		over->setZValue(3);
 		gScene->addItem(over);
 		timer->stop();
+		overG = true;
 	}
 }
 
@@ -543,6 +544,7 @@ Game::Game(QTimer *t, QString n)
 	velx = 1;
 	vely = 1;
 	boolMagic = false;
+	overG = false;
 	
 	//connect to slot functions
 	connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
