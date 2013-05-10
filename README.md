@@ -8,6 +8,7 @@
   + Game Name: Yoshi's Quest
   + Game Description: Yoshi is on a quest! Avoid enemies as you run across.
   + [Game Design Doc](GameDesignDoc.md)
+  + [License](LICENSE.md)
 
 
 ### Compile & Run Instructions
