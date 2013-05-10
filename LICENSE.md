@@ -17,5 +17,7 @@ If you have any questions or comments, contact me by
 email at <mailto: jesusega@usc.edu> or paper mail:
 
 >Jesus Garcia
+
 >3700 1/2 Ruthelen St.
+
 >Los Angeles, CA 90018
